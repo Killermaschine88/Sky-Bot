@@ -71,7 +71,7 @@ module.exports = {
 		let embed = new Discord.MessageEmbed()
 			.setTitle('Mine')
 			.setDescription(
-				`Pickaxe: **${player.data.equipment.mining.pickaxe.name}**\nMining speed: **${ps.mining_speed}**\nMining fortune: **${ps.mining_fortune}**`
+				`Pickaxe: **${player.data.equipment.mining.pickaxe.name}**\nMining speed: \`${ps.mining_speed} ⸕\`\nMining fortune: \`${ps.mining_fortune} ☘\``
 			)
 
 			.setFooter(getFooter(player))
