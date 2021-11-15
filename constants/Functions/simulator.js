@@ -132,4 +132,27 @@ async function getPrice1(bzname) {
 	return await response.json();
 }
 
-module.exports = { getAuctionID, addItems, getSwordProgress, getArmorProgress, getRodProgress, getPickaxeProgress, getPrice, getPrice1 };
+function reforgeStats(player) {
+  const swordrf = player.data.equipment.combat.sword.reforge
+  const armorrf = player.data.equipment.combat.armor.reforge
+  const rodrf = player.data.equipment.fishing.rod.reforge
+  const pickrf = player.data.equipment.mining.pickaxe.reforge
+
+  const health = 0, defense = 0, damage = 0, strength = 0, crit_chance = 0, crit_damage = 0, magic_find = 0, sea_creature_chance = 0, mining_speed = 0, mining_fortune = 0
+
+
+  return {
+		health,
+		defense,
+		damage,
+		strength,
+		crit_chance,
+		crit_damage,
+		magic_find,
+		sea_creature_chance,
+		mining_speed,
+		mining_fortune,
+	};
+}
+
+module.exports = { getAuctionID, addItems, getSwordProgress, getArmorProgress, getRodProgress, getPickaxeProgress, getPrice, getPrice1, reforgeStats };

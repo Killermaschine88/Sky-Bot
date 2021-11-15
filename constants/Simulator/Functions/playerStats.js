@@ -1,4 +1,5 @@
 const level = require('./skilllvl.js');
+const { reforgeStats } = require('../../../constants/Functions/simulator.js')
 
 async function playerStats(player) {
 	//Events
@@ -93,6 +94,19 @@ async function playerStats(player) {
 		mining_fortune += inv3.pickaxe.mining_fortune * 1.1 - inv3.pickaxe.mining_fortune;
 		mining_speed += inv3.pickaxe.mining_speed * 1.1 - inv3.pickaxe.mining_speed;
 	}
+
+  //Adding reforge bonus
+  const rf = reforgeStats(player)
+  health += rf.health
+  defense += rf.defense
+  damage += rf.defense
+  strength += rf.strength
+  crit_chance += rf.crit_chance
+  crit_damage += rf.crit_damage
+  magic_find += rf.magic_find
+  sea_creature_chance += rf.sea_creature_chance
+  mining_speed += rf.mining_speed
+  mining_fortune += rf.mining_fortune
 
 	//Add Booster Cookie Stats
 	if (cookie == true) {

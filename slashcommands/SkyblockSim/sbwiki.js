@@ -24,17 +24,16 @@ module.exports = {
 
 		const button1 = new Discord.MessageButton().setCustomId('general').setLabel('General Info').setStyle('PRIMARY');
 		const button2 = new Discord.MessageButton().setCustomId('symbols').setLabel('Symbols').setStyle('PRIMARY');
-		const button3 = new Discord.MessageButton().setCustomId('misc').setLabel('Misc').setStyle('PRIMARY');
-		const button4 = new Discord.MessageButton().setCustomId('events').setLabel('Events').setStyle('PRIMARY');
-		const button5 = new Discord.MessageButton().setCustomId('dungeons').setLabel('Dungeons').setStyle('PRIMARY');
-		const button6 = new Discord.MessageButton().setCustomId('reforges').setLabel('Reforges').setStyle('PRIMARY');
+		const button3 = new Discord.MessageButton().setCustomId('events').setLabel('Events').setStyle('PRIMARY');
+		const button4 = new Discord.MessageButton().setCustomId('dungeons').setLabel('Dungeons').setStyle('PRIMARY');
+		const button5 = new Discord.MessageButton().setCustomId('reforges').setLabel('Reforges').setStyle('PRIMARY');
 
-		const row1 = new Discord.MessageActionRow().addComponents(button1, button2, button4, button5);
-		const row2 = new Discord.MessageActionRow().addComponents(button6);
+		const row1 = new Discord.MessageActionRow().addComponents(button1, button2, button3, button4, button5);
+		//const row2 = new Discord.MessageActionRow().addComponents(button6);
 
 		let menu = await interaction.editReply({
 			embeds: [embed],
-			components: [row1, row2],
+			components: [row1],
 		});
 
 		const filter = (i) => {
@@ -52,9 +51,10 @@ module.exports = {
 			if (i.customId == 'general') {
 				const generalembed = new Discord.MessageEmbed()
 					.setTitle('General Information')
-					.setDescription(
-						'**Available Commands**\n`sb class`, `sb daily`, `sb dungeons`, `sb grind`, `sb info`, `sb reforge`, `sb sell`, `sb settings`, `sb shop`, `sb start`, `sb wardrobe`, `sb warp`, `sb wiki`, `sb fishing`, `sb mining`'
-					)
+          .addField('Voting', 'By voting [here](https://top.gg/bot/839835292785704980) you recieve 2 Gems, which are used to buy the best items and you also support my Developer.')
+					.addField('Suggest Ideas', 'Use /suggest to send ideas or suggestions to be added at the bot. These will then be sent to <#909871468136001606> in my [Support Server](https://discord.gg/Ca6XpTRQaR)', true)
+          .addField('Bug found?', 'Make sure to join my [Support Server](https://discord.gg/Ca6XpTRQaR) and report them in <#908702024902787132>. In return you get some buffs at the game.', true)
+          .addField('Looking for help or advice?', 'You can ask for advice in <#908705612970479707> in my [Support Server](https://discord.gg/Ca6XpTRQaR)', true)
 					.setColor(getColor('Skyblock'))
 					.setFooter(getFooter('Skyblock'));
 
