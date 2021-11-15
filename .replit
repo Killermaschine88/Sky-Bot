@@ -1,2 +1,2 @@
 language = "nix"
-run = "node ./Testing-JS/index.js"
+run = "node index.js"
