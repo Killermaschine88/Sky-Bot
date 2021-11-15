@@ -972,7 +972,7 @@ module.exports = {
 						fightEnded = true;
 						test.fields = [];
 						test.setColor('ORANGE');
-						test.addField(`\u200B`, `Killed the boss with **❤️ ${php} HP** left, and you earned combat XP`); //Add combat xp var
+						test.addField(`\u200B`, `Killed the boss with **❤️ ${php}** left, and you earned combat XP`); //Add combat xp var
 						await collection.updateOne(
 							//Add Combat XP from enemy Kill (do once mobs decided)
 							{ _id: interaction.user.id },
@@ -989,7 +989,7 @@ module.exports = {
 					} else if (php <= 0) {
 						test.fields = [];
 						test.setColor('RED');
-						test.addField(`\u200B`, `Died to the boss, which had **❤️ ${mhp} HP** left.`);
+						test.addField(`\u200B`, `Died to the boss, which had **❤️ ${mhp}** left.`);
 						runFailed = true;
 						return collector.stop();
 					}
@@ -1080,7 +1080,7 @@ module.exports = {
 						score += 20;
 						test.fields = [];
 						test.setColor('ORANGE');
-						test.addField('\u200B', 'Killed the enemy with **❤️ ${php} HP** left and earned combat XP'); //Add combat xp var
+						test.addField('\u200B', `Killed the enemy with **❤️ ${php}** left and earned combat XP`); //Add combat xp var
 						await collection.updateOne(
 							//Add Combat XP from enemy Kill (do once mobs decided)
 							{ _id: interaction.user.id },
@@ -1104,11 +1104,11 @@ module.exports = {
 					} else if (php <= 0) {
 						test.fields = [];
 						test.setColor('RED');
-						test.addField('\u200B', 'Died to the enemy which had **❤️ ${mhp} HP** left.');
+						test.addField('\u200B', `Died to the enemy which had **❤️ ${mhp}** left.`);
 						runFailed = true;
 						return collector.stop();
 					}
-					// FINISH FIGHTa
+					// FINISH FIGHT
 
 					if (fightEnded) {
 						if (direction == undefined) {
