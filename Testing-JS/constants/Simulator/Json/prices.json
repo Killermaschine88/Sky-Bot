@@ -1,0 +1,54 @@
+[
+	{
+		"name": "Carrot",
+		"price": 5
+	},
+	{
+		"name": "Potato",
+		"price": 5
+	},
+	{
+		"name": "Cobweb",
+		"price": 7
+	},
+	{
+		"name": "Arrow",
+		"price": 5
+	},
+	{
+		"name": "Slimeball",
+		"price": 8
+	},
+	{
+		"name": "Gold Nugget",
+		"price": 2
+	},
+	{
+		"name": "Eye of Ender",
+		"price": 20
+	},
+	{
+		"name": "Lilypad",
+		"price": 115
+	},
+	{
+		"name": "Gemstone",
+		"price": 20
+	},
+	{
+		"name": "Hardstone",
+		"price": 5
+	},
+	{
+		"name": "Lapis Lazuli",
+		"price": 8
+	},
+	{
+		"name": "Mithril",
+		"price": 11
+	},
+	{
+		"name": "Titanium",
+		"price": 60
+	}
+]

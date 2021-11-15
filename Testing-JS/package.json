@@ -1,0 +1,47 @@
+{
+	"name": "test-bot",
+	"version": "1.0.0",
+	"main": "index.js",
+	"dependencies": {
+		"@replit/database": "^2.0.1",
+		"@top-gg/sdk": "^3.1.2",
+		"axios": "^0.21.1",
+		"colorette": "^1.3.0",
+		"cron": "^1.8.2",
+		"discord.js": "^13.3.0",
+		"express": "^4.17.1",
+		"fuse.js": "^6.4.6",
+		"mineflayer": "^3.7.0",
+		"moment": "^2.29.1",
+		"mongodb": "^3.6.9",
+		"ms": "^2.1.3",
+		"node-fetch": "^2.6.1",
+		"node-os-utils": "^1.3.5",
+		"npm": "^7.21.0",
+		"pm2": "^5.1.0",
+		"pretty-ms": "^7.0.1",
+		"sourcebin": "^4.2.5",
+		"topgg-autoposter": "^2.0.0"
+	},
+	"scripts": {
+		"start": "pm2 start index.js",
+		"kill": "pm2 delete 'all'",
+		"list": "pm2 list",
+		"dev": "node index.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Killermaschine88/Testing-JS.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Killermaschine88/Testing-JS/issues"
+	},
+	"homepage": "https://github.com/Killermaschine88/Testing-JS#readme",
+	"description": "",
+	"devDependencies": {
+		"prettier": "^2.4.1"
+	}
+}

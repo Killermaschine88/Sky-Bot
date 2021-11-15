@@ -1,0 +1,16 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# NPM
+node_modules/
+.npm
+
+# Replit
+.replit
+replit.nix
+.cache/replit/nix
+
+# Other
+.env

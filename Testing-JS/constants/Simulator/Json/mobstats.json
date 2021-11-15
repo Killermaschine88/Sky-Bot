@@ -1,0 +1,125 @@
+{
+	"Squid": {
+		"name": "Squid",
+		"hp": "200",
+		"dmg": 0,
+		"level": 0,
+		"xp": 41
+	},
+	"Sea Walker": {
+		"name": "Sea Walker",
+		"hp": "150",
+		"dmg": 30,
+		"level": 2,
+		"xp": 68
+	},
+	"Sea Guardian": {
+		"name": "Sea Guardian",
+		"hp": "250",
+		"dmg": 75,
+		"level": 5,
+		"xp": 101
+	},
+	"Sea Witch": {
+		"name": "Sea Witch",
+		"hp": "600",
+		"dmg": 40,
+		"level": 7,
+		"xp": 338
+	},
+	"Sea Archer": {
+		"name": "Sea Archer",
+		"hp": "700",
+		"dmg": 60,
+		"level": 10,
+		"xp": 169
+	},
+	"Monster of the Deep": {
+		"name": "Monster of the Deep",
+		"hp": "2000",
+		"dmg": 70,
+		"level": 11,
+		"xp": 270
+	},
+	"Catfish": {
+		"name": "Catfish",
+		"hp": "2000",
+		"dmg": 80,
+		"level": 11,
+		"xp": 405
+	},
+	"Carrot King": {
+		"name": "Carrot King",
+		"hp": "3200",
+		"dmg": 0,
+		"level": 15,
+		"xp": 810
+	},
+	"Sea Leech": {
+		"name": "Sea Leech",
+		"hp": "6000",
+		"dmg": 90,
+		"level": 16,
+		"xp": 675
+	},
+	"Guardian Defender": {
+		"name": "Guardian Defender",
+		"hp": "7600",
+		"dmg": 1000,
+		"level": 17,
+		"xp": 1013
+	},
+	"Deep Sea Protector": {
+		"name": "Deep Sea Protector",
+		"hp": "15000",
+		"dmg": 200,
+		"level": 18,
+		"xp": 1350
+	},
+	"Water Hydra": {
+		"name": "Water Hydra",
+		"hp": "20000",
+		"dmg": 150,
+		"level": 19,
+		"xp": 3000
+	},
+	"Sea Emperor": {
+		"name": "Sea Emperor",
+		"hp": "25000",
+		"dmg": 130,
+		"level": 20,
+		"xp": 3375
+	},
+	"Nurse Shark": {
+		"name": "Nurse Shark",
+		"hp": "500",
+		"dmg": 30,
+		"level": 5,
+		"xp": 405,
+		"shark_mob": true
+	},
+	"Blue Shark": {
+		"name": "Blue Shark",
+		"hp": "1000",
+		"dmg": 50,
+		"level": 10,
+		"xp": 810,
+		"shark_mob": true
+	},
+	"Tiger Shark": {
+		"name": "Tiger Shark",
+		"hp": "2000",
+		"dmg": 90,
+		"level": 18,
+		"xp": 1013,
+		"shark_mob": true
+	},
+	"Great White Shark": {
+		"name": "Great White Shark",
+		"hp": "7500",
+		"dmg": 150,
+		"level": 24,
+		"xp": 2025,
+		"shark_mob": true
+	}
+}
