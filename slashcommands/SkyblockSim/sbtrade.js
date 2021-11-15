@@ -1,4 +1,6 @@
 const Discord = require('discord.js');
+const { caps } = require('../../constants/Functions/general.js')
+const { addItems } = require('../../constants/Functions/simulator.js')
 
 module.exports = {
 	name: 'sbtrade',
@@ -516,36 +518,3 @@ module.exports = {
 		}
 	},
 };
-
-function caps(words) {
-	let separateWord = words.toLowerCase().split(' ');
-	for (let i = 0; i < separateWord.length; i++) {
-		separateWord[i] = separateWord[i].charAt(0).toUpperCase() + separateWord[i].substring(1);
-	}
-	return separateWord.join(' ');
-}
-
-async function addItems(mobdrop, amount, player) {
-	if (!player.data.inventory.items) player.data.inventory.items = [];
-
-	if (player.data.inventory.items.length === 0) {
-		player.data.inventory.items.push({
-			name: mobdrop,
-			amount: amount,
-		});
-		return player;
-	}
-
-	for (const item of player.data.inventory.items) {
-		if (item.name === mobdrop) {
-			item.amount += amount;
-			return player;
-		}
-	}
-
-	player.data.inventory.items.push({
-		name: mobdrop,
-		amount: amount,
-	});
-	return player;
-}

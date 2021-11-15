@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
-const list = require('../../constants/Simulator/Json/prices.json');
-const fetch = require('node-fetch');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
+const { getPrice, getPrice1 } = require('../../constants/Functions/simulator.js')
 
 module.exports = {
 	name: 'sbsell',
@@ -242,49 +241,3 @@ module.exports = {
 		}
 	},
 };
-
-function addItem(sellitem, amount, player) {
-	if (!player.data.inventory.items) player.data.inventory.items = [];
-
-	if (player.data.inventory.items.length === 0) {
-		player.data.inventory.items.push({
-			name: sellitem,
-			amount: amount,
-		});
-		return player;
-	}
-
-	for (const item of player.data.inventory.items) {
-		if (item.name === sellitem) {
-			item.amount -= amount;
-			return player;
-		}
-	}
-
-	player.data.inventory.items.push({
-		name: sellitem,
-		amount: amount,
-	});
-	return player;
-}
-
-function getPrice(sellitem) {
-	if (sellitem == 'Coins' || sellitem == 'Potatoe') {
-		return 0;
-	}
-	const itemprice = list.filter((item) => item.name == sellitem);
-
-	price = itemprice[0].price;
-
-	return price;
-}
-
-async function getPrice1(bzname) {
-	const response = await fetch(`https://api.slothpixel.me/api/skyblock/bazaar/${bzname}`);
-	return await response.json();
-}
-
-function updateItem(player, itemindex) {
-	player.data.inventory.items.splice(itemindex, 1);
-	return player;
-}

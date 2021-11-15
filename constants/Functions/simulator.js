@@ -1,3 +1,7 @@
+const list = require('../../constants/Simulator/Json/prices.json');
+const fetch = require('node-fetch');
+
+
 function getAuctionID() {
 	const first = Date.now().toString(36).slice(-3);
 	const second = Math.random().toString(36).slice(-3);
@@ -112,4 +116,20 @@ function getPickaxeProgress(pickaxename) {
 	else if (pickaxename == 'Gemstone Gauntlet') return 7;
 }
 
-module.exports = { getAuctionID, addItems, getSwordProgress, getArmorProgress, getRodProgress, getPickaxeProgress };
+function getPrice(sellitem) {
+	if (sellitem == 'Coins' || sellitem == 'Potatoe') {
+		return 0;
+	}
+	const itemprice = list.filter((item) => item.name == sellitem);
+
+	price = itemprice[0].price;
+
+	return price;
+}
+
+async function getPrice1(bzname) {
+	const response = await fetch(`https://api.slothpixel.me/api/skyblock/bazaar/${bzname}`);
+	return await response.json();
+}
+
+module.exports = { getAuctionID, addItems, getSwordProgress, getArmorProgress, getRodProgress, getPickaxeProgress, getPrice, getPrice1 };

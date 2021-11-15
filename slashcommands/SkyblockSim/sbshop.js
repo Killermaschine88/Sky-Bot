@@ -609,30 +609,3 @@ module.exports = {
 			.catch((err) => console.log(''));
 	},
 };
-
-/*
-  function addItem(sellitem, amount, player) {
-  if (!player.data.inventory.items) player.data.inventory.items = []
-
-  if (player.data.inventory.items.length === 0) {
-    player.data.inventory.items.push({
-      name: sellitem,
-      amount: amount
-    })
-    return player
-  }
-
-  for (const item of player.data.inventory.items) {
-    if (item.name === sellitem) {
-      item.amount -= amount
-      return player
-    }
-  }
-
-  player.data.inventory.items.push({
-    name: sellitem,
-    amount: amount
-  })
-  return player
-}
-*/
