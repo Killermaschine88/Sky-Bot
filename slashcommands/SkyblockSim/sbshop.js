@@ -715,7 +715,7 @@ module.exports = {
           const finished = new Discord.MessageEmbed()
 							.setFooter(getFooter(player))
 							.setTitle('Pickaxe Upgarded')
-							.setDescription(`Purchased **${pickname}** for ${cost} coins and ${itemamount} ${itemname}.`)
+							.setDescription(`Purchased **${pickname}** for ${pickcoins} coins and ${itemamount} ${itemname}.`)
 							.setColor('GREEN');
 
 						interaction.editReply({
