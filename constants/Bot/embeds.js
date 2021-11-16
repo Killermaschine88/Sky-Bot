@@ -16,7 +16,7 @@ const getColor = (playerOrString) => {
 	/*
 		Hardcoded locations:
 		• Pond (for fishing)
-		• Catacombs (for dungeon)
+		• Dungeons (for dungeon)
 	*/
 	switch (location) {
 		case 'Slimehill':

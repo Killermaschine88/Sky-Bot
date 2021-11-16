@@ -496,8 +496,22 @@ module.exports = {
 
 		let critchance = pstats.crit_chance;
 		let php = pstats.health;
-		let mhp = Math.random() < 0.5 ? 300 : 200; // Random mob hp at the moment
-		let mdmg = Math.random() < 0.5 ? 50 : 25; // Random mob hp at the moment
+    if(floor == 1) {
+      mhp = 100
+      mdmg = 10
+    } else if(floor == 2) {
+      mhp = 150
+      mdmg = 20
+    } else if(floor == 3) {
+      mhp = 200
+      mdmg = 30
+    } else if(floor == 4) {
+      mhp = 250
+      mdmg = 40
+    } else if(floor == 5) {
+      mhp = 320
+      mdmg = 50
+    }
 
 		test.setDescription(`🎯 Score: **${score}**\n\n${mapArray(map)}`);
 
@@ -973,10 +987,26 @@ module.exports = {
 						test.fields = [];
 						test.setColor('ORANGE');
 						test.addField(`\u200B`, `Killed the boss with **❤️ ${php}** left, and you earned combat XP`); //Add combat xp var
+            let xp = 0
+            if(floor == 1) {
+              xp = 150
+            } else if(floor == 2) {
+              xp = 250
+            } else if(floor == 3) {
+              xp = 350
+            } else if(floor == 4) {
+              xp = 500
+            } else if(floor == 5) {
+              xp = 750
+            } else if(floor == 6) {
+              xp = 1000
+            } else if(floor == 7) {
+              xp = 1500
+            }
 						await collection.updateOne(
 							//Add Combat XP from enemy Kill (do once mobs decided)
 							{ _id: interaction.user.id },
-							{ $inc: { 'data.skills.combat': 500 } },
+							{ $inc: { 'data.skills.combat': xp } },
 							{ upsert: true }
 						);
 
@@ -1081,16 +1111,46 @@ module.exports = {
 						test.fields = [];
 						test.setColor('ORANGE');
 						test.addField('\u200B', `Killed the enemy with **❤️ ${php}** left and earned combat XP`); //Add combat xp var
+            let xp = 0
+            if(floor == 1) {
+              xp = 20
+            } else if(floor == 2) {
+              xp = 40
+            } else if(floor == 3) {
+              xp = 60
+            } else if(floor == 4) {
+              xp = 80
+            } else if(floor == 5) {
+              xp = 100
+            } else if(floor == 6) {
+              xp = 125
+            } else if(floor == 7) {
+              xp = 150
+            }
 						await collection.updateOne(
 							//Add Combat XP from enemy Kill (do once mobs decided)
 							{ _id: interaction.user.id },
-							{ $inc: { 'data.skills.combat': 50 } },
+							{ $inc: { 'data.skills.combat': xp } },
 							{ upsert: true }
 						);
 
 						php = pstats.health; //reset player health
-						mhp = Math.random() < 0.5 ? 300 : 200; // reset mob hp for new mob
-						mdmg = Math.random() < 0.5 ? 50 : 25; // reset mob dmg for new mob
+						if(floor == 1) {
+      mhp = 100
+      mdmg = 10
+    } else if(floor == 2) {
+      mhp = 150
+      mdmg = 20
+    } else if(floor == 3) {
+      mhp = 200
+      mdmg = 30
+    } else if(floor == 4) {
+      mhp = 250
+      mdmg = 40
+    } else if(floor == 5) {
+      mhp = 320
+      mdmg = 50
+    }
 
 						// Unlocks arrows after mob is killed
 						row1.components[0].disabled = true;
@@ -1140,8 +1200,9 @@ module.exports = {
 					bossFight = true;
 					bossrow.components[0].disabled = false;
 					if (floor == 1) (mhp = 500), (mdmg = 100);
-					else if (floor == 2) (mhp = 1000), (mdmg = 200);
-					else if (floor == 3) (mhp = 2500), (mdmg = 350);
+					else if (floor == 2) (mhp = 1000), (mdmg = 150);
+					else if (floor == 3) (mhp = 2500), (mdmg = 200);
+          else if (floor == 4) (mhp = 3500), (mdmg = 300);
 					test.fields = [];
 					test.addField(
 						`Battle`,
