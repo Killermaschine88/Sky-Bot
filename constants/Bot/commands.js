@@ -219,6 +219,12 @@ const data = [
 							},
 						],
 					},
+          {
+						name: 'sell-excluded',
+						description: 'Items to exclude at sell-all (Seperate them with a ,)',
+						type: 'STRING',
+						required: false,
+					},
 				],
 			},
 			{

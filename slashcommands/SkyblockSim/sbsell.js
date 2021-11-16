@@ -32,6 +32,10 @@ module.exports = {
 		}
 
 		let sellall = interaction.options.getString('sell-all');
+    let excluded = interaction.options.getString('sell-excluded')?.toLowerCase()
+    if(excluded) {
+      excluded = excluded.split(", ")
+    }
 		let sellallcoins = 0;
 		let sellallitems = 0;
 
@@ -46,7 +50,7 @@ module.exports = {
 
 			await collection.updateOne({ _id: interaction.user.id }, { $set: { 'data.misc.is_massselling': true } });
 			for (const item of player.data.inventory.items) {
-				if (item.amount != 0 && item.name != '') {
+				if (item.amount != 0 && item.name != '' && !excluded.includes(item.name.toLowerCase())) {
 					let sellname = item.name.split(' ');
 					sellname = sellname.join('_').toUpperCase();
 

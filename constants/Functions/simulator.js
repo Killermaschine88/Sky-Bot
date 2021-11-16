@@ -122,7 +122,11 @@ function getPrice(sellitem) {
 	}
 	const itemprice = list.filter((item) => item.name == sellitem);
 
-	price = itemprice[0].price;
+  if(itemprice.length != 0) {
+    	price = itemprice[0].price;
+  } else {
+    price = 5
+  }
 
 	return price;
 }

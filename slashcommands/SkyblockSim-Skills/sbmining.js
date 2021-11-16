@@ -154,7 +154,7 @@ module.exports = {
 
 				await collection.updateOne(
 					{ _id: interaction.user.id },
-					{ $inc: { 'data.skills.mining': ore.xp } },
+					{ $inc: { 'data.skills.mining': ore.xp * ore.amount } },
 					{ upsert: true }
 				);
 
@@ -215,7 +215,7 @@ function getOre(player, ps) {
 	let ores = '';
 	let name = '';
 	let img = '';
-	let amount = '';
+	let amount = 1;
 
 	//Get valid ores for area
 	if (location == 'Coal Mine') {
@@ -320,15 +320,13 @@ function getOre(player, ps) {
 		xp = 35;
 	}
 
-	if (ps.mining_fortune < 50) {
-		amount = 1;
-	} else if (ps.mining_fortune < 100) {
-		amount = 2;
-	} else if (ps.mining_fortune < 150) {
-		amount = 3;
-	} else if (ps.mining_fortune < 200) {
-		amount = 4;
-	}
+  let rn = Math.floor(Math.random() * (50 - 1) + 1);
+
+  amount += Math.floor(ps.mining_fortune / 50)
+
+  if(rn <= Math.floor(ps.mining_fortune % 50)) {
+    amount += 1
+  }
 
 	//return data
 	return {

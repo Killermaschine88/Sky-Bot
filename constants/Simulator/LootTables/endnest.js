@@ -8,6 +8,6 @@ endnest.addItem('Bone', 60, false);
 endnest.addItem('Enchanted Ender Pearl', 5, true);
 endnest.addItem('Enchanted Obsidian', 5, true);
 endnest.addItem('Enchanted Bone', 5, true);
-endnest.addItem('Summoning Eye', 20, true);
+endnest.addItem('Summoning Eye', 1, true);
 
 module.exports = endnest;

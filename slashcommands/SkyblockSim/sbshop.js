@@ -77,6 +77,12 @@ module.exports = {
 			.setStyle('PRIMARY')
 			.setDisabled(true);
 
+    const pickaxe_button = new Discord.MessageButton()
+      .setCustomId('pickaxe')
+			.setLabel('Pickaxe')
+			.setStyle('PRIMARY')
+			.setDisabled(true);
+
 		const cancel_button = new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel').setStyle('DANGER');
 
 		const row = new Discord.MessageActionRow();
@@ -148,6 +154,34 @@ module.exports = {
 			gemsneeded = 50;
 			amount = 250;
 		}
+
+    //Pickaxes
+    let pick = player.data.equipment.mining.pickaxe.name
+    let pickname = ''
+    let pickfortune = 0
+    let pickspeed = 0
+    let pickcoins = 0
+    let pickgems = 0
+    if(pick == 'Wood Pickaxe') {
+      pickname = 'Stone Pickaxe'
+      
+    } else if(pick == 'Stone Pickaxe') {
+      pickname = 'Iron Pickaxe'
+
+    } else if(pick == 'Iron Pickaxe') {
+      pickname = 'Mithril Pickaxe'
+      
+    } else if(pick == 'Mithril Pickaxe') {
+      pickname = 'Titanium Pickaxe'
+      
+    } else if(pick == 'Titanium Pickaxe') {
+      pickname = 'Stonk'
+      
+    } else if(pick == 'Stonk') {
+      pickname = 'Gemstone Gauntlet'
+      
+    } else if(pick == 'Gemstone Gauntlet') {      
+    }
 
 		//Sword Upgrades
 		if (
@@ -271,6 +305,12 @@ module.exports = {
 			row.addComponents(armor_button);
 		} else if (!armorinv.find((item) => item.name == 'Superior Dragon Armor') && row2.components.length < 4) {
 			row2.addComponents(armor_button);
+		}
+
+    if (player.data.equipment.mining.pickaxe.name != 'Gemstone Gauntlet' && row.components.length < 4) {
+			row.addComponents(pickaxe_button);
+		} else if (player.data.equipment.mining.pickaxe.name != 'Gemstone Gauntlet' && row2.components.length < 4) {
+			row2.addComponents(pickaxe_button);
 		}
 
 		row.addComponents(cancel_button);
