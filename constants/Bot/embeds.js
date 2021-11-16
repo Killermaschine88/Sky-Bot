@@ -42,6 +42,9 @@ const getColor = (playerOrString) => {
 			return COLORS.ORANGE;
 
 		case 'The End':
+    case 'End Gate':
+    case 'Dragon\'s Nest':
+    case 'Void Sepulture':
 			return COLORS.PURPUR;
 
 		case 'Obsidian Sanctuary':

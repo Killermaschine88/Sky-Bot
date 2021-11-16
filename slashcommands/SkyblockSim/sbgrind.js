@@ -41,7 +41,7 @@ module.exports = {
 			'Lava Field',
 			'End Gate',
 			"Dragon's Nest",
-			'Void Supelture',
+			'Void Sepulture',
 		];
 
 		//Check if Player is at valid Combat Area
@@ -135,7 +135,7 @@ module.exports = {
 			mob = ['Zealot', 'Obsidian Defender', 'Watcher'];
 			mobdrop = lt.endnest.roll(mf);
 			img = 'https://cdn.discordapp.com/attachments/841757730887827497/865215569128194078/unknown.png';
-		} else if (location === 'Void Supelture') {
+		} else if (location === 'Void Sepulture') {
 			mob = ['Voidling Fanatic', 'Voidling Extremist', 'Voidling Devotee'];
 			mobdrop = lt.endvoid.roll(mf);
 			img = 'https://cdn.discordapp.com/attachments/841757730887827497/865215776332185630/unknown.png';

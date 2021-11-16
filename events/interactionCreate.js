@@ -300,7 +300,7 @@ module.exports = {
 
 		const now = Date.now();
 		const timestamps = cooldowns.get(commandExecute);
-		let cd = interaction.client.slashcommands.get(commandExecute).cooldown;
+		let cd = interaction.client.slashcommands.get(commandExecute)?.cooldown;
 
 		let cooldownAmount = (cd || 3) * 1000;
 
@@ -312,30 +312,6 @@ module.exports = {
 		if (timestamps.has(interaction.user.id)) {
 			let expirationTime = timestamps.get(interaction.user.id) + cooldownAmount;
 
-			/*const collection = mclient.db('Sky-Bot').collection('SkyblockSim')
-    const found = await collection.findOne({ _id: message.author.id })
-
-    //Phoenix Pet Cooldown Reduction
-    let cdr1 = 0
-    let cdr2 = 0
-    let cdr3 = 0
-    let cdr4 = 0
-
-    if (found.phoenix === true) {
-      cdr1 = 2000
-    }
-    if (found.dragon === true) {
-      cdr2 = 2000
-    }
-    if (found.luckcharm === true) {
-      cdr3 = 1000
-    }
-    if (found.enderman === true) {
-      cdr4 = 1000
-    }
-
-
-    let reduced = cdr1 + cdr2 + cdr3 + cdr4*/
 			let exptime = expirationTime;
 
 			if (now < exptime && interaction.user.id !== '570267487393021969') {
@@ -359,6 +335,10 @@ module.exports = {
 		/*console.log(timestamps)
     console.log(now)
     console.log(cooldownAmount)*/
+
+    /*console.log(commandExecute)
+    console.log(interaction.client.slashcommands)
+    return*/
 
 		try {
 			const collection = mclient.db('Sky-Bot').collection('commanduses');

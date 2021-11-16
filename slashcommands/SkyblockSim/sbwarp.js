@@ -488,34 +488,34 @@ module.exports = {
 					})
 					.catch((err) => menu.edit({ components: [] }));
 			} else if (island === 'The End') {
-				//Fix The End
+
         const blazingwarp = new Discord.MessageEmbed()
 					.setTitle('Skyblock Simulator The End Areas')
 					.setFooter(getFooter(player))
 					.setColor(getColor(player))
-					.setDescription('Available areas and their drops\n\nEnd Gate (combat level 13) <:ender_pearl:869900884337913896><:eye_of_ender:869900884367257650>\nDragon\'s Nest (combat lvl 15) <:ender_pearl:869900884337913896><:eye_of_ender:869900884367257650><:arrow:869900884379832320><:obsidian:869490639769853992><:bone:869900884405002270><:summoning_eye:869900884396638238>\nVoid Sepelture (combat lvl 17) <:ender_pearl:869900884337913896><:eye_of_ender:869900884367257650>');
+					.setDescription('Available areas and their drops\n\nEnd Gate (combat level 12) <:ender_pearl:869900884337913896><:eye_of_ender:869900884367257650>\nDragon\'s Nest (combat lvl 14) <:ender_pearl:869900884337913896><:eye_of_ender:869900884367257650><:arrow:869900884379832320><:obsidian:869490639769853992><:bone:869900884405002270><:summoning_eye:869900884396638238>\nVoid Sepulture (combat lvl 16) <:ender_pearl:869900884337913896><:eye_of_ender:869900884367257650>');
 
 				const b1 = new Discord.MessageButton()
-					.setEmoji('869900884358860820')
+					.setEmoji('869900884337913896')
 					.setCustomId('endgate')
 					.setLabel('End Gate')
 					.setStyle('PRIMARY');
 				const b2 = new Discord.MessageButton()
-					.setEmoji('869900884144947201')
+					.setEmoji('869900884396638238')
 					.setCustomId("dragonnest")
 					.setLabel("Dragon's Nest")
 					.setStyle('PRIMARY');
 				const b3 = new Discord.MessageButton()
-					.setEmoji('869900884337905684')
+					.setEmoji('869900884367257650')
 					.setCustomId('void')
-					.setLabel('Void Sepelture')
+					.setLabel('Void Sepulture')
 					.setStyle('PRIMARY');
 				const b4 = new Discord.MessageButton().setCustomId('cancel').setLabel('Cancel').setStyle('DANGER');
 
-				if (combatxp < 67425) {
+				if (combatxp < 47425) {
 					b2.setDisabled(true);
 					b3.setDisabled(true);
-				} else if (combatxp < 147425) {
+				} else if (combatxp < 67425) {
 					b3.setDisabled(true);
 				}
 
@@ -535,7 +535,7 @@ module.exports = {
 						} else if (i.customId === 'dragonnest') {
 							location = "Dragon's Nest";
 						} else if (i.customId === 'void') {
-							location = 'Void Sepelture';
+							location = 'Void Sepulture';
 						} else {
 							const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
 							menu.edit({ embeds: [cancelled], components: [] });
