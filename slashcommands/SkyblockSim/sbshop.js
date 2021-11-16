@@ -172,8 +172,8 @@ module.exports = {
     let itemname = ''
     let itemamount = 0
 
-    if(pick == 'Wood Pickaxe' && inv.find(item => item.name == 'Cobblestone' && item.amount >= 20) && pcoin >= 10000) {
-      //pickaxe_button.setDisabled(false)
+    if(pick == 'Wood Pickaxe' && inv.find(item => item?.name == 'Cobblestone' && item?.amount >= 20) && pcoin >= 10000) {
+      pickaxe_button.setDisabled(false)
       pickname = 'Stone Pickaxe'
       pickspeed = 15
       pickfortune = 20
@@ -181,35 +181,50 @@ module.exports = {
       itemname = 'Cobblestone'
       itemamount = 20
       
-    } else if(pick == 'Stone Pickaxe') {
-      //pickaxe_button.setDisabled(false)
+    } else if(pick == 'Stone Pickaxe' && inv.find(item => item?.name == 'Iron Ingot' && item?.amount >= 25) && pcoin >= 50000) {
+      pickaxe_button.setDisabled(false)
       pickname = 'Iron Pickaxe'
       pickspeed = 30
       pickfortune = 40
+      pickcoins = 50000
+      itemname = 'Iron Ingot'
+      itemamount = 25
 
-    } else if(pick == 'Iron Pickaxe') {
-      //pickaxe_button.setDisabled(false)
+    } else if(pick == 'Iron Pickaxe' && inv.find(item => item?.name == 'Mithril' && item?.amount >= 30) && pcoin >= 90000) {
+      pickaxe_button.setDisabled(false)
       pickname = 'Mithril Pickaxe'
       pickspeed = 45
       pickfortune = 80
+      pickcoins = 90000
+      itemname = 'Mithril'
+      itemamount = 30
       
-    } else if(pick == 'Mithril Pickaxe') {
-      //pickaxe_button.setDisabled(false)
+    } else if(pick == 'Mithril Pickaxe' && inv.find(item => item?.name == 'Titanium' && item?.amount >= 40) && pcoin >= 125000) {
+      pickaxe_button.setDisabled(false)
       pickname = 'Titanium Pickaxe'
       pickspeed = 60
       pickfortune = 100
+      pickcoins = 125000
+      itemname = 'Titanium'
+      itemamount = 40
       
-    } else if(pick == 'Titanium Pickaxe') {
-      //pickaxe_button.setDisabled(false)
+    } else if(pick == 'Titanium Pickaxe' && inv.find(item => item?.name == 'Gold Ingot' && item?.amount >= 80) && pcoin >= 250000) {
+      pickaxe_button.setDisabled(false)
       pickname = 'Stonk'
       pickspeed = 75
       pickfortune = 140
+      pickcoins = 250000
+      itemname = 'Gold Ingot'
+      itemamount = 80
       
-    } else if(pick == 'Stonk') {
-      //pickaxe_button.setDisabled(false)
+    } else if(pick == 'Stonk' && inv.find(item => item?.name == 'Gemstone' && item?.amount >= 100) && pcoin >= 2000000) {
+      pickaxe_button.setDisabled(false)
       pickname = 'Gemstone Gauntlet'
       pickspeed = 100
       pickfortune = 200
+      pickcoins = 2000000
+      itemname = 'Gemstone'
+      itemamount = 100
       
     } else if(pick == 'Gemstone Gauntlet') {    
 
@@ -339,11 +354,11 @@ module.exports = {
 			row2.addComponents(armor_button);
 		}
 
-    /*if (player.data.equipment.mining.pickaxe.name != 'Gemstone Gauntlet' && row.components.length < 4) {
+    if (player.data.equipment.mining.pickaxe.name != 'Gemstone Gauntlet' && row.components.length < 4) {
 			row.addComponents(pickaxe_button);
 		} else if (player.data.equipment.mining.pickaxe.name != 'Gemstone Gauntlet' && row2.components.length < 4) {
 			row2.addComponents(pickaxe_button);
-    }*/
+    }
 
 		row.addComponents(cancel_button);
 

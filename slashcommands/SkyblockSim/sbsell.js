@@ -35,7 +35,10 @@ module.exports = {
     let excluded = interaction.options.getString('sell-excluded')?.toLowerCase()
     if(excluded) {
       excluded = excluded.split(", ")
+    } else {
+      excluded = ['Banana', 'Fish']
     }
+  
 		let sellallcoins = 0;
 		let sellallitems = 0;
 
