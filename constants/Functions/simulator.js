@@ -140,6 +140,64 @@ function reforgeStats(player) {
 
   const health = 0, defense = 0, damage = 0, strength = 0, crit_chance = 0, crit_damage = 0, magic_find = 0, sea_creature_chance = 0, mining_speed = 0, mining_fortune = 0
 
+  switch (swordrf) {
+    case 'Fabled':
+      strength += 50
+      crit_damage += 25
+      break;
+    case 'Withered':
+      strength += 75
+      break;
+    case 'Warped':
+      strength += 20
+      crit_chance += 10
+      crit_damage += 30
+      break;
+  }
+
+  switch (armorrf) {
+    case 'Submerged':
+      sea_creature_chance += 10
+      break;
+    case 'Renowned':
+      health += 50
+      defense += 20
+      strength += 15
+      crit_damage += 20
+      magic_find += 10
+      break;
+    case 'Ancient':
+      strength += 25
+      crit_chance += 10
+      crit_damage += 50
+      break;
+    case 'Empowered':
+      health += 75
+      defense += 25
+      break;
+  }
+
+  switch (rodrf) {
+    case 'Stiff':
+      sea_creature_chance += 5
+      break;
+    case 'Lucky':
+      sea_creature_chance += 7
+      magic_find += 5
+      break;
+  }
+
+  switch (pickrf) {
+    case 'Fruitful':
+      mining_fortune += 10
+      break;
+    case 'Fleet':
+      mining_fortune += 20
+      break;
+    case 'Auspicious':
+      mining_fortune += 30
+      break;
+  }
 
   return {
 		health,

@@ -142,22 +142,22 @@ module.exports = {
 					)
 					.addField(
 						'Sword Reforges',
-						'Dragon Claw () [Fabled] {Dragons}\nWither Blood () [Withered] {Dungeons}\nWarped Stone () [Warped] {}',
+						'Dragon Claw (\`50 ❁\`, \`25 ☠\`) [Fabled] {Dragons}\nWither Blood (\`75 ❁\`) [Withered] {Dungeons}\nWarped Stone (\`20 ❁\`, \`10 ☣\`, \`30 ☠\`) [Warped] {}',
 						true
 					)
 					.addField(
 						'Armor Reforges',
-						"Deep Sea Orb () [Submerged] {Fishing}\nDragon Horn () [Renowned] {Dragons}\nPrecursor Gear () [Ancient] {Dungeons}\nSadan's Brooch () [Empowered] {Dungeons}",
+						"Deep Sea Orb (\`10 α\`) [Submerged] {Fishing}\nDragon Horn (\`50 ❤\`, \`20 ❈\`, \`15 ❁\`, \`20 ☠\`, \`10 ✯\`) [Renowned] {Dragons}\nPrecursor Gear (\`25 ❁\`, \`10 ☣\`, \`50 ☠\`) [Ancient] {Dungeons}\nSadan's Brooch (\`75 ❤\`, \`25 ❈\`) [Empowered] {Dungeons}",
 						true
 					)
 					.addField(
 						'Fishing Rod Reforges',
-						'Hardened Wood () [Stiff] {Fishing}\nLucky Dice () [Lucky] {Fishing}',
+						'Hardened Wood (\`5 α\`) [Stiff] {Fishing}\nLucky Dice (\`7 α\`, \`5 ✯\`) [Lucky] {Fishing}',
 						true
 					)
 					.addField(
 						'Pickaxe Reforges',
-						'Onyx () [Fruitful] {Mining}\nDiamonite () [Fleet] {Mining}\nRock Gemstone () [Auspicious] {Mining}',
+						'Onyx (\`10 ☘\`) [Fruitful] {Mining}\nDiamonite (\`20 ☘\`) [Fleet] {Mining}\nRock Gemstone (\`30 ☘\`) [Auspicious] {Mining}',
 						true
 					);
 

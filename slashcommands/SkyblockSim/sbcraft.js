@@ -40,10 +40,12 @@ module.exports = {
 		if (!inv2.find((armor) => armor.name == 'Shark Scale Armor')) {
 			embed.addField(
 				'Shark Scale Armor',
-				'**Stats:** `200 ❤`, `120 ❈`, `75 ❁`, `25 ☣`, `90 ☠`, `20 α`\n\n**Cost:** 100 Shark Fin and 100 Lilypads',
+				'**Stats:** `200 ❤`, `120 ❈`, `75 ❁`, `25 ☣`, `90 ☠`, `10 α`\n\n**Cost:** 100 Shark Fin and 100 Lilypads',
 				true
 			);
 		}
+    //embed.addField('Hardened Wood', '**Stats:** `5 α`\n\n**Cost:** 25 Lilypads', true)
+    //embed.addField('Hardened Wood', '**Stats:** `7 α`, `5 ✯`\n\n**Cost:** 50 Lilypads and 25 Shark Fin', true)
 
 		craftmenu.addOptions([
 			{

@@ -133,7 +133,7 @@
 		"crit_chance": 25,
 		"crit_damage": 90,
 		"magic_find": 0,
-		"sea_creature_chance": 20,
+		"sea_creature_chance": 10,
 		"coins": 10000000,
 		"reforge": "None"
 	},
