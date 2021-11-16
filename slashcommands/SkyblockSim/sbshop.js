@@ -55,30 +55,35 @@ module.exports = {
 		//Buttons
 		const rod_button = new Discord.MessageButton()
 			.setCustomId('rod')
+      .setEmoji('852069714359877643')
 			.setLabel('Fishing Rod')
 			.setStyle('PRIMARY')
 			.setDisabled(true);
 
 		const cookie_button = new Discord.MessageButton()
 			.setCustomId('cookie')
+      .setEmoji('🍪')
 			.setLabel('Booster Cookie')
 			.setStyle('PRIMARY')
 			.setDisabled(true);
 
 		const sword_button = new Discord.MessageButton()
 			.setCustomId('sword')
+      .setEmoji('852079613052059658')
 			.setLabel('Sword')
 			.setStyle('PRIMARY')
 			.setDisabled(true);
 
 		const armor_button = new Discord.MessageButton()
 			.setCustomId('armor')
+      .setEmoji('852079613051666472')
 			.setLabel('Armor')
 			.setStyle('PRIMARY')
 			.setDisabled(true);
 
     const pickaxe_button = new Discord.MessageButton()
       .setCustomId('pickaxe')
+      .setEmoji('852069714577719306')
 			.setLabel('Pickaxe')
 			.setStyle('PRIMARY')
 			.setDisabled(true);
@@ -157,30 +162,57 @@ module.exports = {
 
     //Pickaxes
     let pick = player.data.equipment.mining.pickaxe.name
+    let inv = player.data.inventory.items
+    let pcoin = player.data.profile.coins
     let pickname = ''
     let pickfortune = 0
     let pickspeed = 0
     let pickcoins = 0
     let pickgems = 0
-    if(pick == 'Wood Pickaxe') {
+    let itemname = ''
+    let itemamount = 0
+
+    if(pick == 'Wood Pickaxe' && inv.find(item => item.name == 'Cobblestone' && item.amount >= 20) && pcoin >= 10000) {
+      //pickaxe_button.setDisabled(false)
       pickname = 'Stone Pickaxe'
+      pickspeed = 15
+      pickfortune = 20
+      pickcoins = 10000
+      itemname = 'Cobblestone'
+      itemamount = 20
       
     } else if(pick == 'Stone Pickaxe') {
+      //pickaxe_button.setDisabled(false)
       pickname = 'Iron Pickaxe'
+      pickspeed = 30
+      pickfortune = 40
 
     } else if(pick == 'Iron Pickaxe') {
+      //pickaxe_button.setDisabled(false)
       pickname = 'Mithril Pickaxe'
+      pickspeed = 45
+      pickfortune = 80
       
     } else if(pick == 'Mithril Pickaxe') {
+      //pickaxe_button.setDisabled(false)
       pickname = 'Titanium Pickaxe'
+      pickspeed = 60
+      pickfortune = 100
       
     } else if(pick == 'Titanium Pickaxe') {
+      //pickaxe_button.setDisabled(false)
       pickname = 'Stonk'
+      pickspeed = 75
+      pickfortune = 140
       
     } else if(pick == 'Stonk') {
+      //pickaxe_button.setDisabled(false)
       pickname = 'Gemstone Gauntlet'
+      pickspeed = 100
+      pickfortune = 200
       
-    } else if(pick == 'Gemstone Gauntlet') {      
+    } else if(pick == 'Gemstone Gauntlet') {    
+
     }
 
 		//Sword Upgrades
@@ -307,11 +339,11 @@ module.exports = {
 			row2.addComponents(armor_button);
 		}
 
-    if (player.data.equipment.mining.pickaxe.name != 'Gemstone Gauntlet' && row.components.length < 4) {
+    /*if (player.data.equipment.mining.pickaxe.name != 'Gemstone Gauntlet' && row.components.length < 4) {
 			row.addComponents(pickaxe_button);
 		} else if (player.data.equipment.mining.pickaxe.name != 'Gemstone Gauntlet' && row2.components.length < 4) {
 			row2.addComponents(pickaxe_button);
-		}
+    }*/
 
 		row.addComponents(cancel_button);
 
@@ -634,7 +666,49 @@ module.exports = {
 						embeds: [lootembed],
 						components: [],
 					});
-				} else {
+				} else if(id == 'pickaxe') {
+
+          await collection.updateOne(
+    { _id: interaction.user.id },
+    {
+      $set: {
+        'data.equipment.mining.pickaxe.name': pickname,
+        'data.equipment.mining.pickaxe.fortune': pickfortune,
+        'data.equipment.mining.pickaxe.speed': pickspeed,
+        'data.equipment.mining.pickaxe.recombobulated': false,
+        'data.equipment.mining.pickaxe.reforge': 'None'
+      },
+    },
+    { upsert: true }
+  );
+  await collection.updateOne(
+						{
+							_id: interaction.user.id,
+							'data.inventory.items.name': itemname,
+						},
+						{ $inc: { 'data.inventory.items.$.amount': -itemamount } },
+						{ upsert: true }
+					);
+          await collection.updateOne(
+						{
+							_id: interaction.user.id
+						},
+						{ $inc: { 'data.profile.coins': -pickcoins } },
+						{ upsert: true }
+					);
+
+          const finished = new Discord.MessageEmbed()
+							.setFooter(getFooter(player))
+							.setTitle('Pickaxe Upgarded')
+							.setDescription(`Purchased **${pickname}** for ${cost} coins and ${itemamount} ${itemname}.`)
+							.setColor('GREEN');
+
+						interaction.editReply({
+							embeds: [finished],
+							components: [],
+						});
+
+        } else {
 					const cancelled = new Discord.MessageEmbed()
 						.setTitle('Menu Cancelled')
 						.setColor('RED')

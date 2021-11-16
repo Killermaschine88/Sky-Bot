@@ -338,25 +338,25 @@ function getOre(player, ps) {
 }
 
 async function getCooldown(ps) {
-	if (ps.mining_speed < 10) {
+	if (ps.mining_speed <= 10) {
 		return 2000;
-	} else if (ps.mining_speed < 20) {
+	} else if (ps.mining_speed <= 20) {
 		return 1900;
-	} else if (ps.mining_speed < 30) {
+	} else if (ps.mining_speed <= 30) {
 		return 1700;
-	} else if (ps.mining_speed < 40) {
+	} else if (ps.mining_speed <= 40) {
 		return 1600;
-	} else if (ps.mining_speed < 50) {
+	} else if (ps.mining_speed <= 50) {
 		return 1500;
-	} else if (ps.mining_speed < 60) {
+	} else if (ps.mining_speed <= 60) {
 		return 1400;
-	} else if (ps.mining_speed < 70) {
+	} else if (ps.mining_speed <= 70) {
 		return 1300;
-	} else if (ps.mining_speed < 80) {
+	} else if (ps.mining_speed <= 80) {
 		return 1200;
-	} else if (ps.mining_speed < 90) {
+	} else if (ps.mining_speed <= 90) {
 		return 1100;
-	} else if (ps.mining_speed < 100) {
+	} else if (ps.mining_speed <= 100) {
 		return 1000;
 	}
 }
