@@ -508,7 +508,7 @@ const data = [
 						],
 					},
 					{
-						name: 'item-name',
+						name: 'item',
 						description: 'Item to auction',
 						type: 'STRING',
 						required: false,

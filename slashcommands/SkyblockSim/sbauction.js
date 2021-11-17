@@ -30,7 +30,7 @@ module.exports = {
 		}
 
 		const action = interaction.options.getString('action');
-		const itemname = interaction.options.getString('item-name');
+		const itemname = interaction.options.getString('item');
 		const duration = interaction.options.getInteger('duration');
 		const amount = interaction.options.getInteger('bid-amount');
 		const auctionid = interaction.options.getString('auction-id');

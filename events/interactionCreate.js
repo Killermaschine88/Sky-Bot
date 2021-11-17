@@ -11,10 +11,13 @@ module.exports = {
 	 */
 	async execute(interaction, mclient) {
 		if (interaction.isAutocomplete()) {
-			const focused = interaction.options.getFocused();
-      const playerinvautocomplete = ['sell', 'auction'] //array for autocomplete needing player inv
+			const focused = interaction.options.getFocused(true).value;
+      const focusedcmd = interaction.options.getFocused(true).name
+      const playerinvautocomplete = ['item', 'sell-excluded'] //array for autocomplete needing player inv
 
-			if (interaction.options.getSubcommand(false) == 'reforge') {
+      console.log(interaction.options.getFocused(true))
+
+			if (focusedcmd == 'reforge-stone') {
 				let stones = [
 					'Dragon Claw',
 					'Wither Blood',
@@ -53,7 +56,7 @@ module.exports = {
 				} else {
 					interaction.respond(found2);
 				}
-			} else if (playerinvautocomplete.includes(interaction.options.getSubcommand(false))) {
+			} else if (playerinvautocomplete.includes(focusedcmd)) {
 				const collection = mclient.db('SkyblockSim').collection('Players');
 				let player = await collection.findOne({ _id: interaction.user.id });
 
