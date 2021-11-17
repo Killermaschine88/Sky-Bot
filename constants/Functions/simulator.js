@@ -117,9 +117,9 @@ function getPickaxeProgress(pickaxename) {
 }
 
 function getPrice(sellitem) {
-	if (sellitem == 'Coins' || sellitem == 'Potatoe') {
+	/*if (sellitem == 'Coins' || sellitem == 'Potatoe') {
 		return 0;
-	}
+  }*/
 	const itemprice = list.filter((item) => item.name == sellitem);
 
   if(itemprice.length != 0) {

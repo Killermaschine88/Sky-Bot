@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
-const { getPrice, getPrice1 } = require('../../constants/Functions/simulator.js')
+const { getPrice } = require('../../constants/Functions/simulator.js')
+const { caps } = require('../../constants/Functions/general.js')
 
 module.exports = {
 	name: 'sbsell',
@@ -36,7 +37,7 @@ module.exports = {
     if(excluded) {
       excluded = excluded.split(", ")
     } else {
-      excluded = ['Banana', 'Fish']
+      excluded = ['Thisismytest']
     }
   
 		let sellallcoins = 0;
@@ -54,40 +55,9 @@ module.exports = {
 			await collection.updateOne({ _id: interaction.user.id }, { $set: { 'data.misc.is_massselling': true } });
 			for (const item of player.data.inventory.items) {
 				if (item.amount != 0 && item.name != '' && !excluded.includes(item.name.toLowerCase())) {
-					let sellname = item.name.split(' ');
+					/*let sellname = item.name.split(' ');
 					sellname = sellname.join('_').toUpperCase();
 
-					let price = await getPrice1(sellname);
-					if (!price.error) {
-						price = Number(price.quick_status.sellPrice.toFixed(2));
-
-						const words = item.name.split(' ');
-
-						for (let i = 0; i < words.length; i++) {
-							words[i] = words[i][0].toUpperCase() + words[i].substr(1);
-						}
-
-						let sellitem = words.join(' ');
-						let earned = price * item.amount;
-
-						await collection.updateOne(
-							{
-								_id: interaction.user.id,
-								'data.inventory.items.name': sellitem,
-							},
-							{
-								$inc: {
-									'data.inventory.items.$.amount': -item.amount,
-								},
-							}
-						);
-						await collection.updateOne(
-							{ _id: interaction.user.id },
-							{ $inc: { 'data.profile.coins': earned } }
-						);
-						sellallcoins += earned;
-						sellallitems += item.amount;
-					} else {
 						let price = 0;
 						const words = item.name.split(' ');
 
@@ -95,9 +65,9 @@ module.exports = {
 							words[i] = words[i][0].toUpperCase() + words[i].substr(1);
 						}
 
-						let sellitem = words.join(' ');
+						let sellitem = words.join(' ');*/
 
-						price = getPrice(sellitem);
+						let price = getPrice(item.name);
 						price = Number(price);
 
 						let earned = price * item.amount;
@@ -105,7 +75,7 @@ module.exports = {
 						await collection.updateOne(
 							{
 								_id: interaction.user.id,
-								'data.inventory.items.name': sellitem,
+								'data.inventory.items.name': item.name,
 							},
 							{
 								$inc: {
@@ -119,7 +89,6 @@ module.exports = {
 						);
 						sellallcoins += earned;
 						sellallitems += item.amount;
-					}
 				}
 			}
 			let date2 = Date.now();
@@ -140,9 +109,9 @@ module.exports = {
 
 		//Variables for Checks
 		let amount = interaction.options.getInteger('amount');
-		let price = '';
+		let price = 0;
 
-		let bzname = interaction.options.getString('item').split(' ');
+		/*let bzname = interaction.options.getString('item').split(' ');
 		bzname = bzname.join('_').toUpperCase();
 
 		let input = interaction.options.getString('item');
@@ -152,10 +121,11 @@ module.exports = {
 			words[i] = words[i][0].toUpperCase() + words[i].substr(1);
 		}
 
-		let sellitem = words.join(' ');
+		let sellitem = words.join(' ');*/
 
-		const founditem = player.data.inventory.items.find((item) => item.name == sellitem);
-		const itemindex = player.data.inventory.items.findIndex((item) => item.name === sellitem);
+    const sellitem = interaction.options.getString('item')
+
+		const founditem = player.data.inventory.items.find((item) => item.name.toLowerCase() == sellitem.toLowerCase());
 
 		if (founditem === undefined) {
 			let invaliditemembed = new Discord.MessageEmbed()
@@ -191,15 +161,8 @@ module.exports = {
 			amount = founditem.amount;
 		}
 
-		//Get Price for the Item and Calculate earned coins
-		let data = await getPrice1(bzname);
-
-		if (data.error) {
+		//Get Price for the Item and Calculate earned coiny
 			price = await getPrice(sellitem);
-		} else {
-			price = Math.floor(data.quick_status.sellPrice);
-			sellitem = data.name;
-		}
 		let earnedcoins = price * amount;
 
 		//Add Coins and remove Items
@@ -210,7 +173,7 @@ module.exports = {
 			await collection.updateOne(
 				{
 					_id: interaction.user.id,
-					'data.inventory.items.name': sellitem,
+					'data.inventory.items.name': caps(sellitem),
 				},
 				{ $inc: { 'data.inventory.items.$.amount': -amount } }
 			);
