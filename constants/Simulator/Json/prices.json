@@ -10,7 +10,7 @@
 	{
 		"name": "Cobweb",
 		"price": 7
-	},
+  },
 	{
 		"name": "Arrow",
 		"price": 5
@@ -50,5 +50,125 @@
 	{
 		"name": "Titanium",
 		"price": 60
+	},
+  {
+		"name": "Coal",
+		"price": 4
+	},
+  {
+		"name": "Iron Ingot",
+		"price": 9
+	},
+  {
+		"name": "Gold Ingot",
+		"price": 7
+	},
+  {
+		"name": "Redstone",
+		"price": 1
+	},
+  {
+		"name": "Emerald",
+		"price": 4
+	},
+  {
+		"name": "Diamond",
+		"price": 7
+	},
+  {
+		"name": "Recombobulator 3000",
+		"price": 1000000
+	},
+  {
+		"name": "Blaze Rod",
+		"price": 5
+	},
+  {
+		"name": "Magma Cream",
+		"price": 3
+	},
+  {
+		"name": "Bone",
+		"price": 3
+	},
+  {
+		"name": "Enchanted Gold Ingot",
+		"price": 700
+	},
+  {
+		"name": "Enchanted Blaze Powder",
+		"price": 500
+	},
+  {
+		"name": "Enchanted Magma Cream",
+		"price": 300
+	},
+  {
+		"name": "Enchanted Bone",
+		"price": 300
+	},
+  {
+		"name": "Enchanted Coal",
+		"price": 400
+	},
+  {
+		"name": "Ghast Tear",
+		"price": 8
+	},
+  {
+		"name": "Enchanted Ghast Tear",
+		"price": 800
+	},
+  {
+		"name": "Ender Pearl",
+		"price": 5
+	},
+  {
+		"name": "Enchanted Ender Pearl",
+		"price": 500
+	},
+  {
+		"name": "Eye of Ender",
+		"price": 6
+	},
+  {
+		"name": "Enchanted Eye of Ender",
+		"price": 600
+	},
+  {
+		"name": "Obsidian",
+		"price": 4
+	},
+  {
+		"name": "Enchanted Obsidian",
+		"price": 400
+	},
+  {
+		"name": "Summoning Eye",
+		"price": 300000
+	},
+  {
+		"name": "String",
+		"price": 3
+	},
+  {
+		"name": "Enchanted String",
+		"price": 300
+	},
+  {
+		"name": "Spider Eye",
+		"price": 4
+	},
+  {
+		"name": "Enchanted Spider Eye",
+		"price": 400
+	},
+  {
+		"name": "Rotten Flesh",
+		"price": 2
+	},
+  {
+		"name": "Shark Fin",
+		"price": 40
 	}
 ]
