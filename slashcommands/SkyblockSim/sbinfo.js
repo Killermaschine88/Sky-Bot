@@ -343,7 +343,7 @@ module.exports = {
 						.setFooter(getFooter(player))
 						.setColor(getColor(player))
 						.setDescription(
-							`${armorstr}\nYou can change your armor using \`/sb wardrobe armor itemid\`\nExample: \`/sb wardrobe armor 0\``
+							`${armorstr}\nYou can change your armor using \`/sb wardrobe item-name\`\nExample: \`/sb wardrobe Naked\``
 						);
 					menu.edit({ embeds: [dungeons] });
 				} else if (i.customId === 'swordlist') {
@@ -352,7 +352,7 @@ module.exports = {
 						.setFooter(getFooter(player))
 						.setColor(getColor(player))
 						.setDescription(
-							`${swordstr}\nYou can change your sword using \`/sb wardrobe sword itemid\`\nExample: \`/sb wardrobe sword 0\``
+							`${swordstr}\nYou can change your sword using \`/sb wardrobe item-name\`\nExample: \`/sb wardrobe Fist\``
 						);
 					menu.edit({ embeds: [dungeons] });
 				} else if (i.customId == 'settings') {
