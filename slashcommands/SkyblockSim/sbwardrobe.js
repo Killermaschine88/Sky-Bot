@@ -78,7 +78,7 @@ module.exports = {
         const err = new Discord.MessageEmbed()
         .setTitle('Error')
         .setColor('RED')
-        .setDescription(`Couldn't find any Armor or Sword matching ${caps(itemname)}.`)
+        .setDescription(`Couldn't find any Armor or Sword matching \`${caps(itemname)}\`.`)
         .setFooter(getFooter(player))
 
         return interaction.editReply({embeds: [err]})
