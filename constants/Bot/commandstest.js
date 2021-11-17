@@ -512,6 +512,7 @@ const data = [
 						description: 'Item to auction',
 						type: 'STRING',
 						required: false,
+            autocomplete: true,
 					},
 					{
 						name: 'duration',
