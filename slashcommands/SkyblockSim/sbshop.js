@@ -688,8 +688,8 @@ module.exports = {
     {
       $set: {
         'data.equipment.mining.pickaxe.name': pickname,
-        'data.equipment.mining.pickaxe.fortune': pickfortune,
-        'data.equipment.mining.pickaxe.speed': pickspeed,
+        'data.equipment.mining.pickaxe.mining_fortune': pickfortune,
+        'data.equipment.mining.pickaxe.mining_speed': pickspeed,
         'data.equipment.mining.pickaxe.recombobulated': false,
         'data.equipment.mining.pickaxe.reforge': 'None'
       },
