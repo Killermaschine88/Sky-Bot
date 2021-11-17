@@ -15,7 +15,7 @@ module.exports = {
       const focusedcmd = interaction.options.getFocused(true).name
       const playerinvautocomplete = ['item', 'sell-excluded'] //array for autocomplete needing player inv
 
-      console.log(interaction.options.getFocused(true))
+      //console.log(interaction.options.getFocused(true))
 
 			if (focusedcmd == 'reforge-stone') {
 				let stones = [
@@ -174,7 +174,66 @@ module.exports = {
 				} else {
 					interaction.respond(found2);
 				}
-			}
+			} else if(focusedcmd == 'item-name') {
+
+        const collection = mclient.db('SkyblockSim').collection('Players');
+				let player = await collection.findOne({ _id: interaction.user.id });
+
+        let found = [];
+        let items = [];
+				let found2 = [];
+
+        for(const item of player.data.inventory.sword) {
+          if(items.length < 25) {
+            items.push({
+              name: item.name,
+              value: item.name
+            })
+          } else {
+            break
+          }
+        }
+        for(const item of player.data.inventory.armor) {
+          if(items.length < 25) {
+            items.push({
+              name: item.name,
+              value: item.name
+            })
+          } else {
+            break
+          }
+        }
+
+              //console.log(items)
+
+        const seen = items.filter(
+						(item) => item.name.toLowerCase().includes(focused.toLowerCase()))
+
+        if (seen.length != 0) {
+						let i = 0;
+						for (const item of seen) {
+							//console.log(item)
+							if (i < 15) {
+								found.push({
+									name: item.name,
+									value: item.name,
+								});
+								i++;
+							} else {
+								break;
+							}
+						}
+					}
+       // console.log(found)
+
+        if (found.length != 0) {
+					interaction.respond(found);
+				} else {
+					interaction.respond(found2);
+				}
+      
+        
+      }
 		}
 
 		if (!interaction.isCommand()) return;

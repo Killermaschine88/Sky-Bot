@@ -323,7 +323,7 @@ const data = [
 				description: 'Lets you select different Equipment',
 				type: 'SUB_COMMAND',
 				options: [
-					{
+					/*{
 						name: 'type',
 						description: 'Available  Equipment Types',
 						type: 'STRING',
@@ -338,12 +338,13 @@ const data = [
 								value: 'armor',
 							},
 						],
-					},
+					},*/
 					{
-						name: 'itemid',
-						description: 'Item Number',
-						type: 'INTEGER',
+						name: 'item-name',
+						description: 'Name of the Item you want to equip',
+						type: 'STRING',
 						required: true,
+            autocomplete: true,
 					},
 				],
 			},

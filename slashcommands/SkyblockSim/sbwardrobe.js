@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
+const { caps } = require('../../constants/Functions/general.js')
 
 module.exports = {
 	name: 'sbwardrobe',
@@ -13,14 +14,7 @@ module.exports = {
 		const collection = mclient.db('SkyblockSim').collection('Players');
 		let player = await collection.findOne({ _id: interaction.user.id });
 
-		let type = interaction.options.getString('type');
-		let number = interaction.options.getInteger('itemid');
-
-		let sword = player.data.inventory.sword;
-		let armor = player.data.inventory.armor;
-		let item = '';
-
-		if (player === null) {
+    if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')
 				.setTitle('No profile found')
@@ -29,108 +23,73 @@ module.exports = {
 			return;
 		}
 
-		if (number < 0) {
-			const errembed = new Discord.MessageEmbed()
-				.setTitle('Negative Number')
-				.setDescription(`You can\'t enter a negative number.'`)
-				.setColor('RED')
-				.setFooter(getFooter(player));
+      const itemname = interaction.options.getString('item-name')
+      const swordinv = player.data.inventory.sword
+      const armorinv = player.data.inventory.armor
+      let type = ''
 
-			return interaction.editReply({ embeds: [errembed] });
-		}
+      const foundsword = swordinv.find(item => item.name == caps(itemname))
+      const foundarmor = armorinv.find(item => item.name == caps(itemname))
 
-		if (type == 'sword' && sword.length <= number) {
-			const errembed = new Discord.MessageEmbed()
-				.setTitle('Invalid Item Number')
-				.setDescription(
-					`You don\'t own a sword with the ID \`${number}\`.\nCheck the sword category at \`/sb info\` to see what items you own.`
-				)
-				.setColor('RED')
-				.setFooter(getFooter(player));
+      if(foundsword) {
+        
+        type = 'Sword'
 
-			return interaction.editReply({ embeds: [errembed] });
-		}
-
-		if (type == 'armor' && armor.length <= number) {
-			const errembed = new Discord.MessageEmbed()
-				.setTitle('Invalid Item Number')
-				.setDescription(
-					`You don\'t own an armor with the ID \`${number}\`.\nCheck the armor category at \`/sb info\` to see what items you own.`
-				)
-				.setColor('RED')
-				.setFooter(getFooter(player));
-
-			return interaction.editReply({ embeds: [errembed] });
-		}
-
-		if (type == 'sword') {
-			item = sword[number];
-
-			await collection.updateOne(
+        await collection.updateOne(
 				{ _id: interaction.user.id },
 				{
 					$set: {
-						'data.equipment.combat.sword.name': item.name,
-						'data.equipment.combat.sword.damage': item.damage,
-						'data.equipment.combat.sword.strength': item.strength,
-						'data.equipment.combat.sword.crit_chance': item.crit_chance,
-						'data.equipment.combat.sword.crit_damage': item.crit_damage,
-						'data.equipment.combat.sword.recombobulated': item.recombobulated,
-						'data.equipment.combat.sword.reforge': item.reforge,
+						'data.equipment.combat.sword.name': foundsword.name,
+						'data.equipment.combat.sword.damage': foundsword.damage,
+						'data.equipment.combat.sword.strength': foundsword.strength,
+						'data.equipment.combat.sword.crit_chance': foundsword.crit_chance,
+						'data.equipment.combat.sword.crit_damage': foundsword.crit_damage,
+						'data.equipment.combat.sword.recombobulated': foundsword.recombobulated,
+						'data.equipment.combat.sword.reforge': foundsword.reforge,
 					},
 				},
 				{ upsert: true }
 			);
+        
+      } else if(foundarmor) {
+        
+        type = 'Armor'
 
-			let eqsword = '';
-			if (item.reforge != 'None') {
-				eqsword = item.reforge + ' ' + item.name;
-			} else {
-				eqsword = item.name;
-			}
-
-			const sucembed = new Discord.MessageEmbed()
-				.setTitle('Sword Changed')
-				.setDescription(`Successfully changed equipped sword to **${eqsword}**`)
-				.setColor('GREEN')
-				.setFooter(getFooter(player));
-
-			return interaction.editReply({ embeds: [sucembed] });
-		} else if (type == 'armor') {
-			item = armor[number];
-			await collection.updateOne(
+        await collection.updateOne(
 				{ _id: interaction.user.id },
 				{
 					$set: {
-						'data.equipment.combat.armor.name': item.name,
-						'data.equipment.combat.armor.health': item.health,
-						'data.equipment.combat.armor.defense': item.defense,
-						'data.equipment.combat.armor.strength': item.strength,
-						'data.equipment.combat.armor.crit_chance': item.crit_chance,
-						'data.equipment.combat.armor.crit_damage': item.crit_damage,
-						'data.equipment.combat.armor.magic_find': item.magic_find,
-						'data.equipment.combat.armor.sea_creature_chance': item.sea_creature_chance,
-						'data.equipment.combat.armor.recombobulated': item.recombobulated,
-						'data.equipment.combat.armor.reforge': item.reforge,
+						'data.equipment.combat.armor.name': foundarmor.name,
+						'data.equipment.combat.armor.health': foundarmor.health,
+						'data.equipment.combat.armor.defense': foundarmor.defense,
+						'data.equipment.combat.armor.strength': foundarmor.strength,
+						'data.equipment.combat.armor.crit_chance': foundarmor.crit_chance,
+						'data.equipment.combat.armor.crit_damage': foundarmor.crit_damage,
+						'data.equipment.combat.armor.magic_find': foundarmor.magic_find,
+						'data.equipment.combat.armor.sea_creature_chance': foundarmor.sea_creature_chance,
+						'data.equipment.combat.armor.recombobulated': foundarmor.recombobulated,
+						'data.equipment.combat.armor.reforge': foundarmor.reforge,
 					},
 				},
 				{ upsert: true }
 			);
+        
+      } else {
+        const err = new Discord.MessageEmbed()
+        .setTitle('Error')
+        .setColor('RED')
+        .setDescription(`Couldn't find any Armor or Sword matching ${caps(itemname)}.`)
+        .setFooter(getFooter(player))
 
-			let eqarmor = '';
-			if (item.reforge != 'None') {
-				eqarmor = item.reforge + ' ' + item.name;
-			} else {
-				eqarmor = item.name;
-			}
+        return interaction.editReply({embeds: [err]})
+      }
 
-			const sucembed = new Discord.MessageEmbed()
-				.setTitle('Armor Changed')
-				.setDescription(`Successfully changed equipped armor to **${eqarmor}**`)
-				.setColor('GREEN')
-				.setFooter(getFooter(player));
+      const embed = new Discord.MessageEmbed()
+      .setTitle('Equipment changed.')
+      .setColor('GREEN')
+      .setDescription(`Successfully changed ${type} to ${caps(itemname)}.`)
+      .setFooter(getFooter(player))
 
-			return interaction.editReply({ embeds: [sucembed] });
-		}
+      return interaction.editReply({embeds: [embed]})
 	},
 };
