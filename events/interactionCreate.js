@@ -179,6 +179,10 @@ module.exports = {
         const collection = mclient.db('SkyblockSim').collection('Players');
 				let player = await collection.findOne({ _id: interaction.user.id });
 
+        if(!player) {
+          return interaction.respond([])
+        }
+
         let found = [];
         let items = [];
 				let found2 = [];
