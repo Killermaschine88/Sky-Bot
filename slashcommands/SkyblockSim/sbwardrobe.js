@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
-const { caps } = require('../../constants/Functions/general.js')
+const { caps, errEmbed } = require('../../constants/Functions/general.js')
 
 module.exports = {
 	name: 'sbwardrobe',
@@ -76,12 +76,8 @@ module.exports = {
         
       } else {
         const err = new Discord.MessageEmbed()
-        .setTitle('Error')
-        .setColor('RED')
-        .setDescription(`Couldn't find any Armor or Sword matching \`${caps(itemname)}\`.`)
-        .setFooter(getFooter(player))
 
-        return interaction.editReply({embeds: [err]})
+        return interaction.editReply({embeds: [errEmbed(`Couldn't find any Armor or Sword matching \`${caps(itemname)}\`.`)]})
       }
 
       const embed = new Discord.MessageEmbed()

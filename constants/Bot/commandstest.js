@@ -541,6 +541,54 @@ const data = [
 					},
 				],
 			},
+      {
+				name: 'bazaar',
+				description: 'Lets you grind Mobs for Combat XP and Items',
+				type: 'SUB_COMMAND',
+        options: [
+          {
+						name: 'action',
+						description: 'Action to execute',
+						type: 'STRING',
+						required: true,
+						choices: [
+							{
+								name: 'buy-offer',
+								value: 'buy-offer',
+							},
+							{
+								name: 'sell-offer',
+								value: 'sell-offer',
+							},
+							{
+								name: 'buy-instantly',
+								value: 'buy-instantly',
+							},
+							{
+								name: 'sell-instantly',
+								value: 'sell-instantly',
+							},
+              {
+                name: 'overview',
+                value: 'overview',
+              },
+						],
+					},
+          {
+						name: 'item',
+						description: 'Item name',
+						type: 'STRING',
+						required: false,
+            autocomplete: true,
+					},
+          {
+						name: 'amount',
+						description: 'Amount of Items',
+						type: 'STRING',
+						required: false,
+					},
+        ]
+			},
 		],
 	},
 ];

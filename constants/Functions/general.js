@@ -20,7 +20,8 @@ function errEmbed(errorText) {
   const embed = new Discord.MessageEmbed()
   .setTitle('An error occured.')
   .setColor('RED')
-  .setDescription(`${errorText}`)
+  .setFooter('Skyblock Simulator • Skyblock Hub • /suggest idea')
+  .setDescription(errorText)
 
   return embed
 }

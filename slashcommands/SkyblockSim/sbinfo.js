@@ -60,7 +60,7 @@ module.exports = {
 		} else {
 			for (item of player.data.inventory.items) {
 				if (item.amount != 0) {
-					if (i <= 50 && i <= player.data.inventory.items.length) {
+					if (str.length < 3900 && i <= player.data.inventory.items.length) {
 						str += item.name + ': ' + item.amount + '\n';
 					} else {
 						break;
