@@ -17,7 +17,7 @@ module.exports = {
     const collection = mclient.db('SkyblockSim').collection('bazaar');
 
     const action = interaction.options.getString('action')
-    const itemname = interaction.options.getString('item')
+    const itemname = interaction.options.getString('item-name')
     const amount = interaction.options.getInteger('amount')
 
     if(action == 'buy-order') {

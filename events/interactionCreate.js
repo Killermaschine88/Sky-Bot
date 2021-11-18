@@ -15,8 +15,6 @@ module.exports = {
       const focusedcmd = interaction.options.getFocused(true).name
       const playerinvautocomplete = ['item', 'sell-excluded'] //array for autocomplete needing player inv
 
-      //console.log(interaction.options.getFocused(true))
-
 			if (focusedcmd == 'reforge-stone') {
 				let stones = [
 					'Dragon Claw',
@@ -131,11 +129,9 @@ module.exports = {
 					seen = items.filter(
 						(item) => item.amount != 0 && item.name.toLowerCase().includes(focused.toLowerCase())
 					);
-					//console.log(seen)
 					if (seen.length != 0) {
 						let i = 0;
 						for (const item of seen) {
-							//console.log(item)
 							if (i < 15) {
 								found.push({
 									name: item.name,
@@ -148,33 +144,13 @@ module.exports = {
 						}
 					}
 				}
-				//console.log(found)
-				//console.log(items)
-
-				// console.log(seen)
-				//  return
-
-				/*if (seen.length != 0) {
-					let i = 0;
-					for (const item of seen) {
-						if (i < 10) {
-							found.push({
-								name: item,
-								value: item,
-							});
-							i++;
-						} else {
-							break;
-						}
-					}
-				}*/
 
 				if (found.length != 0) {
 					interaction.respond(found);
 				} else {
 					interaction.respond(found2);
 				}
-			} else if(focusedcmd == 'item-name') {
+			} else if(focusedcmd == 'equipment-name') {
 
         const collection = mclient.db('SkyblockSim').collection('Players');
 				let player = await collection.findOne({ _id: interaction.user.id });
@@ -208,15 +184,12 @@ module.exports = {
           }
         }
 
-              //console.log(items)
-
         const seen = items.filter(
 						(item) => item.name.toLowerCase().includes(focused.toLowerCase()))
 
         if (seen.length != 0) {
 						let i = 0;
 						for (const item of seen) {
-							//console.log(item)
 							if (i < 15) {
 								found.push({
 									name: item.name,
@@ -228,15 +201,12 @@ module.exports = {
 							}
 						}
 					}
-       // console.log(found)
 
         if (found.length != 0) {
 					interaction.respond(found);
 				} else {
 					interaction.respond(found2);
 				}
-      
-        
       }
 		}
 

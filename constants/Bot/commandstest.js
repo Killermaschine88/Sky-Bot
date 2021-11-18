@@ -340,7 +340,7 @@ const data = [
 						],
 					},*/
 					{
-						name: 'item-name',
+						name: 'equipment-name',
 						description: 'Name of the Item you want to equip',
 						type: 'STRING',
 						required: true,
