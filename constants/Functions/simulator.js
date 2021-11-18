@@ -117,10 +117,7 @@ function getPickaxeProgress(pickaxename) {
 }
 
 function getPrice(sellitem) {
-	/*if (sellitem == 'Coins' || sellitem == 'Potatoe') {
-		return 0;
-  }*/
-	const itemprice = list.filter((item) => item.name == sellitem);
+	const itemprice = list.filter((item) => item.name.toLowerCase() == sellitem.toLowerCase());
 
   if(itemprice.length != 0) {
     	price = itemprice[0].price;
@@ -129,11 +126,6 @@ function getPrice(sellitem) {
   }
 
 	return price;
-}
-
-async function getPrice1(bzname) {
-	const response = await fetch(`https://api.slothpixel.me/api/skyblock/bazaar/${bzname}`);
-	return await response.json();
 }
 
 function reforgeStats(player) {
@@ -217,4 +209,4 @@ function reforgeStats(player) {
 	};
 }
 
-module.exports = { getAuctionID, addItems, getSwordProgress, getArmorProgress, getRodProgress, getPickaxeProgress, getPrice, getPrice1, reforgeStats };
+module.exports = { getAuctionID, addItems, getSwordProgress, getArmorProgress, getRodProgress, getPickaxeProgress, getPrice, reforgeStats };

@@ -55,17 +55,6 @@ module.exports = {
 			await collection.updateOne({ _id: interaction.user.id }, { $set: { 'data.misc.is_massselling': true } });
 			for (const item of player.data.inventory.items) {
 				if (item.amount != 0 && item.name != '' && !excluded.includes(item.name.toLowerCase())) {
-					/*let sellname = item.name.split(' ');
-					sellname = sellname.join('_').toUpperCase();
-
-						let price = 0;
-						const words = item.name.split(' ');
-
-						for (let i = 0; i < words.length; i++) {
-							words[i] = words[i][0].toUpperCase() + words[i].substr(1);
-						}
-
-						let sellitem = words.join(' ');*/
 
 						let price = getPrice(item.name);
 						price = Number(price);
@@ -110,18 +99,6 @@ module.exports = {
 		//Variables for Checks
 		let amount = interaction.options.getInteger('amount');
 		let price = 0;
-
-		/*let bzname = interaction.options.getString('item').split(' ');
-		bzname = bzname.join('_').toUpperCase();
-
-		let input = interaction.options.getString('item');
-		const words = input.split(' ');
-
-		for (let i = 0; i < words.length; i++) {
-			words[i] = words[i][0].toUpperCase() + words[i].substr(1);
-		}
-
-		let sellitem = words.join(' ');*/
 
     const sellitem = interaction.options.getString('item')
 

@@ -553,12 +553,12 @@ const data = [
 						required: true,
 						choices: [
 							{
-								name: 'buy-offer',
-								value: 'buy-offer',
+								name: 'buy-order',
+								value: 'buy-order',
 							},
 							{
-								name: 'sell-offer',
-								value: 'sell-offer',
+								name: 'sell-order',
+								value: 'sell-order',
 							},
 							{
 								name: 'buy-instantly',
@@ -584,6 +584,12 @@ const data = [
           {
 						name: 'amount',
 						description: 'Amount of Items',
+						type: 'INTEGER',
+						required: false,
+					},
+          {
+						name: 'price',
+						description: 'Price for each item you wanna pay',
 						type: 'INTEGER',
 						required: false,
 					},
