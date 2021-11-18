@@ -584,7 +584,7 @@ const data = [
           {
 						name: 'amount',
 						description: 'Amount of Items',
-						type: 'STRING',
+						type: 'INTEGER',
 						required: false,
 					},
         ]

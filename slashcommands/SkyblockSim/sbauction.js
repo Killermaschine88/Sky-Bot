@@ -1,7 +1,8 @@
 const Discord = require('discord.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
-const { caps } = require('../../constants/Functions/general.js');
+const { caps, errEmbed } = require('../../constants/Functions/general.js');
 const { getAuctionID } = require('../../constants/Functions/simulator.js');
+const { bazaar_items } = require('../../constants/Simulator/Json/items.js')
 
 module.exports = {
 	name: 'sbauction',
@@ -50,6 +51,11 @@ module.exports = {
 				err.setDescription('Item name, duration and starting bid are required when creating an auction.');
 				return interaction.editReply({ embeds: [err] });
 			}
+
+      if(bazaar_items.includes(caps(itemname))) {
+        return interaction.editReply({embeds: [errEmbed("You can't auction any Items you can be sold at the Bazaar.", true)]})
+      }
+
 			if (
 				!player.data.inventory.items.find(
 					(item) => item.name.toLowerCase() == itemname.toLowerCase() && item.amount != 0

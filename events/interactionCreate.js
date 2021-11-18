@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const config = require('../constants/Bot/config.json');
-const { bazaar_items } = require('../constants/Simulator/Json/items.js')
+const { bazaar_items, ah_items } = require('../constants/Simulator/Json/items.js')
+const { caps } = require('../../constants/Functions/general.js')
 
 module.exports = {
 	name: 'interactionCreate',
@@ -13,6 +14,7 @@ module.exports = {
 		if (interaction.isAutocomplete()) {
 			const focused = interaction.options.getFocused(true).value;
       const focusedcmd = interaction.options.getFocused(true).name
+      const cmd = interaction.options.getSubcommand(false)
       const playerinvautocomplete = ['item', 'sell-excluded'] //array for autocomplete needing player inv
 
 			if (focusedcmd == 'reforge-stone') {
@@ -64,51 +66,8 @@ module.exports = {
 				let found2 = [];
 
 				if (player == null) {
-					items = [
-						'Hardstone',
-						'Coal',
-						'Iron Ingot',
-						'Gold Ingot',
-						'Lapis Lazuli',
-						'Redstone',
-						'Emerald',
-						'Diamond',
-						'Mithril',
-						'Titanium',
-						'Gemstone',
-						'Lilypad',
-						'Recombobulator 3000',
-						'Gold Nugget',
-						'Blaze Rod',
-						'Enchanted Gold Ingot',
-						'Enchanted Blaze Rod',
-						'Magma Cream',
-						'Bone',
-						'Enchanted Magma Cream',
-						'Enchanted Bone',
-						'Enchanted Coal',
-						'Ghast Tear',
-						'Enchanted Ghast Tear',
-						'Ender Pearl',
-						'Enchanted Ender Pearl',
-						'Eye of Ender',
-						'Enchanted Eye of Ender',
-						'Obsidian',
-						'Enchanted Obsidian',
-						'Summoning Eye',
-						'Arrow',
-						'Slimeball',
-						'String',
-						'Spider Eye',
-						'Enchanted Slimeball',
-						'Enchanted String',
-						'Enchanted Spider Eye',
-						'Rotten Flesh',
-						'Carrot',
-						'Potato',
-						'Shark Fin',
-					];
-					seen = items.filter((item) => item.toLowerCase().includes(focused) || item.includes(focused));
+					items = [];
+					seen = [];
 
 					if (seen.length != 0) {
 						let i = 0;
@@ -125,10 +84,23 @@ module.exports = {
 						}
 					}
 				} else {
-					items = player.data.inventory.items;
-					seen = items.filter(
-						(item) => item.amount != 0 && item.name.toLowerCase().includes(focused.toLowerCase())
+
+          items = player.data.inventory.items;
+
+          if(cmd == 'auction') {
+
+            seen = items.filter(
+						(item) => item.amount != 0 && item.name.toLowerCase().includes(focused.toLowerCase() && ah_items.includes(caps(item.name))
 					);
+
+          } else {
+
+            seen = items.filter(
+						(item) => item.amount != 0 && item.name.toLowerCase().includes(focused.toLowerCase())
+					  );
+
+          }
+
 					if (seen.length != 0) {
 						let i = 0;
 						for (const item of seen) {

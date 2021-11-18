@@ -1,5 +1,6 @@
 const bazaar_items = [
 						'Hardstone',
+            'Cobblestone',
 						'Coal',
 						'Iron Ingot',
 						'Gold Ingot',
@@ -42,4 +43,8 @@ const bazaar_items = [
 						'Shark Fin',
 					];
 
-module.exports = { bazaar_items }
+const ah_items = [
+  "Recombobulator 3000",
+];
+
+module.exports = { bazaar_items, ah_items }

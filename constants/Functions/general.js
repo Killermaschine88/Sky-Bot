@@ -24,8 +24,6 @@ function errEmbed(errorText, footer) {
 
   if(footer) {
     embed.setFooter('Skyblock Simulator • Skyblock Hub • /suggest idea')
-  } else {
-    embed.setFooter('Sky Bot')
   }
 
   return embed
