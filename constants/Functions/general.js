@@ -16,12 +16,17 @@ function sleep(milliseconds) {
 	} while (currentDate - date < milliseconds);
 }
 
-function errEmbed(errorText) {
+function errEmbed(errorText, footer) {
   const embed = new Discord.MessageEmbed()
   .setTitle('An error occured.')
   .setColor('RED')
-  .setFooter('Skyblock Simulator • Skyblock Hub • /suggest idea')
   .setDescription(errorText)
+
+  if(footer) {
+    embed.setFooter('Skyblock Simulator • Skyblock Hub • /suggest idea')
+  } else {
+    embed.setFooter('Sky Bot')
+  }
 
   return embed
 }
