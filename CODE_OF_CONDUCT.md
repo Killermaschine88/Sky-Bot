@@ -2,7 +2,7 @@
 
 ## Our Pledge
 
-## REMEMBER TO PULL BEFORE YOU WORK ON SOMETHING!!!
+## !!! REMEMBER TO PULL BEFORE YOU WORK ON SOMETHING !!!
 
 We as members, contributors, and leaders pledge to make participation in our
 community a harassment-free experience for everyone, regardless of age, body
