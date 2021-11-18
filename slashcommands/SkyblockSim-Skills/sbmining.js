@@ -245,6 +245,7 @@ function getOre(player, ps) {
 			'Emerald',
 			'Diamond',
 			'Mithril',
+      'Titanium',
 		];
 	} else if (location == 'Crystal Hollows') {
 		ores = [
