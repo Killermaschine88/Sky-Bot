@@ -77,7 +77,7 @@ module.exports = {
       } else {
         const err = new Discord.MessageEmbed()
 
-        return interaction.editReply({embeds: [errEmbed(`Couldn't find any Armor or Sword matching \`${caps(itemname)}\`.`)]})
+        return interaction.editReply({embeds: [errEmbed(`Couldn't find any Armor or Sword matching \`${caps(itemname)}\`.`, true)]})
       }
 
       const embed = new Discord.MessageEmbed()
