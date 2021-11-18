@@ -1,3 +1,5 @@
+const Discord = require('discord.js')
+
 function caps(words) {
 	let separateWord = words.toLowerCase().split(' ');
 	for (let i = 0; i < separateWord.length; i++) {
@@ -14,4 +16,13 @@ function sleep(milliseconds) {
 	} while (currentDate - date < milliseconds);
 }
 
-module.exports = { caps, sleep };
+function errEmbed(errorText) {
+  const embed = new Discord.MessageEmbed()
+  .setTitle('An error occured.')
+  .setColor('RED')
+  .setDescription(`${errorText}`)
+
+  return embed
+}
+
+module.exports = { caps, sleep, errEmbed };
