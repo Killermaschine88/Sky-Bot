@@ -23,7 +23,7 @@ module.exports = {
 			return;
 		}
 
-      const itemname = interaction.options.getString('item-name')
+      const itemname = interaction.options.getString('equipment-name')
       const swordinv = player.data.inventory.sword
       const armorinv = player.data.inventory.armor
       let type = ''
