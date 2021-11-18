@@ -1,10 +1,10 @@
 const Discord = require('discord.js');
 const config = require('../constants/Bot/config.json');
+const { bazaar_items } = require('../constants/Simulator/Json/items.js')
 
 module.exports = {
 	name: 'interactionCreate',
 	/**
-	 *
 	 * @param {Discord.Interaction} interaction
 	 * @param {*} mclient
 	 * @returns
@@ -113,7 +113,7 @@ module.exports = {
 					if (seen.length != 0) {
 						let i = 0;
 						for (const item of seen) {
-							if (i < 15) {
+							if (i < 25) {
 								found.push({
 									name: item,
 									value: item,
@@ -132,7 +132,7 @@ module.exports = {
 					if (seen.length != 0) {
 						let i = 0;
 						for (const item of seen) {
-							if (i < 15) {
+							if (i < 25) {
 								found.push({
 									name: item.name,
 									value: item.name,
@@ -190,7 +190,7 @@ module.exports = {
         if (seen.length != 0) {
 						let i = 0;
 						for (const item of seen) {
-							if (i < 15) {
+							if (i < 25) {
 								found.push({
 									name: item.name,
 									value: item.name,
@@ -207,6 +207,35 @@ module.exports = {
 				} else {
 					interaction.respond(found2);
 				}
+      } else if(focusedcmd == 'item-name') {
+
+        let found = [];
+        let itemlist = bazaar_items;
+				let found2 = [];
+
+        const seen = itemlist.filter((item) => item.toLowerCase().includes(focused.toLowerCase()))
+
+        if (seen.length != 0) {
+						let i = 0;
+						for (const item of seen) {
+							if (i < 25) {
+								found.push({
+									name: item,
+									value: item,
+								});
+								i++;
+							} else {
+								break;
+							}
+						}
+					}
+
+        if (found.length != 0) {
+					interaction.respond(found);
+				} else {
+					interaction.respond(found2);
+				}
+
       }
 		}
 

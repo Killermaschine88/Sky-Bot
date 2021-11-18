@@ -575,7 +575,7 @@ const data = [
 						],
 					},
           {
-						name: 'item',
+						name: 'item-name',
 						description: 'Item name',
 						type: 'STRING',
 						required: false,
