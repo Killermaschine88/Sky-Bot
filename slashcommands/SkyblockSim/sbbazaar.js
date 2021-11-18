@@ -40,7 +40,7 @@ module.exports = {
     }
 
     if(ah_items.includes(caps(itemname))) {
-      return interaction.editReply({embeds: [errEmbed("You can't sell any Items to the Bazaar that can be auctioned.", true)]})
+      return interaction.editReply({embeds: [errEmbed("You can't sell any Items to the Bazaar which can be auctioned.", true)]})
     }
 
     if(!player.data.inventory.items.find(item => item.name.toLowerCase() == itemname.toLowerCase() || item.amount > 0)) {

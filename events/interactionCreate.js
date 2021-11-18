@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const config = require('../constants/Bot/config.json');
 const { bazaar_items, ah_items } = require('../constants/Simulator/Json/items.js')
-const { caps } = require('../../constants/Functions/general.js')
+const { caps } = require('../constants/Functions/general.js')
 
 module.exports = {
 	name: 'interactionCreate',
@@ -87,19 +87,9 @@ module.exports = {
 
           items = player.data.inventory.items;
 
-          if(cmd == 'auction') {
-
-            seen = items.filter(
-						(item) => item.amount != 0 && item.name.toLowerCase().includes(focused.toLowerCase() && ah_items.includes(caps(item.name))
-					);
-
-          } else {
-
             seen = items.filter(
 						(item) => item.amount != 0 && item.name.toLowerCase().includes(focused.toLowerCase())
 					  );
-
-          }
 
 					if (seen.length != 0) {
 						let i = 0;
@@ -179,35 +169,6 @@ module.exports = {
 				} else {
 					interaction.respond(found2);
 				}
-      } else if(focusedcmd == 'item-name') {
-
-        let found = [];
-        let itemlist = bazaar_items;
-				let found2 = [];
-
-        const seen = itemlist.filter((item) => item.toLowerCase().includes(focused.toLowerCase()))
-
-        if (seen.length != 0) {
-						let i = 0;
-						for (const item of seen) {
-							if (i < 25) {
-								found.push({
-									name: item,
-									value: item,
-								});
-								i++;
-							} else {
-								break;
-							}
-						}
-					}
-
-        if (found.length != 0) {
-					interaction.respond(found);
-				} else {
-					interaction.respond(found2);
-				}
-
       }
 		}
 

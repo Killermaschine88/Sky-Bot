@@ -53,7 +53,7 @@ module.exports = {
 			}
 
       if(bazaar_items.includes(caps(itemname))) {
-        return interaction.editReply({embeds: [errEmbed("You can't auction any Items you can be sold at the Bazaar.", true)]})
+        return interaction.editReply({embeds: [errEmbed("You can't auction any Items which can be sold at the Bazaar.", true)]})
       }
 
 			if (

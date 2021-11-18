@@ -45,6 +45,18 @@ const bazaar_items = [
 
 const ah_items = [
   "Recombobulator 3000",
+  "Dragon Claw",
+  "Wither Blood",
+  "Warped Stone",
+  "Deep Sea Orb",
+  "Dragon Horn",
+  "Precursor Gear",
+  "Sadan's Brooch",
+  "Hardened Wood",
+  "Lucky Dice",
+  "Onyx",
+  "Diamonite",
+  "Rock Gemstone",
 ];
 
 module.exports = { bazaar_items, ah_items }
