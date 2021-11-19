@@ -161,12 +161,12 @@ module.exports = {
 
       for(const items of item.sell) {
         if(amountfound <= amount) {
-          if(items.amount > (amountfound + items.amount)) {
+          if(items.amount > (amount - amountfound)) {
             amountfound += (amount - amountfound)
             costfound += items.price * (amount - amountfound)
           } else {
-          amountfound += items.amount
-          costfound += items.amount * items.price
+            amountfound += items.amount
+            costfound += items.amount * items.price
           }
         } else {
           break
