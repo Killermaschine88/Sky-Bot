@@ -174,7 +174,7 @@ module.exports = {
       }
 
       const embed = new Discord.MessageEmbed()
-      .setDescription(`Do you want to buy ${amountfound} ${caps(itemname)} for ${costfound} coins?`, true)
+      .setDescription(`Do you want to buy ${amountfound} ${caps(itemname)} for ${costfound} (+10 Fee) coins?`, true)
       .setColor('ORANGE')
       .setFooter(getFooter(player))
 
@@ -195,6 +195,22 @@ module.exports = {
 				const { customId: id } = i;
 
         if(id == 'yes') {
+
+          //handle user buying items
+
+          for(const items of item.sell) {
+        if(amountfound <= amount) {
+          if(items.amount > (amount - amountfound)) {
+            amountfound += (amount - amountfound)
+            costfound += items.price * (amount - amountfound)
+          } else {
+            amountfound += items.amount
+            costfound += items.amount * items.price
+          }
+        } else {
+          break
+        }
+      }
 
         } else {
           embed.setDescription('Cancelled')
