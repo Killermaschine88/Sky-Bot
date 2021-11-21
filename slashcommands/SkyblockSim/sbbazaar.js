@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 const { caps, errEmbed } = require('../../constants/Functions/general.js');
 const { addItems, getBazaarID } = require('../../constants/Functions/simulator.js');
-const { ah_items } = require('../../constants/Simulator/Json/items.js')
+const { ah_items, bazaar_items } = require('../../constants/Simulator/Json/items.js')
 
 module.exports = {
 	name: 'sbbazaar',
@@ -60,6 +60,20 @@ module.exports = {
       if(!itemname || !amount || !price) {
         return interaction.editReply({embeds: [errEmbed("Item name, amount and price are required for this action.", true)]})
       }
+
+      if(!bazaar_items.includes(caps(itemname))) {
+        return interaction.editReply({embeds: [errEmbed(`${itemname} can't be bought at the bazaar.`, true)]})
+      }
+
+      const itemcheck = await collection2.findOne({ _id: caps(itemname) })
+      
+      if(!itemcheck) {
+        return interaction.editReply({embeds: [errEmbed(`No bazaar entry found for ${itemname} if you believe this is wrong contact **Baltraz#4874**`, true)]})
+      }
+
+      if(amount <= 0 || price <= 0) {
+        return interaction.editReply({embeds: [errEmbed("Can't create sell offer for negative Items or negative Price.", true)]})
+      }
       
       if(player.data.profile.coins < amount * price) {
         return interaction.editReply({embeds: [errEmbed("You don't have enough coins to setup this buy order.", true)]})
@@ -71,15 +85,19 @@ module.exports = {
           { _id: caps(itemname) },
           {
             $push: {
-              'buy': {
-                id: interaction.user.id,
+              buy: {
+                $each: [{
+                  id: interaction.user.id,
                 amount: amount,
                 price: price,
                 bz_id: bz_id
-              }
+                }],
+                $sort: {
+                  price: -1
+                },
+              },
             },
           },
-          { upsert: true }
         );
 
       await collection.updateOne(
@@ -93,7 +111,7 @@ module.exports = {
 			);
 
       const embed = new Discord.MessageEmbed()
-      .setDescription(`Created an buy order for ${amount} ${caps(itemname)}, buying them for ${price} coins each.`)
+      .setDescription(`Created an buy order for ${amount} ${caps(itemname)}, buying them at ${price} coins each.`)
       .setColor('GREEN')
       .setFooter(getFooter(player))
 
@@ -105,10 +123,24 @@ module.exports = {
         return interaction.editReply({embeds: [errEmbed("Item name, amount and price are required for this action.", true)]})
       }
 
+      if(!bazaar_items.includes(caps(itemname))) {
+        return interaction.editReply({embeds: [errEmbed(`${itemname} can't be sold at the bazaar.`, true)]})
+      }
+
+      const itemcheck = await collection2.findOne({ _id: caps(itemname) })
+      
+      if(!itemcheck) {
+        return interaction.editReply({embeds: [errEmbed(`No bazaar entry found for ${itemname} if you believe this is wrong contact **Baltraz#4874**`, true)]})
+      }
+
       const founditem = player.data.inventory.items.find(item => item.name.toLowerCase() == itemname.toLowerCase())
 
-      if(!founditem) {
+      if(!founditem || founditem.amount <= 0) {
         return interaction.editReply({embeds: [errEmbed(`Couldn't find any ${caps(itemname)} in your inventory.`, true)]})
+      }
+
+      if(amount <= 0 || price <= 0) {
+        return interaction.editReply({embeds: [errEmbed("Can't create sell offer for negative Items or negative Price.", true)]})
       }
       
       if(founditem.amount < amount) {
@@ -121,15 +153,19 @@ module.exports = {
           { _id: caps(itemname) },
           {
             $push: {
-              'sell': {
-                id: interaction.user.id,
+              sell: {
+                $each: [{
+                  id: interaction.user.id,
                 amount: amount,
                 price: price,
                 bz_id: bz_id
-              }
+                }],
+                $sort: {
+                  price: 1
+                },
+              },
             },
           },
-          { upsert: true }
         );
 
       await collection.updateOne(
@@ -143,7 +179,7 @@ module.exports = {
 			);
 
       const embed = new Discord.MessageEmbed()
-      .setDescription(`Created an sell order for ${amount} ${caps(itemname)}, selling them for ${price} coins each.`)
+      .setDescription(`Created an sell order for ${amount} ${caps(itemname)}, selling them at ${price} coins each.`)
       .setColor('GREEN')
       .setFooter(getFooter(player))
 
