@@ -9,6 +9,13 @@ function getAuctionID() {
 	return first + second;
 }
 
+function getBazaarID() {
+	const first = Date.now().toString(36).slice(-6);
+	const second = Math.random().toString(36).slice(-6);
+
+	return first + second;
+}
+
 function addItems(mobdrop, amount, player) {
 	if (!player.data.inventory.items) player.data.inventory.items = [];
 
@@ -209,4 +216,4 @@ function reforgeStats(player) {
 	};
 }
 
-module.exports = { getAuctionID, addItems, getSwordProgress, getArmorProgress, getRodProgress, getPickaxeProgress, getPrice, reforgeStats };
+module.exports = { getAuctionID, addItems, getSwordProgress, getArmorProgress, getRodProgress, getPickaxeProgress, getPrice, reforgeStats, getBazaarID };

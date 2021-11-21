@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 const { caps, errEmbed } = require('../../constants/Functions/general.js');
-const { addItems } = require('../../constants/Functions/simulator.js');
+const { addItems, getBazaarID } = require('../../constants/Functions/simulator.js');
 const { ah_items } = require('../../constants/Simulator/Json/items.js')
 
 module.exports = {
@@ -65,6 +65,8 @@ module.exports = {
         return interaction.editReply({embeds: [errEmbed("You don't have enough coins to setup this buy order.", true)]})
       }
 
+      const bz_id = getBazaarID()
+
       await collection2.updateOne(
           { _id: caps(itemname) },
           {
@@ -72,7 +74,8 @@ module.exports = {
               'buy': {
                 id: interaction.user.id,
                 amount: amount,
-                price: price
+                price: price,
+                bz_id: bz_id
               }
             },
           },
@@ -112,6 +115,8 @@ module.exports = {
         amount = founditem.amount
       }
 
+      const bz_id = getBazaarID()
+
       await collection2.updateOne(
           { _id: caps(itemname) },
           {
@@ -119,7 +124,8 @@ module.exports = {
               'sell': {
                 id: interaction.user.id,
                 amount: amount,
-                price: price
+                price: price,
+                bz_id: bz_id
               }
             },
           },
@@ -192,6 +198,9 @@ module.exports = {
 				const { customId: id } = i;
 
         if(id == 'yes') {
+          if(player.data.profile.coins < costfound) {
+            return interaction.editReply({embeds: [errEmbed(`Not enough coins to purchased ${caps(itemname)}`)], components: []})
+          }
 
           //handle user buying items
           for(const items of item.sell) {
@@ -213,6 +222,11 @@ module.exports = {
                 { upsert: true }
               );
               //remove items from db
+              await collection2.updateOne(
+                { _id: caps(itemname), "sell.bz_id": items.bz_id },
+                { $set: { "sell.$.amount": 0 }},
+                { upsert: true }
+              )
               amountfound -= items.amount
             } else {
               player = await collection.findOne({ _id: interaction.user.id });
@@ -230,15 +244,33 @@ module.exports = {
                 { upsert: true }
               );
 
-              //remove items from db
+              //updating sell orders
               await collection2.updateOne(
-                { _id: caps(itemname) },
-                { $pull: { sell: { amount: 0 }}},
-                { multi: true }
+                { _id: caps(itemname), "sell.bz_id": items.bz_id },
+                { $inc: { "sell.$.amount": -amountfound }},
+                { upsert: true }
               )
               amountfound = 0
             }
           }
+
+          //removing items from array
+           collection2.updateOne(
+                { },
+                { $pull: { sell: { amount: 0 }}},
+                { multi: true }
+              )
+          //removing buyer the coins
+              await collection.updateOne(
+                { _id: interaction.user.id },
+                {
+                  $inc: {
+                    'data.profile.coins': -costfound
+                  },
+                },
+                { upsert: true }
+              );
+
 
           embed.setDescription(`Purchased Items successfully.`)
           embed.setColor('GREEN')
