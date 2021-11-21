@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 const { caps, errEmbed } = require('../../constants/Functions/general.js');
+const { addItems } = require('../../constants/Functions/simulator.js');
 const { ah_items } = require('../../constants/Simulator/Json/items.js')
 
 module.exports = {
@@ -18,7 +19,7 @@ module.exports = {
     const collection = mclient.db('SkyblockSim').collection('Players');
     const collection2 = mclient.db('SkyblockSim').collection('bazaar');
     
-    const player = await collection.findOne({ _id: interaction.user.id });
+    let player = await collection.findOne({ _id: interaction.user.id });
 
     if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
@@ -160,33 +161,29 @@ module.exports = {
       let costfound = 0
 
       for(const items of item.sell) {
-        if(amountfound <= amount) {
           if(items.amount > (amount - amountfound)) {
-            amountfound += (amount - amountfound)
-            costfound += items.price * (amount - amountfound)
+            costfound += Number((items.price * (amount - amountfound)))
+            amountfound += Number((amount - amountfound))
           } else {
             amountfound += items.amount
-            costfound += items.amount * items.price
+            costfound += (items.amount * items.price)
           }
-        } else {
-          break
-        }
+          if(amountfound == amount) break;
       }
 
       const embed = new Discord.MessageEmbed()
-      .setDescription(`Do you want to buy ${amountfound} ${caps(itemname)} for ${costfound} (+10 Fee) coins?`, true)
+      .setDescription(`Do you want to buy ${amountfound} ${caps(itemname)} for ${costfound} coins?`, true)
       .setColor('ORANGE')
       .setFooter(getFooter(player))
 
-      interaction.editReply({embeds: [embed], components: [row]})
+      const menu = await interaction.editReply({embeds: [embed], components: [row]})
 
       const filter = (i) => {
 			i.deferUpdate();
 			return i.user.id === interaction.user.id;
 		  };
 
-      await interaction.channel
-			.awaitMessageComponent({
+      await menu.awaitMessageComponent({
 				filter,
 				componentType: 'BUTTON',
 				time: 30000,
@@ -197,32 +194,64 @@ module.exports = {
         if(id == 'yes') {
 
           //handle user buying items
-
           for(const items of item.sell) {
-        if(amountfound <= amount) {
-          if(items.amount > (amount - amountfound)) {
-            amountfound += (amount - amountfound)
-            costfound += items.price * (amount - amountfound)
-          } else {
-            amountfound += items.amount
-            costfound += items.amount * items.price
+            if(amountfound == 0) break;
+            if(items.amount <= amountfound) {
+              //add player items
+              player = await collection.findOne({ _id: interaction.user.id });
+              const updatePlayer = addItems(caps(itemname), items.amount, player)
+              await collection.replaceOne({ _id: interaction.user.id }, updatePlayer);
+
+              //add seller coins
+              await collection.updateOne(
+                { _id: items.id },
+                {
+                  $inc: {
+                    'data.profile.coins': items.price * items.amount
+                  },
+                },
+                { upsert: true }
+              );
+              //remove items from db
+              amountfound -= items.amount
+            } else {
+              player = await collection.findOne({ _id: interaction.user.id });
+              const updatePlayer = addItems(caps(itemname), amountfound, player)
+              await collection.replaceOne({ _id: interaction.user.id }, updatePlayer);
+
+              //add seller coins
+              await collection.updateOne(
+                { _id: items.id },
+                {
+                  $inc: {
+                    'data.profile.coins': items.price * amountfound
+                  },
+                },
+                { upsert: true }
+              );
+
+              //remove items from db
+              await collection2.updateOne(
+                { _id: caps(itemname) },
+                { $pull: { sell: { amount: 0 }}},
+                { multi: true }
+              )
+              amountfound = 0
+            }
           }
-        } else {
-          break
-        }
-      }
+
+          embed.setDescription(`Purchased Items successfully.`)
+          embed.setColor('GREEN')
+
+          return interaction.editReply({embeds: [embed], components: []})
 
         } else {
           embed.setDescription('Cancelled')
           embed.setColor('RED')
-          interaction.editReply({embeds: [embed], components: []})
+          return interaction.editReply({embeds: [embed], components: []})
         }
 
       }).catch((err) => interaction.editReply({components: []}));
-
-    
-
-      
 
     } else if(action == 'sell-instantly') {
 

@@ -1,6 +1,7 @@
 let CronJob = require('cron').CronJob;
 let Discord = require('discord.js');
 const { addItems } = require('../../constants/Functions/simulator.js');
+const pms = require('pretty-ms');
 
 async function start(client, mclient) {
 	//Player Collection
@@ -13,6 +14,26 @@ async function start(client, mclient) {
 	const collection2 = mclient.db('SkyblockSim').collection('events');
 
 	const collection3 = mclient.db('SkyblockSim').collection('auctions');
+
+  const collection4 = mclient.db('Sky-Bot').collection('info')
+
+  
+
+  //Info for Website
+  const info = new CronJob('0 */30 * * * *', async function () {
+    const mem_usage = process.memoryUsage().heapUsed
+    collection4.updateOne(
+      { _id: 'info' },
+      { $set: {
+        mem_usage: mem_usage,
+        guilds: client.guilds.cache.size,
+        channels: client.channels.cache.size,
+        uptime: pms(client.uptime)
+      }},
+      { upsert: true }
+    )
+  })
+  info.start()
 
 	//Updating the Fishing/Mining/Dungeon
 	collection.updateMany(

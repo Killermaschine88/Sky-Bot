@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
-const { caps } = require('../../constants/Functions/simulator.js');
+const { caps } = require('../../constants/Functions/general.js');
 
 module.exports = {
 	name: 'sbreforge',
