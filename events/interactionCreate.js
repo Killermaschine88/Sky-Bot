@@ -331,13 +331,6 @@ module.exports = {
 
 		timestamps.set(interaction.user.id, now);
 		setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
-		/*console.log(timestamps)
-    console.log(now)
-    console.log(cooldownAmount)*/
-
-    /*console.log(commandExecute)
-    console.log(interaction.client.slashcommands)
-    return*/
 
 		try {
 			const collection = mclient.db('Sky-Bot').collection('commanduses');
@@ -351,9 +344,16 @@ module.exports = {
 				content: 'There was an error while executing this command and the Bot Dev has been notified.',
 				ephemeral: true,
 			});
+
 			const errembed = new Discord.MessageEmbed()
 				.setTitle(`Error occured when ${interaction.user.tag} used ${commandExecute}`)
-				.setDescription(`${error.stack}`);
+				.setDescription(`${error.stack}`)
+
+        for(const option of interaction.options._hoistedOptions) {
+        if(interaction.options._hoistedOptions.length <= 0) break;
+        errembed.addField(`${option.type} Option`, `Name: ${option.name}\nValue: ${option.value}`)
+      }
+
 			await interaction.client.users.fetch('570267487393021969').then(async (user) => {
 				await user.send({ embeds: [errembed] });
 			});
