@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 const { caps, errEmbed } = require('../../constants/Functions/general.js');
-const { addItems, getBazaarID, formatBZ } = require('../../constants/Functions/simulator.js');
+const { addItems, getBazaarID, formatBZ, getEmoji } = require('../../constants/Functions/simulator.js');
 const { ah_items, bazaar_items } = require('../../constants/Simulator/Json/items.js')
 
 module.exports = {
@@ -502,7 +502,7 @@ module.exports = {
       }
 
       const embed = new Discord.MessageEmbed()
-      .setTitle(`Bazaar Info for ${caps(itemname)}`)
+      .setTitle(`Bazaar Info for ${getEmoji(itemname)} ${caps(itemname)}`)
       .setColor('GREEN')
       .setFooter(getFooter(player))
       .setDescription(`Total sold: ${item.total_sold}\nTotal purchased: ${item.total_bought}`)

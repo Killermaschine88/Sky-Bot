@@ -1,5 +1,6 @@
 const list = require('../../constants/Simulator/Json/prices.json');
 const fetch = require('node-fetch');
+const allemojis = require('../Skyblock/allemojis.json')
 
 
 function getAuctionID() {
@@ -225,4 +226,15 @@ function formatBZ(array) {
     }
 }
 
-module.exports = { getAuctionID, addItems, getSwordProgress, getArmorProgress, getRodProgress, getPickaxeProgress, getPrice, reforgeStats, getBazaarID, formatBZ };
+function getEmoji(name) {
+  name = name.toUpperCase().split(' ')
+  name = name.join('_')
+  const emoji = allemojis[name]
+  if(!emoji) {
+    return 'U+200D'
+  } else {
+    return emoji.formatted
+  }
+}
+
+module.exports = { getAuctionID, addItems, getSwordProgress, getArmorProgress, getRodProgress, getPickaxeProgress, getPrice, reforgeStats, getBazaarID, formatBZ, getEmoji };
