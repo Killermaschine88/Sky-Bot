@@ -323,14 +323,18 @@ module.exports = {
 
     } else if(action == 'sell-instantly') {
 
-      if(!itemname || !amount || !price) {
+      if(!itemname || !amount) {
         return interaction.editReply({embeds: [errEmbed("Item name and amount are required for this action.", true)]})
       }
 
       const founditem = player.data.inventory.items.find(item => item.name.toLowerCase() == itemname.toLowerCase())
 
-      if(!founditem) {
+      if(!founditem || founditem.amount <= 0) {
         return interaction.editReply({embeds: [errEmbed(`Couldn't find any ${caps(itemname)} in your inventory.`, true)]})
+      }
+
+      if(founditem.amount < amount) {
+        amount = founditem.amount
       }
 
       const item = await collection2.findOne({ _id: caps(itemname) })
@@ -338,6 +342,128 @@ module.exports = {
       if(item.buy.length == 0) {
         return interaction.editReply({embeds: [errEmbed(`Couldn't find any buy offers for ${caps(itemname)}.`, true)]})
       }
+
+      let amountfound = 0
+      let costfound = 0
+
+      for(const items of item.buy) {
+          if(items.amount > (amount - amountfound)) {
+            costfound += Number((items.price * (amount - amountfound)))
+            amountfound += Number((amount - amountfound))
+          } else {
+            amountfound += items.amount
+            costfound += (items.amount * items.price)
+          }
+          if(amountfound == amount) break;
+      }
+
+      /*
+      * work on handling insta selling
+      **/
+      const embed = new Discord.MessageEmbed()
+      .setDescription(`Do you want to sell ${amountfound} ${caps(itemname)} for ${costfound} coins?`, true)
+      .setColor('ORANGE')
+      .setFooter(getFooter(player))
+
+      const menu = await interaction.editReply({embeds: [embed], components: [row]})
+
+      const filter = (i) => {
+			i.deferUpdate();
+			return i.user.id === interaction.user.id;
+		  };
+      
+      await menu.awaitMessageComponent({
+				filter,
+				componentType: 'BUTTON',
+				time: 30000,
+			})
+			.then(async (i) => {
+				const { customId: id } = i;
+
+        if(id == 'yes') {
+
+          //handle user buying items
+          for(const items of item.buy) {
+            if(amountfound == 0) break;
+            if(items.amount <= amountfound) {
+              //add player items
+              player = await collection.findOne({ _id: items.id });
+              const updatePlayer = addItems(caps(itemname), items.amount, player)
+              await collection.replaceOne({ _id: items.id }, updatePlayer);
+
+              //add seller coins
+              await collection.updateOne(
+                { _id: interaction.user.id },
+                {
+                  $inc: {
+                    'data.profile.coins': items.price * items.amount
+                  },
+                },
+                { upsert: true }
+              );
+              //remove items from db
+              await collection2.updateOne(
+                { _id: caps(itemname), "buy.bz_id": items.bz_id },
+                { $set: { "buy.$.amount": 0 }},
+                { upsert: true }
+              )
+              amountfound -= items.amount
+            } else {
+              player = await collection.findOne({ _id: items.id });
+              const updatePlayer = addItems(caps(itemname), amountfound, player)
+              await collection.replaceOne({ _id: items.id }, updatePlayer);
+
+              //add seller coins
+              await collection.updateOne(
+                { _id: interaction.user.id },
+                {
+                  $inc: {
+                    'data.profile.coins': items.price * amountfound
+                  },
+                },
+                { upsert: true }
+              );
+
+              //updating sell orders
+              await collection2.updateOne(
+                { _id: caps(itemname), "buy.bz_id": items.bz_id },
+                { $inc: { "buy.$.amount": -amountfound }},
+                { upsert: true }
+              )
+              amountfound = 0
+            }
+          }
+
+          //removing items from array
+           collection2.updateOne(
+                { },
+                { $pull: { buy: { amount: 0 }}},
+                { multi: true }
+              )
+          //removing seller the items
+              await collection.updateOne(
+                { _id: interaction.user.id, 'data.inventory.items.name': caps(itemname) },
+                {
+                  $inc: {
+                    'data.inventory.items.$.amount': -amount
+                  },
+                },
+                { upsert: true }
+              );
+
+
+          embed.setDescription(`Sold Items successfully.`)
+          embed.setColor('GREEN')
+
+          return interaction.editReply({embeds: [embed], components: []})
+
+        } else {
+          embed.setDescription('Cancelled')
+          embed.setColor('RED')
+          return interaction.editReply({embeds: [embed], components: []})
+        }
+
+      }).catch((err) => interaction.editReply({components: []}));      
 
     } else if(action == 'overview') {
       
