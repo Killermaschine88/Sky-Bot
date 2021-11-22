@@ -216,4 +216,21 @@ function reforgeStats(player) {
 	};
 }
 
-module.exports = { getAuctionID, addItems, getSwordProgress, getArmorProgress, getRodProgress, getPickaxeProgress, getPrice, reforgeStats, getBazaarID };
+function formatBZ(array, type) {
+  if(array.length <= 0) return 'None'
+  if(type == 'buy') {
+    if(array[0].price == 1) {
+      return `${array[0].price} coin`
+    } else {
+      return `${array[0].price} coins`
+    }
+  } else if(type == 'sell') {
+    if(array[0].price == 1) {
+      return `${array[0].price} coin`
+    } else {
+      return `${array[0].price} coins`
+    }
+  }
+}
+
+module.exports = { getAuctionID, addItems, getSwordProgress, getArmorProgress, getRodProgress, getPickaxeProgress, getPrice, reforgeStats, getBazaarID, formatBZ };

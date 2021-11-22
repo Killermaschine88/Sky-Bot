@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 const { caps, errEmbed } = require('../../constants/Functions/general.js');
-const { addItems, getBazaarID } = require('../../constants/Functions/simulator.js');
+const { addItems, getBazaarID, formatBZ } = require('../../constants/Functions/simulator.js');
 const { ah_items, bazaar_items } = require('../../constants/Simulator/Json/items.js')
 
 module.exports = {
@@ -294,7 +294,7 @@ module.exports = {
            collection2.updateOne(
                 { },
                 { $pull: { sell: { amount: 0 }},
-                $inc: { total: amount }},
+                $inc: { total_bought: amount }},
                 { multi: true }
               )
           //removing buyer the coins
@@ -436,7 +436,7 @@ module.exports = {
            collection2.updateOne(
                 { },
                 { $pull: { buy: { amount: 0 }},
-                $inc: { total: amount }},
+                $inc: { total_sold: amount }},
                 { multi: true }
               )
           //removing seller the items
@@ -476,12 +476,45 @@ module.exports = {
         return interaction.editReply({embeds: [errEmbed(`No bazaar entry found for ${itemname} if you believe this is wrong contact **Baltraz#4874**`, true)]})
       }
 
+      let totalitems_buyoffer = 0
+      let totalitems_selloffer = 0
+
+      for(const items of item.buy) {
+        if(item.buy.length <= 0) break;
+        totalitems_buyoffer += items.amount
+      }
+
+      for(const items of item.sell) {
+        if(item.sell.length <= 0) break;
+        totalitems_selloffer += items.amount
+      }
+
+      const buy = {
+        price: formatBZ(item.buy, 'buy'),
+        offers: item.buy.length || 'None',
+        total_amount: totalitems_buyoffer || 'None'
+      }
+
+      const sell = {
+        price: formatBZ(item.sell, 'sell'),
+        offers: item.sell.length || 'None',
+        total_amount: totalitems_selloffer || 'None'
+      }
+
       const embed = new Discord.MessageEmbed()
-      .setTitle(`Bazaar Info for ${itemname}`)
+      .setTitle(`Bazaar Info for ${caps(itemname)}`)
       .setColor('GREEN')
       .setFooter(getFooter(player))
-      .addField('Overview', `a`, true)
+      .setDescription(`Total sold: ${item.total_sold}\nTotal purchased: ${item.total_bought}`)
+      .addField('Insta sell price', `${buy.price}\n`, true)
+      .addField('Amount of buy offers', `${buy.offers}`, true)
+      .addField('Amount of items in buy offers', `${buy.total_amount}`, true)
+      .addField('Insta buy price', `${sell.price}\n`, true)
+      .addField('Amount of sell offers', `${sell.offers}`, true)
+      .addField('Amount of items in sell offers', `${sell.total_amount}`, true)
 
+
+      interaction.editReply({embeds: [embed]})
       
     } else if(action == 'cancel-order') {
 
