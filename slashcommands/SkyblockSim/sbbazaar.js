@@ -490,13 +490,13 @@ module.exports = {
       }
 
       const buy = {
-        price: formatBZ(item.buy, 'buy'),
+        price: formatBZ(item.buy),
         offers: item.buy.length || 'None',
         total_amount: totalitems_buyoffer || 'None'
       }
 
       const sell = {
-        price: formatBZ(item.sell, 'sell'),
+        price: formatBZ(item.sell),
         offers: item.sell.length || 'None',
         total_amount: totalitems_selloffer || 'None'
       }
