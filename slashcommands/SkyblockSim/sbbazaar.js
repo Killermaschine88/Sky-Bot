@@ -293,7 +293,8 @@ module.exports = {
           //removing items from array
            collection2.updateOne(
                 { },
-                { $pull: { sell: { amount: 0 }}},
+                { $pull: { sell: { amount: 0 }},
+                $inc: { total: amount }},
                 { multi: true }
               )
           //removing buyer the coins
@@ -357,9 +358,6 @@ module.exports = {
           if(amountfound == amount) break;
       }
 
-      /*
-      * work on handling insta selling
-      **/
       const embed = new Discord.MessageEmbed()
       .setDescription(`Do you want to sell ${amountfound} ${caps(itemname)} for ${costfound} coins?`, true)
       .setColor('ORANGE')
@@ -437,7 +435,8 @@ module.exports = {
           //removing items from array
            collection2.updateOne(
                 { },
-                { $pull: { buy: { amount: 0 }}},
+                { $pull: { buy: { amount: 0 }},
+                $inc: { total: amount }},
                 { multi: true }
               )
           //removing seller the items
@@ -466,6 +465,23 @@ module.exports = {
       }).catch((err) => interaction.editReply({components: []}));      
 
     } else if(action == 'overview') {
+
+      if(!itemname) {
+        return interaction.editReply({embeds: [errEmbed("Item name is required for this action.", true)]})
+      }
+
+      const item = await collection2.findOne({ _id: caps(itemname) })
+
+      if(!item) {
+        return interaction.editReply({embeds: [errEmbed(`No bazaar entry found for ${itemname} if you believe this is wrong contact **Baltraz#4874**`, true)]})
+      }
+
+      const embed = new Discord.MessageEmbed()
+      .setTitle(`Bazaar Info for ${itemname}`)
+      .setColor('GREEN')
+      .setFooter(getFooter(player))
+      .addField('Overview', `a`, true)
+
       
     } else if(action == 'cancel-order') {
 

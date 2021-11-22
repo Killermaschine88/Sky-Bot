@@ -350,7 +350,10 @@ module.exports = {
 				.setDescription(`${error.stack}`)
 
         for(const option of interaction.options._hoistedOptions) {
-        if(interaction.options._hoistedOptions.length <= 0) break;
+        if(interaction.options._hoistedOptions.length <= 0) {
+          errembed.addField('NO INPUT', "Didn't get any input from the user.")
+          break
+        }
         errembed.addField(`${option.type} Option`, `Name: ${option.name}\nValue: ${option.value}`)
       }
 
