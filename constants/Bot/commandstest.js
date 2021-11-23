@@ -573,8 +573,8 @@ const data = [
                 value: 'item-info',
               },
               {
-                name: 'running-orders',
-                value: 'running-orders',
+                name: 'cancel-orders',
+                value: 'cancel-orders',
               },
               {
                 name: 'overview',

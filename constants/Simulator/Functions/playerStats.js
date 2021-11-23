@@ -127,6 +127,18 @@ async function playerStats(player) {
 
 	health = Math.floor(health * (1 + defense / 100));
 
+    health = Number(health.toFixed(1)),
+		hp = Number(hp.toFixed(1)),
+		defense = Number(defense.toFixed(1)),
+		damage = Number(damage.toFixed(1)),
+		strength = Number(strength.toFixed(1)),
+		crit_chance = Number(crit_chance.toFixed(1)),
+		crit_damage = Number(crit_damage.toFixed(1)),
+		magic_find = Number(magic_find.toFixed(1)),
+		sea_creature_chance = Number(sea_creature_chance.toFixed(1)),
+		mining_speed = Number(mining_speed.toFixed(1)),
+		mining_fortune = Number(mining_fortune.toFixed(1))
+
 	return {
 		health,
 		hp,
@@ -138,7 +150,7 @@ async function playerStats(player) {
 		magic_find,
 		sea_creature_chance,
 		mining_speed,
-		mining_fortune,
+		mining_fortune
 	};
 }
 

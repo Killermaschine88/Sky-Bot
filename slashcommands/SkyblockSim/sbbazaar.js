@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+//import * as Discord from 'discord.js'
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 const { caps, errEmbed } = require('../../constants/Functions/general.js');
 const { addItems, getBazaarID, formatBZ, getEmoji } = require('../../constants/Functions/simulator.js');
