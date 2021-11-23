@@ -172,7 +172,7 @@ module.exports = {
 					); //rod in water
 				}
 
-				menu.edit({ embeds: [pond], components: [row3] });
+				interaction.editReply({ embeds: [pond], components: [row3] });
 
 				await sleep(fishing_time);
 
@@ -184,7 +184,7 @@ module.exports = {
 					); //fish close to rod
 				}
 
-				menu.edit({ embeds: [pond], components: [row1] });
+				interaction.editReply({ embeds: [pond], components: [row1] });
 			} else if (i.customId === 'lure' && rod_casted === true) {
 				let creature = isSeaCreature(sea_creature_chance, isCreature);
 				if (creature === 'yes') {
@@ -197,7 +197,7 @@ module.exports = {
 						`${foundmob.name} caught!`,
 						`Player health: ❤️ **${php}**\nMob health: ❤️ **${mhp}**`
 					);
-					menu.edit({ embeds: [pond], components: [row2] });
+					interaction.editReply({ embeds: [pond], components: [row2] });
 					rod_casted = false;
 				} else {
 					let raredrop = isRareDrop(fishinglvl);
@@ -215,7 +215,7 @@ module.exports = {
 						pond.fields = [];
 						pond.addField(`RARE CATCH!`, `Earned **<:coins:861974605203636253> ${coindrop} coins**`);
 
-						menu.edit({ embeds: [pond], components: [row] });
+						interaction.editReply({ embeds: [pond], components: [row] });
 					} else {
 						let fishxp = Math.floor(Math.random() * (200 - 50) + 50);
 						let fishes = ['Raw Fish', 'Raw Salmon', 'Pufferfish', 'Clownfish'];
@@ -256,7 +256,7 @@ module.exports = {
 							{ upsert: true }
 						);
 
-						menu.edit({ embeds: [pond], components: [row] });
+						interaction.editReply({ embeds: [pond], components: [row] });
 					}
 				}
 			} else if (i.customId === 'killsc') {
@@ -281,7 +281,7 @@ module.exports = {
 					pond.fields = [];
 					pond.addField(`Battle`, `Player health: ❤️ ${php} (- ${mdmg})\nMob health: ❤️ ${mhp} (- ${pdmg})`);
 				}
-				menu.edit({ embeds: [pond] });
+				interaction.editReply({ embeds: [pond] });
 
 				if (i.customId === 'killsc' && mhp <= 0) {
 					let amount = Math.floor(Math.random() * (3 - 1) + 1);
@@ -312,12 +312,12 @@ module.exports = {
 						{ $inc: { 'data.skills.fishing': foundmob.xp } }
 					);
 
-					menu.edit({ embeds: [pond], components: [row] });
+					interaction.editReply({ embeds: [pond], components: [row] });
 				} else if (i.customId === 'killsc' && php <= 0) {
 					pond.fields = [];
 					pond.setColor('RED');
 					pond.addField(`Result`, `Died to the enemy, which had **❤️ ${mhp}** left.`);
-					menu.edit({ embeds: [pond] });
+					interaction.editReply({ embeds: [pond] });
 					collector.stop();
 				}
 			} else if (i.customId === 'cancel') {
@@ -336,7 +336,7 @@ module.exports = {
 			);
 			await collection1.updateOne({ _id: interaction.channelId }, { $set: { blocked: false } }, { upsert: true });
 			try {
-				await menu.edit({ embeds: [pond], components: [] });
+				await interaction.editReply({ embeds: [pond], components: [] });
 			} catch (e) {}
 		});
 	},

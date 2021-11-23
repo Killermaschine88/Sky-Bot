@@ -61,7 +61,7 @@ module.exports = {
 			.setDescription(`<a:runningsteve:865198832316317706> Wandering around scouting for mobs.`)
 			.setFooter(getFooter(player));
 
-		const menu = await interaction.editReply({ embeds: [start] });
+		await interaction.editReply({ embeds: [start] });
 
 		//Settings a small wait time for "find Mobs"
 		sleep(2000);
@@ -75,7 +75,7 @@ module.exports = {
 				.setColor('RED')
 				.setDescription(`Failed to find any mobs in the **${location}**`)
 				.setFooter(getFooter(player));
-			menu.edit({ embeds: [nomobsfound] });
+			interaction.editReply({ embeds: [nomobsfound] });
 			return;
 		}
 
@@ -178,6 +178,6 @@ module.exports = {
 				`<:berserker:852079613052059658> Killing **${mobkills} ${mobname}s** at the **${location}** dropped you **${amount}x ${mobdrop}**`
 			);
 		}
-		menu.edit({ embeds: [endembed] });
+		interaction.editReply({ embeds: [endembed] });
 	},
 };

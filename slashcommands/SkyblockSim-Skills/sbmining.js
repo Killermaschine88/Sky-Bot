@@ -176,7 +176,7 @@ module.exports = {
 				{ upsert: true }
 			);
 			await collection1.updateOne({ _id: interaction.channelId }, { $set: { blocked: false } }, { upsert: true });
-			menu.edit({ embeds: [embed], components: [] });
+			interaction.editReply({ embeds: [embed], components: [] });
 		});
 	},
 };

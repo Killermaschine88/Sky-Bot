@@ -191,8 +191,6 @@ module.exports = {
 				);
 			}
 
-			//console.log(ah)
-
 			const embed = new Discord.MessageEmbed()
 				.setDescription(`Successfully placed bid of ${amount} Coins on ${ah.item.name} with ID ${ah._id}`)
 				.setColor('GREEN')

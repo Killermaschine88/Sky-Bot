@@ -58,7 +58,7 @@ module.exports = {
 					.setColor(getColor('Skyblock'))
 					.setFooter(getFooter('Skyblock'));
 
-				menu.edit({ embeds: [generalembed] });
+				interaction.editReply({ embeds: [generalembed] });
 			} else if (i.customId == 'symbols') {
 				const symbolembed = new Discord.MessageEmbed()
 					.setTitle('Symbol Information')
@@ -68,7 +68,7 @@ module.exports = {
 						'`❤ Health`\n`❈ Defense`\n`⚔️ Damage`\n`❁ Strength`\n`☣ Crit chance`\n`☠ Crit damage`\n`✯ Magic find`\n`α Sea Creature chance`\n`🎣 Fishing speed`\n`⸕ Mining speed`\n`☘ Mining fortune`'
 					);
 
-				menu.edit({ embeds: [symbolembed] });
+				interaction.editReply({ embeds: [symbolembed] });
 			} else if (i.customId == 'events') {
 				let time = Date.now() / 1000;
 
@@ -100,7 +100,7 @@ module.exports = {
 					);
 				}
 
-				menu.edit({ embeds: [eventembed] });
+				interaction.editReply({ embeds: [eventembed] });
 			} else if (i.customId == 'dungeons') {
 				let dungeonsembed = new Discord.MessageEmbed()
 					.setTitle('Dungeons Information')
@@ -128,7 +128,7 @@ module.exports = {
 						true
 					);
 
-				menu.edit({ embeds: [dungeonsembed] });
+				interaction.editReply({ embeds: [dungeonsembed] });
 			} else if (i.customId == 'reforges') {
 				let reforgeembed = new Discord.MessageEmbed()
 					.setTitle('Reforge Information')
@@ -161,7 +161,7 @@ module.exports = {
 						true
 					);
 
-				menu.edit({ embeds: [reforgeembed] });
+				interaction.editReply({ embeds: [reforgeembed] });
 			}
 		});
 	},

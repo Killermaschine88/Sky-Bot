@@ -125,8 +125,7 @@ module.exports = {
 		});
 
 		leaderCollector.on('end', async (collected) => {
-			/*	const reply = await interaction.fetchReply();
-			reply.delete();*/
+      
 		});
 	},
 };
