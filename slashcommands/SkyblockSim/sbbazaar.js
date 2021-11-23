@@ -522,7 +522,37 @@ module.exports = {
         const allitems = await collection2.find({ }).toArray();
       }
     } else if(action == 'overview') {
-      
+
+      const allitems = await collection2.find({ }).toArray()
+
+      let total_buyorder_items = 0
+      let total_sellorder_items = 0
+      let total_buyorders = 0
+      let total_sellorders = 0
+
+      for(const item of allitems) {
+        if(item._id == 'info') continue;
+        for(const sell_order of item.sell) {
+          total_sellorder_items += sell_order.amount
+        }
+        for(const buy_order of item.buy) {
+          total_buyorder_items += buy_order.amount
+        }
+        total_buyorders += item.buy.length
+        total_sellorders += item.sell.length
+      }
+
+      const embed = new Discord.MessageEmbed()
+      .setTitle('Bazaar Info')
+      .setColor(getColor('Bazaar'))
+      .setFooter(getFooter('Bazaar'))
+      .addField(`Available item categories`, `${allitems.length -1}`, true)
+      .addField('Total buy orders', `${total_buyorders}`, true)
+      .addField('Total items in buy orders', `${total_buyorder_items}`, true)
+      .addField('Total sell orders', `${total_sellorders}`, true)
+      .addField('Total items in sell orders', `${total_sellorder_items}`, true)
+
+      return interaction.editReply({embeds: [embed]})
     }
 
 

@@ -24,6 +24,12 @@ const mclient = new MongoClient(urii, {
 mclient.connect();
 global.mmclient = mclient;
 
+/*
+client
+    .on("debug", console.log)
+    .on("warn", console.log)
+    */
+
 /*//Topgg votes detectionsa
 const Topgg = require("@top-gg/sdk")
 const express = require("express")
