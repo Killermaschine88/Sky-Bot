@@ -540,10 +540,10 @@ module.exports = {
       }
 
       if(buy_str.length <= 1) {
-        buy_str = 'None'
+        buy_str = 'None\n'
       }
       if(sell_str.length <= 1) {
-        sell_str = 'None'
+        sell_str = 'None\n'
       }
 
       const embed = new Discord.MessageEmbed()
