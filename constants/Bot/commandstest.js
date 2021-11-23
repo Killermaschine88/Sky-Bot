@@ -601,6 +601,12 @@ const data = [
 						type: 'INTEGER',
 						required: false,
 					},
+          {
+            name: 'bazaar-id',
+            description: 'Bazaar id use to cancel orders',
+            type: 'STRING',
+            required: false,
+          },
         ]
 			},
 		],

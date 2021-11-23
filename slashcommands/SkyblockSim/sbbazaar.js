@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-//import * as Discord from 'discord.js'
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 const { caps, errEmbed } = require('../../constants/Functions/general.js');
 const { addItems, getBazaarID, formatBZ, getEmoji } = require('../../constants/Functions/simulator.js');
@@ -52,6 +51,7 @@ module.exports = {
     const itemname = interaction.options.getString('item')
     let amount = interaction.options.getInteger('amount')
     const price = interaction.options.getInteger('price')
+    const bzid = interaction.options.getString('bazaar-id')
 
     //top lvl variables needed
 
@@ -517,11 +517,118 @@ module.exports = {
 
       interaction.editReply({embeds: [embed]})
       
-    } else if(action == 'cancel-order') {
+    } else if(action == 'cancel-orders') {
+
+      let buy_str = ''
+      let sell_str = ''
 
       if(!itemname) {
         const allitems = await collection2.find({ }).toArray();
+
+        for(const items of allitems) {
+        if(items._id == 'info') continue;
+        for(const item of items.buy) {
+          if(item.id == interaction.user.id) {
+            buy_str += `${items._id}: ${item.bz_id}\n`
+          }
+        }
+        for(const item of items.sell) {
+          if(item.id == interaction.user.id) {
+            sell_str += `${items._id}: ${item.bz_id}\n`
+          }
+        }
       }
+
+      if(buy_str.length <= 1) {
+        buy_str = 'None'
+      }
+      if(sell_str.length <= 1) {
+        sell_str = 'None'
+      }
+
+      const embed = new Discord.MessageEmbed()
+      .setTitle('Found orders')
+      .setColor(getColor('Bazaar'))
+      .setFooter(getFooter('Bazaar'))
+      .setDescription(`**Buy orders**\n${buy_str}\n**Sell orders**\n${sell_str}`)
+
+      return interaction.editReply({embeds: [embed]})
+
+      } else if(itemname && bzid) {
+
+        const founditem = await collection2.findOne({ _id: caps(itemname) })
+
+        if(!founditem) {
+          return interaction.editReply({embeds: [errEmbed(`No bazaar entry found for ${itemname} if you believe this is wrong contact **Baltraz#4874**`, true)]})
+        }
+
+        const buycheck = founditem.buy.find(item => item.bz_id == bzid)
+        const sellcheck = founditem.sell.find(item => item.bz_id == bzid)
+
+        if(buycheck) {
+
+          await collection.updateOne(
+                { _id: interaction.user.id },
+                {
+                  $inc: {
+                    'data.profile.coins': buycheck.amount * buycheck.price
+                  },
+                },
+                { upsert: true }
+              );
+          await collection2.updateOne(
+            { _id: caps(itemname) },
+            { $pull: { buy: { bz_id: bzid }}},
+            { upsert: true }
+          )
+
+          const embed = new Discord.MessageEmbed()
+          .setTitle('Buy order cancelled')
+          .setDescription(`Order with id ${bzid} cancelled and refunded you ${buycheck.amount * buycheck.price} coins.`)
+          .setColor(getColor('Bazaar'))
+          .setFooter(getFooter('Bazaar'))
+
+          return interaction.editReply({embeds: [embed]})
+
+        } else if(sellcheck) {
+
+          await collection.updateOne(
+                { _id: interaction.user.id, 'data.inventory.items.name': caps(itemname) },
+                {
+                  $inc: {
+                    'data.inventory.items.$.amount': sellcheck.amount
+                  },
+                },
+                { upsert: true }
+              );
+
+          await collection2.updateOne(
+            { _id: caps(itemname) },
+            { $pull: { sell: { bz_id: bzid }}},
+            { upsert: true }
+          )
+
+          const embed = new Discord.MessageEmbed()
+          .setTitle('Sell order cancelled')
+          .setDescription(`Order with id ${bzid} cancelled and refunded you ${sellcheck.amount} ${caps(itemname)}.`)
+          .setColor(getColor('Bazaar'))
+          .setFooter(getFooter('Bazaar'))
+
+          return interaction.editReply({embeds: [embed]})
+
+        } else {
+
+          return interaction.editReply({embeds: [errEmbed(`Couldn't find any buy or sell orders with\nID: ${bzid}\nItem: ${caps(itemname)}.\n\nTo find running orders use \`/sb bazaar cancel-orders\` without any extra input.`)]})
+
+        }
+
+      } else {
+        return interaction.editReply({embeds: [errEmbed(`Item name and bazaar id are required for this action.`)]})
+      }
+
+
+
+
     } else if(action == 'overview') {
 
       const allitems = await collection2.find({ }).toArray()

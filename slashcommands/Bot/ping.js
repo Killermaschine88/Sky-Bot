@@ -1,5 +1,5 @@
-const Discord = require('discord.js');
-const pms = require('pretty-ms');
+const Discord = require('discord.js')
+const pms = require('pretty-ms')
 
 module.exports = {
 	name: 'ping',
