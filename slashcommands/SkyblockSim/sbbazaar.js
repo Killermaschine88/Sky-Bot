@@ -192,6 +192,10 @@ module.exports = {
         return interaction.editReply({embeds: [errEmbed("Item name and amount are required for this action.", true)]})
       }
 
+      if(amount <= 0) {
+        return interaction.editReply({embeds: [errEmbed("Can't input negative Amount.", true)]})
+      }
+
       const founditem = player.data.inventory.items.find(item => item.name.toLowerCase() == itemname.toLowerCase())
 
       const item = await collection2.findOne({ _id: caps(itemname) })
@@ -327,6 +331,10 @@ module.exports = {
 
       if(!itemname || !amount) {
         return interaction.editReply({embeds: [errEmbed("Item name and amount are required for this action.", true)]})
+      }
+
+      if(amount <= 0) {
+        return interaction.editReply({embeds: [errEmbed("Can't input negative Amount.", true)]})
       }
 
       const founditem = player.data.inventory.items.find(item => item.name.toLowerCase() == itemname.toLowerCase())

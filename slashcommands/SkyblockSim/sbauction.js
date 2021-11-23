@@ -52,6 +52,10 @@ module.exports = {
 				return interaction.editReply({ embeds: [err] });
 			}
 
+      if(duration <= 0 || startbid <= 0) {
+        return interaction.editReply({embeds: [errEmbed("Can't input negative Values.", true)]})
+      }
+
       if(bazaar_items.includes(caps(itemname))) {
         return interaction.editReply({embeds: [errEmbed("You can't auction any Items which can be sold at the Bazaar.", true)]})
       }
@@ -134,6 +138,10 @@ module.exports = {
 				err.setDescription('Amount of coins and auction id are required when bidding on an auction.');
 				return interaction.editReply({ embeds: [err] });
 			}
+
+      if(amount <= 0) {
+        return interaction.editReply({embeds: [errEmbed("Can't input negative Values.", true)]})
+      }
 
 			const ah = await collection2.findOne({ _id: auctionid });
 
