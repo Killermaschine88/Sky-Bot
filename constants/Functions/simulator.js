@@ -231,7 +231,7 @@ function getEmoji(name) {
   name = name.join('_')
   const emoji = allemojis[name]
   if(!emoji) {
-    return 'U+200D'
+    return '​'
   } else {
     return emoji.formatted
   }

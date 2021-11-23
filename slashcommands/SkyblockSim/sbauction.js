@@ -129,7 +129,6 @@ module.exports = {
 
 			return interaction.editReply({ embeds: [ahmade] });
 		} else if (action == 'bid') {
-			//console.log(player.data.profile.coins)
 
 			if (!amount || !auctionid) {
 				err.setDescription('Amount of coins and auction id are required when bidding on an auction.');
@@ -137,7 +136,6 @@ module.exports = {
 			}
 
 			const ah = await collection2.findOne({ _id: auctionid });
-			// console.log(ah)
 
 			if (!ah) {
 				err.setDescription(`Can't find any running auctions with id: ${auctionid}.`);
@@ -218,7 +216,6 @@ module.exports = {
 			return interaction.editReply({ embeds: [embed] });
 		} else if (action == 'list') {
 			const auctions = await collection2.find({}).toArray();
-			//console.log(auctions)
 
 			const embed = new Discord.MessageEmbed()
 				.setColor(getColor('Auction House'))

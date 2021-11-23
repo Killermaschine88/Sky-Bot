@@ -354,7 +354,7 @@ module.exports = {
           errembed.addField('NO INPUT', "Didn't get any input from the user.")
           break
         }
-        errembed.addField(`${option.type} Option`, `Name: ${option.name}\nValue: ${option.value}`)
+        errembed.addField(`${option.type} Option`, `Name: ${option.name}\nValue: ${option.value}`, true)
       }
 
 			await interaction.client.users.fetch('570267487393021969').then(async (user) => {

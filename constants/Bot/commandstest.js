@@ -569,6 +569,14 @@ const data = [
 								value: 'sell-instantly',
 							},
               {
+                name: 'item-info',
+                value: 'item-info',
+              },
+              {
+                name: 'running-orders',
+                value: 'running-orders',
+              },
+              {
                 name: 'overview',
                 value: 'overview',
               },

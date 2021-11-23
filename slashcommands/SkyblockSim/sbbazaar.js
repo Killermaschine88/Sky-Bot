@@ -294,7 +294,7 @@ module.exports = {
            collection2.updateOne(
                 { },
                 { $pull: { sell: { amount: 0 }},
-                $inc: { total_bought: amount }},
+                $inc: { total_bought: amount, total_spent: costfound }},
                 { multi: true }
               )
           //removing buyer the coins
@@ -436,7 +436,7 @@ module.exports = {
            collection2.updateOne(
                 { },
                 { $pull: { buy: { amount: 0 }},
-                $inc: { total_sold: amount }},
+                $inc: { total_sold: amount, total_earned: costfound }},
                 { multi: true }
               )
           //removing seller the items
@@ -464,7 +464,7 @@ module.exports = {
 
       }).catch((err) => interaction.editReply({components: []}));      
 
-    } else if(action == 'overview') {
+    } else if(action == 'item-info') {
 
       if(!itemname) {
         return interaction.editReply({embeds: [errEmbed("Item name is required for this action.", true)]})
@@ -505,7 +505,7 @@ module.exports = {
       .setTitle(`Bazaar Info for ${getEmoji(itemname)} ${caps(itemname)}`)
       .setColor('GREEN')
       .setFooter(getFooter(player))
-      .setDescription(`Total sold: ${item.total_sold}\nTotal purchased: ${item.total_bought}`)
+      .setDescription(`Total items sold: ${item.total_sold} [${item.total_earned.toLocaleString()} coins]\nTotal items purchased: ${item.total_bought} [${item.total_spent.toLocaleString()} coins]`)
       .addField('Insta sell price', `${buy.price}\n`, true)
       .addField('Amount of buy offers', `${buy.offers}`, true)
       .addField('Amount of items in buy offers', `${buy.total_amount}`, true)
@@ -521,6 +521,8 @@ module.exports = {
       if(!itemname) {
         const allitems = await collection2.find({ }).toArray();
       }
+    } else if(action == 'overview') {
+      
     }
 
 

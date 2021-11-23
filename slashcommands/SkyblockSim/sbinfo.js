@@ -292,14 +292,14 @@ module.exports = {
 						)
 						.addField('Location', `${player.data.misc.location}`, true);
 
-					menu.edit({ embeds: [main] });
+					interaction.editReply({ embeds: [main] });
 				} else if (i.customId === 'inv') {
 					await i.deferUpdate();
 					const inv = new Discord.MessageEmbed()
 						.setFooter(getFooter(player))
 						.setColor(getColor(player))
 						.setDescription(`**Inventory for <@${id}>**\n${str}`);
-					menu.edit({ embeds: [inv] });
+					interaction.editReply({ embeds: [inv] });
 				} else if (i.customId === 'slayer') {
 					await i.deferUpdate();
 					const slayer = new Discord.MessageEmbed()
@@ -327,7 +327,7 @@ module.exports = {
 							`XP: **${player.data.slayer.endermanxp}**\nBoss kills: **${player.data.slayer.endermankills}**`,
 							true
 						);
-					menu.edit({ embeds: [slayer] });
+					interaction.editReply({ embeds: [slayer] });
 				} else if (i.customId === 'dungeons') {
 					await i.deferUpdate();
 					const dungeons = new Discord.MessageEmbed()
@@ -336,7 +336,7 @@ module.exports = {
 						.setDescription(
 							`**Dungeons info for <@${id}>**\n<:catacombs:854399510951624775> Dungeons XP [${cata}]: **${player.data.dungeons.xp}**\n<:mage:852079612699607072> Selected class [${classxp}]: \n* Name: **${player.data.dungeons.class.selected.name}**\n* XP: **${player.data.dungeons.class.selected.xp}**`
 						);
-					menu.edit({ embeds: [dungeons] });
+					interaction.editReply({ embeds: [dungeons] });
 				} else if (i.customId === 'armorlist') {
 					await i.deferUpdate();
 					const dungeons = new Discord.MessageEmbed()
@@ -345,7 +345,7 @@ module.exports = {
 						.setDescription(
 							`${armorstr}\nYou can change your armor using \`/sb wardrobe item-name\`\nExample: \`/sb wardrobe Naked\``
 						);
-					menu.edit({ embeds: [dungeons] });
+					interaction.editReply({ embeds: [dungeons] });
 				} else if (i.customId === 'swordlist') {
 					await i.deferUpdate();
 					const dungeons = new Discord.MessageEmbed()
@@ -354,7 +354,7 @@ module.exports = {
 						.setDescription(
 							`${swordstr}\nYou can change your sword using \`/sb wardrobe item-name\`\nExample: \`/sb wardrobe Fist\``
 						);
-					menu.edit({ embeds: [dungeons] });
+					interaction.editReply({ embeds: [dungeons] });
 				} else if (i.customId == 'settings') {
 					await i.deferUpdate();
 					let settingembed = new Discord.MessageEmbed();
@@ -372,7 +372,7 @@ module.exports = {
 
 		collector.on('end', async (collected) => {
 			try {
-				await menu.edit({ components: [] });
+				await interaction.editReply({ components: [] });
 			} catch (e) {}
 		});
 	},
