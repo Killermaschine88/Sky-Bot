@@ -644,12 +644,14 @@ module.exports = {
 						{ upsert: true }
 					);
 
+          console.log('a')
+
 					const purchased = new Discord.MessageEmbed()
-						.setFooter(getFooter(playef))
+						.setFooter(getFooter(player))
 						.setDescription('Purchased Booster Cookie')
 						.setColor('GREEN');
 
-					interaction.editReply({
+					return interaction.editReply({
 						embeds: [purchased],
 						components: [],
 					});

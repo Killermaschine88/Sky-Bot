@@ -15,6 +15,10 @@ module.exports = {
 		let path = args[1];
 		let value = args[2];
 
+    if(!id || !path || !value) {
+      return message.channel.send('Missing id path or value.')
+    }
+
 		if (id == 0) {
 			id = message.author.id;
 		}
