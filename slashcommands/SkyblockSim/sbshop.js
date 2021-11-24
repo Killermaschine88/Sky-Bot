@@ -496,6 +496,48 @@ module.exports = {
 			);
 		}
 
+    //generate the shop embed fields for pickaxe shop
+    if (player.data.equipment.mining.pickaxe.name == 'Wood Pickaxe') {
+      shopembed.addField(
+        'Stone Pickaxe',
+        '**Cost:** 10k coins + 20 Cobblestone\n\n**Stats:** `15 ⸕`, `20 ☘`',
+        true
+      ); 
+    } else if (player.data.equipment.mining.pickaxe.name == 'Stone Pickaxe') {
+      shopembed.addField(
+        'Iron Pickaxe',
+        '**Cost:** 50k coins + 25 Iron Ingot\n\n**Stats:** `30 ⸕`, `40 ☘`',
+        true
+      );
+    } else if (player.data.equipment.mining.pickaxe.name == 'Iron Pickaxe') {
+      shopembed.addField(
+        'Mithril Pickaxe',
+        '**Cost:** 90k coins + 30 Mithril\n\n**Stats:** `45 ⸕`, `80 ☘`',
+        true
+      );
+    } else if (player.data.equipment.mining.pickaxe.name == 'Mithril Pickaxe') {
+      shopembed.addField(
+        'Titanium Pickaxe',
+        '**Cost:** 125k coins + 30 Titanium\n\n**Stats:** `60 ⸕`, `100 ☘`',
+        true
+      );
+    } else if (player.data.equipment.mining.pickaxe.name == 'Titanium Pickaxe') {
+      shopembed.addField(
+        'Stonk',
+        '**Cost:** 250k coins + 80 Gold Ingot\n\n**Stats:** `75 ⸕`, `140 ☘`',
+        true
+      );
+    } else if (player.data.equipment.mining.pickaxe.name == 'Stonk') {
+      shopembed.addField(
+        'Gemstone Gauntlet',
+        '**Cost:** 2.00m coins + 100 Gemstone\n\n**Stats:** `100 ⸕`, `200 ☘`',
+        true
+      );
+    } else if (player.data.equipment.mining.pickaxe.name == 'Gemstone Gauntlet') {
+      
+    }
+
+
 		//Filter and Collector
 		const filter = (i) => {
 			i.deferUpdate();
