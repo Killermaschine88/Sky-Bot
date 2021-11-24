@@ -24,6 +24,9 @@ const mclient = new MongoClient(urii, {
 mclient.connect();
 global.mmclient = mclient;
 
+client.on
+
+
 /*
 client
     .on("debug", console.log)

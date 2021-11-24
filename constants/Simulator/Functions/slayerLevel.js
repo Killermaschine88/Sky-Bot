@@ -12,7 +12,7 @@ function getLevelByXp(xp, extra = {}) {
     case 'slayer':
     xp_table = leveling.slayer_xp.zombie;
 		default:
-			xp_table = leveling.leveling_xp;
+			xp_table = leveling.slayer_xp.zombie;
 	}
 
 	if (isNaN(xp)) {

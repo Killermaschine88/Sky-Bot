@@ -609,6 +609,11 @@ const data = [
           },
         ]
 			},
+      {
+				name: 'slayer',
+				description: 'Allows you to fight slayers',
+				type: 'SUB_COMMAND',
+			},
 		],
 	},
 ];

@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const leveling = require('../../constants/Simulator/Functions/leveling.js');
 const playerStats = require('../../constants/Simulator/Functions/playerStats.js');
+const slayerLevel = require('../../constants/Simulator/Functions/slayerLevel.js');
 const catalvl = require('../../constants/Simulator/Functions/dungeonlevel.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
