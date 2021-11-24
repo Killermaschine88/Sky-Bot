@@ -142,7 +142,7 @@ function reforgeStats(player) {
   const rodrf = player.data.equipment.fishing.rod.reforge
   const pickrf = player.data.equipment.mining.pickaxe.reforge
 
-  const health = 0, defense = 0, damage = 0, strength = 0, crit_chance = 0, crit_damage = 0, magic_find = 0, sea_creature_chance = 0, mining_speed = 0, mining_fortune = 0
+  let health = 0, defense = 0, damage = 0, strength = 0, crit_chance = 0, crit_damage = 0, magic_find = 0, sea_creature_chance = 0, mining_speed = 0, mining_fortune = 0
 
   switch (swordrf) {
     case 'Fabled':

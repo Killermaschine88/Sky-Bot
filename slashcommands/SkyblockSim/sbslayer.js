@@ -136,6 +136,8 @@ module.exports = {
 
     }
 
+    console.log(array)
+
     const row2 = new Discord.MessageActionRow()
     .addComponents(
       new Discord.MessageButton()
