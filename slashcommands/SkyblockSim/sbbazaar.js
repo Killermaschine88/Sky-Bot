@@ -4,6 +4,7 @@ const { caps, errEmbed } = require('../../constants/Functions/general.js');
 const { addItems, getBazaarID, formatBZ, getEmoji } = require('../../constants/Functions/simulator.js');
 const { ah_items, bazaar_items } = require('../../constants/Simulator/Json/items.js')
 
+
 module.exports = {
 	name: 'sbbazaar',
 	description: 'a',
@@ -13,8 +14,6 @@ module.exports = {
 	aliases: [],
 	cooldown: 10,
 	async execute(interaction, mclient) {
-
-    if(interaction.user.id != '570267487393021969') return interaction.editReply('WIP')
 
     const collection = mclient.db('SkyblockSim').collection('Players');
     const collection2 = mclient.db('SkyblockSim').collection('bazaar');

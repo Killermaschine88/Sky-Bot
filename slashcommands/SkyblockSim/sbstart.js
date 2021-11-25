@@ -100,16 +100,6 @@ module.exports = {
 								],
 							},
 							slayer: {
-								zombiexp: 0,
-								spiderxp: 0,
-								wolfxp: 0,
-								endermanxp: 0,
-								zombiekills: 0,
-								spiderkills: 0,
-								wolfkills: 0,
-								endermankills: 0,
-							},
-							/*slayer: {
                 zombie: {
                     xp: 0,
                     kills: 0
@@ -126,7 +116,7 @@ module.exports = {
                     xp: 0,
                     kills: 0
                 },
-              },*/
+              },
 							dungeons: {
 								xp: 0,
 								total_runs: 0,

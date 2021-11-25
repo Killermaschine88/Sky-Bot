@@ -14,7 +14,6 @@ module.exports = {
 	cooldown: 10,
 	async execute(interaction, mclient) {
 
-    if(interaction.user.id != '570267487393021969') return interaction.editReply('WIP')
 		//Getting required DB Entries
 		const collection = mclient.db('SkyblockSim').collection('Players');
 		let player = await collection.findOne({ _id: interaction.user.id });
