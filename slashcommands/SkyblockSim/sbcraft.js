@@ -177,11 +177,9 @@ module.exports = {
         let itemcheck1 = inv.find((item) => item.name == item1 && item.amount >= amount1)
         let itemcheck2 = 'a'
 
-        console.log(itemcheck1)
 
         if(item2 != 0 && amount2 != 0) {
           itemcheck2 = inv.find((item) => item.name == item2 && item.amount >= amount2)
-          console.log(itemcheck2)
         }
 
         if(!itemcheck1 || !itemcheck2) {

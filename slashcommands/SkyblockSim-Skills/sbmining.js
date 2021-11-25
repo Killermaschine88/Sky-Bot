@@ -359,5 +359,7 @@ async function getCooldown(ps) {
 		return 1100;
 	} else if (ps.mining_speed <= 100) {
 		return 1000;
-	}
+	} else {
+    return 1000;
+  }
 }

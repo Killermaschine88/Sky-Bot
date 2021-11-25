@@ -235,9 +235,7 @@ module.exports = {
 						pond.fields = [];
 						pond.addField(
 							`Caught a ${fishname}`,
-							`Earned **${fishxp} XP**!\nSold it for <:coins:861974605203636253> **${fishingcoins} coins** (new balance: ${
-								player.data.profile.coins + fishingcoins
-							} coins)`
+							`Earned **${fishxp} XP**!\nSold it for <:coins:861974605203636253> **${fishingcoins} coins**`
 						);
 						if (player.data.settings.imgshown == true) {
 							pond.setImage(
@@ -294,7 +292,7 @@ module.exports = {
 					pond.setColor('BLUE');
 					pond.addField(
 						`Result`,
-						`You killed the enemy!\nEarned **${foundmob.xp} XP** and *'${amount} ${mobdrop}**.`
+						`You killed the enemy!\nEarned **${foundmob.xp} XP** and **${amount} ${mobdrop}**.`
 					);
 
 					php = health;
