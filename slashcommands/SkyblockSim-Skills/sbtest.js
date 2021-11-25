@@ -4,11 +4,9 @@ const mobs = require('../../constants/Simulator/Json/mobstats.json');
 const getLevel = require('../../constants/Simulator/Functions/skilllvl.js');
 const playerStats = require('../../constants/Simulator/Functions/playerStats.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
-const buttonemoji = require('../../constants/Simulator/Json/emojilist.json');
-const { addItems } = require('../../constants/Functions/simulator.js')
 
 module.exports = {
-	name: 'sbtest',
+	name: 'sbtest', //name: 'sbminingold',
 	description: 'Earn fishing XP',
 	usage: 'sbfishing',
 	perms: 'None',
@@ -16,6 +14,8 @@ module.exports = {
 	aliases: ['fishing', 'fish'],
 	cooldown: 20,
 	async execute(interaction, mclient) {
+
+    return interaction.editReply('Nothing to test.')
 		const collection = mclient.db('SkyblockSim').collection('Players');
 		let player = await collection.findOne({ _id: interaction.user.id });
 
@@ -65,32 +65,41 @@ module.exports = {
 
 		let cd = await getCooldown(ps);
 		let location = player.data.misc.location;
-		
+		let ore = {
+			name: 'Cobblestone',
+			img: 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/a/a2/Bruchstein.png',
+		};
 
 		let embed = new Discord.MessageEmbed()
 			.setTitle('Mine')
 			.setDescription(
 				`Pickaxe: **${player.data.equipment.mining.pickaxe.name}**\nMining speed: \`${ps.mining_speed} ⸕\`\nMining fortune: \`${ps.mining_fortune} ☘\``
 			)
+
 			.setFooter(getFooter(player))
 			.setColor(getColor(player));
 
 		const cancel = new Discord.MessageButton().setCustomId('cancel').setLabel('Stop Mining').setStyle('DANGER');
 
-		let row1 = new Discord.MessageActionRow()
-		let row2 = new Discord.MessageActionRow()
-    let row3 = new Discord.MessageActionRow()
-    let row4 = new Discord.MessageActionRow()
-    let row5 = new Discord.MessageActionRow().addComponents(cancel)
+		const mine = new Discord.MessageButton()
+			.setCustomId('mine')
+			.setEmoji('852069714577719306')
+			.setLabel('Mine Ore')
+			.setStyle('PRIMARY');
 
-    row1 = await addButtons(row1, 1)
-    row2 = await addButtons(row2, 2)
-    row3 = await addButtons(row3, 3)
-    row4 = await addButtons(row4, 4)
+		const mineoff = new Discord.MessageButton()
+			.setCustomId('mineoff')
+			.setEmoji('852069714577719306')
+			.setLabel('Mine Ore')
+			.setStyle('PRIMARY')
+			.setDisabled(true);
+
+		const row = new Discord.MessageActionRow().addComponents(mine, cancel);
+		const row1 = new Discord.MessageActionRow().addComponents(mineoff, cancel);
 
 		let menu = await interaction.editReply({
 			embeds: [embed],
-			components: [row1, row2, row3, row4, row5],
+			components: [row],
 		});
 
 		const filter = (i) => {
@@ -102,6 +111,7 @@ module.exports = {
 			filter,
 			componentType: 'BUTTON',
 			time: 858000,
+			idle: 60000,
 		});
 
 		await collection.updateOne(
@@ -117,7 +127,6 @@ module.exports = {
 		);
 
 		//Collector
-    let clickamount = 0;
 		collector.on('collect', async (i) => {
 			if (!validlocations.includes(player.data.misc.location) || player.data.misc.is_fishing == true) {
 				interaction.followUp({
@@ -126,81 +135,35 @@ module.exports = {
 				});
 				return collector.stop();
 			}
-      if (i.customId == 'cancel') {
-				return collector.stop();
+
+			if (i.customId == 'mine') {
+				let ore = getOre(player, ps);
+				if (player.data.settings.imgshown == true) {
+					embed.setImage(ore.img);
+				}
+				embed.fields = [];
+				embed.addField('\u200B', `Mined **${ore.amount}x ${ore.name}** at the **${location}**`);
+
+				interaction.editReply({ embeds: [embed], components: [row1] });
+
+				await sleep(cd);
+
+				player = await collection.findOne({ _id: interaction.user.id });
+
+				const updatePlayer = await addItems(ore, player);
+
+				await collection.replaceOne({ _id: interaction.user.id }, updatePlayer);
+
+				await collection.updateOne(
+					{ _id: interaction.user.id },
+					{ $inc: { 'data.skills.mining': ore.xp * ore.amount } },
+					{ upsert: true }
+				);
+
+				interaction.editReply({ embeds: [embed], components: [row] });
+			} else if (i.customId == 'cancel') {
+				collector.stop();
 			}
-      const rowId = i.customId.charAt(0)
-      const indexId = i.customId.charAt(1)
-
-      const ore = getOre(player)
-      const oreemoji = buttonemoji[ore].id
-      const oreamount = getOreAmount(ps)
-
-      if(rowId == 1) row1.components[indexId].emoji.id = oreemoji
-      else if(rowId == 2) row2.components[indexId].emoji.id = oreemoji
-      else if(rowId == 3) row3.components[indexId].emoji.id = oreemoji
-      else if(rowId == 4) row4.components[indexId].emoji.id = oreemoji
-
-      clickamount++
-
-      for(const button of row1.components) {
-        button.disabled = true
-      }
-      for(const button of row2.components) {
-        button.disabled = true
-      }
-      for(const button of row3.components) {
-        button.disabled = true
-      }
-      for(const button of row4.components) {
-        button.disabled = true
-      }
-
-      embed.fields = [];
-			embed.addField('\u200B', `Mined ${oreamount}x ${ore}`);
-
-      player = await collection.findOne({ _id: interaction.user.id });
-      const updatePlayer = addItems(ore, oreamount, player);
-
-			await collection.replaceOne({ _id: interaction.user.id }, updatePlayer);
-      
-      interaction.editReply({embeds: [embed], components: [row1, row2, row3, row4, row5]})
-
-      await sleep(getCooldown(ps))
-
-      if(rowId == 1) row1.components[indexId].emoji.id = '902991050686226433'
-      else if(rowId == 2) row2.components[indexId].emoji.id = '902991050686226433'
-      else if(rowId == 3) row3.components[indexId].emoji.id = '902991050686226433'
-      else if(rowId == 4) row4.components[indexId].emoji.id = '902991050686226433'
-
-      for(const button of row1.components) {
-        if(button.emoji.id == '902991050686226433') continue;
-        button.disabled = false
-      }
-      for(const button of row2.components) {
-        if(button.emoji.id == '902991050686226433') continue;
-        button.disabled = false
-      }
-      for(const button of row3.components) {
-        if(button.emoji.id == '902991050686226433') continue;
-        button.disabled = false
-      }
-      for(const button of row4.components) {
-        if(button.emoji.id == '902991050686226433') continue;
-        button.disabled = false
-      }
-
-      embed.fields = []
-
-      if(clickamount >= 25) {
-        clickamount = 0;
-        row1 = await addButtons(row1, 1)
-        row2 = await addButtons(row2, 2)
-        row3 = await addButtons(row3, 3)
-        row4 = await addButtons(row4, 4)
-      }
-
-      interaction.editReply({embeds: [embed], components: [row1, row2, row3, row4, row5]})
 		});
 
 		//Collector End
@@ -224,9 +187,37 @@ function sleep(ms) {
 	return new Promise((resolve) => setTimeout(() => resolve(), ms));
 }
 
-function getOre(player) {
+function addItems(ore, player) {
+	if (!player.data.inventory.items) player.data.inventory.items = [];
+
+	if (player.data.inventory.items.length === 0) {
+		player.data.inventory.items.push({
+			name: ore.name,
+			amount: ore.amount,
+		});
+		return player;
+	}
+
+	for (const item of player.data.inventory.items) {
+		if (item.name === ore.name) {
+			item.amount += ore.amount;
+			return player;
+		}
+	}
+
+	player.data.inventory.items.push({
+		name: ore.name,
+		amount: ore.amount,
+	});
+	return player;
+}
+
+function getOre(player, ps) {
 	let location = player.data.misc.location;
-	let ores;
+	let ores = '';
+	let name = '';
+	let img = '';
+	let amount = 1;
 
 	//Get valid ores for area
 	if (location == 'Coal Mine') {
@@ -274,12 +265,82 @@ function getOre(player) {
 		];
 	}
 
-  let randore = ores[Math.floor(Math.random() * ores.length)];
+	//Generate Random Ore
+	let randore = ores[Math.floor(Math.random() * ores.length)];
 
-	return randore
+	//Decide whats choosen
+	if (randore == 'Cobblestone') {
+		name = 'Cobblestone';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/a/a2/Bruchstein.png';
+		xp = 3;
+	} else if (randore == 'Coal') {
+		name = 'Coal';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/c/c1/Kohle.png';
+		xp = 5;
+	} else if (randore == 'Iron Ingot') {
+		name = 'Iron Ingot';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/2/24/Eisenbarren.png';
+		xp = 7;
+	} else if (randore == 'Gold Ingot') {
+		name = 'Gold Ingot';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/9/93/Goldbarren.png';
+		xp = 10;
+	} else if (randore == 'Lapis Lazuli') {
+		name = 'Lapis Lazuli';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/8/81/Lapislazuli.png';
+		xp = 15;
+	} else if (randore == 'Redstone') {
+		name = 'Redstone';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/2/20/Redstone-Staub.png';
+		xp = 20;
+	} else if (randore == 'Emerald') {
+		name = 'Emerald';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/c/c5/Smaragd.png';
+		xp = 25;
+	} else if (randore == 'Diamond') {
+		name = 'Diamond';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/6/64/Diamant.png';
+		xp = 30;
+	} else if (randore == 'Obsidian') {
+		name = 'Obsidian';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/2/24/Obsidian.png';
+		xp = 35;
+	} else if (randore == 'Mithril') {
+		name = 'Mithril';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/0/0c/Prismarinkristalle.png';
+		xp = 30;
+	} else if (randore == 'Hardstone') {
+		name = 'Hardstone';
+		img = 'https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/4/45/Stein.png';
+		xp = 10;
+	} else if (randore == 'Gemstone') {
+		name = 'Gemstone';
+		img = 'https://static.wikia.nocookie.net/hypixel-skyblock/images/8/8d/Rough_Ruby_Gemstone.png';
+		xp = 40;
+	} else if (randore == 'Titanium') {
+		name = 'Titanium';
+		img = 'https://static.wikia.nocookie.net/hypixel-skyblock/images/c/cc/Titanium.png';
+		xp = 35;
+	}
+
+  let rn = Math.floor(Math.random() * (50 - 1) + 1);
+
+  amount += Math.floor(ps.mining_fortune / 50)
+
+  if(rn <= Math.floor(ps.mining_fortune % 50)) {
+    amount += 1
+  }
+
+	//return data
+	return {
+		name: name,
+		img: img,
+		amount: amount,
+		xp: xp,
+	};
 }
 
-function getCooldown(ps) {
+async function getCooldown(ps) {
 	if (ps.mining_speed <= 10) {
 		return 2000;
 	} else if (ps.mining_speed <= 20) {
@@ -304,33 +365,3 @@ function getCooldown(ps) {
     return 1000;
   }
 }
-
-let i = 0;
-//function to add discord messagebuttons to a row with randomly generated ore based off an provided array
-function addButtons(row, index) {
-  row.components = []
-while(row.components.length < 5) {
-    row.components.push(
-    new Discord.MessageButton()
-      .setCustomId(`${index}${i}`)
-      .setEmoji('876209923875303424')
-      .setStyle('SECONDARY'),
-      )
-      i++;
-    }
-	i = 0;
-	return row;
-}
-
-function getOreAmount(ps) {
-  let amount = 1
-  let rn = Math.floor(Math.random() * (50 - 1) + 1);
-
-  amount += Math.floor(ps.mining_fortune / 50)
-
-  if(rn <= Math.floor(ps.mining_fortune % 50)) {
-    amount += 1
-  }
-  return amount
-}
-// bedrock id 902991050686226433
