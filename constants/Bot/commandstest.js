@@ -614,6 +614,11 @@ const data = [
 				description: 'Allows you to fight slayers',
 				type: 'SUB_COMMAND',
 			},
+      {
+				name: 'test',
+				description: 'Test skyblock Commands',
+				type: 'SUB_COMMAND',
+			},
 		],
 	},
 ];

@@ -220,6 +220,8 @@ module.exports = {
 		});
 
 		leaderCollector.on('end', async (collected) => {
+
+      interaction.editReply({components: []})
       
 		});
 	},
