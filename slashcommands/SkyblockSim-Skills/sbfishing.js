@@ -119,7 +119,7 @@ module.exports = {
 			.setColor(getColor('Pond'))
 			.setFooter(getFooter('Pond'))
 			.setDescription(
-				`Rod: **${rod}**\nSea Creature chance: \`${sea_creature_chance} α\`\nFishing speed: \`${rod_speed} 🎣\``
+				`Rod: **${rod}**\nSea Creature Chance: \`${sea_creature_chance} α\`\nFishing Speed: \`${rod_speed} 🎣\``
 			);
 		if (player.data.settings.imgshown == true) {
 			pond.setImage('https://cdn.discordapp.com/attachments/871669216703578152/905004300835631174/unknown.png'); //rod in hand
