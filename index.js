@@ -2,10 +2,10 @@ const Discord = require('discord.js');
 const client = new Discord.Client({
 	intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'],
 });
+client.options.http.api = 'https://discordapp.com/api'
 const config = require('./constants/Bot/config.json');
 const keepAlive = require('./constants/Bot/keepAlive.js');
 const fs = require('fs');
-const color = require('colorette');
 const prefix = require('@replit/database');
 const prefixx = new prefix();
 const token = process.env['token'];
@@ -24,14 +24,12 @@ const mclient = new MongoClient(urii, {
 mclient.connect();
 global.mmclient = mclient;
 
-client.on
 
 
-/*
-client
+/*client
     .on("debug", console.log)
-    .on("warn", console.log)
-    */
+    .on("warn", console.log)*/
+    
 
 /*//Topgg votes detectionsa
 const Topgg = require("@top-gg/sdk")

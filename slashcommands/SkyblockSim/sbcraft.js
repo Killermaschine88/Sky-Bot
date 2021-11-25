@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const sets = require('../../constants/Simulator/Json/dungeonloot.json');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 const { addItems } = require('../../constants/Functions/simulator.js');
+const { errEmbed } = require('../../constants/Functions/general.js');
 
 module.exports = {
 	name: 'sbcraft',
@@ -44,41 +45,57 @@ module.exports = {
 				'**Stats:** `200 ❤`, `120 ❈`, `75 ❁`, `25 ☣`, `90 ☠`, `10 α`\n\n**Cost:** 100 Shark Fin and 100 Lilypads',
 				true
 			);
-		}
-    embed.addField('Hardened Wood', '**Stats:** `5 α`\n\n**Cost:** 25 Lilypads', true)
-    embed.addField('Lucky Dice', '**Stats:** `7 α`, `5 ✯`\n\n**Cost:** 50 Lilypads and 25 Shark Fin', true)
-    embed.addField('Onyx', '**Stats:** `10 ☘`\n\n**Cost:** 25 Emeralds', true)
-
-    const reforgestones = {
-      fishing: ['hardenedwood', 'luckydice'],
-      mining: ['onyx', 'diamonite', 'rockgemstone']
-    }
-
-		craftmenu.addOptions([
+      craftmenu.addOptions([
 			{
 				label: 'Shark Scale Armor',
 				value: 'sharkscale'
 			},
-      {
-        label: 'Hardened Wood',
-        value: 'hardenedwood'
-      },
-      {
-        label: 'Lucky Dice',
-        value: 'luckydice'
-      },
-      {
-        label: 'Onyx',
-        value: 'onyx'
-      },
-      {
-        label: 'Diamonite',
-        value: 'diamonite'
-      },
-      {
-        label: 'Rock Gemstone',
-        value: 'rockgemstone'
-      }
+      ])
+		}
+
+		embed.addField('Deep Sea Orb', '**Stats:** `10 α`\n\n**Cost:** 75 Lilypads and 50 Shark Fin', true)
+		embed.addField('Hardened Wood', '**Stats:** `5 α`\n\n**Cost:** 25 Lilypads', true)
+		embed.addField('Lucky Dice', '**Stats:** `7 α`, `5 ✯`\n\n**Cost:** 50 Lilypads and 25 Shark Fin', true)
+		embed.addField('Onyx', '**Stats:** `10 ☘`\n\n**Cost:** 50 Emeralds', true)
+		embed.addField('Diamonite', '**Stats:** `20 ☘`\n\n**Cost:** 75 Diamonds', true)
+		embed.addField('Rock Gemstone', '**Stats:** `30 ☘`\n\n**Cost:** 100 Gemstones', true)
+		embed.addField('Warped Stone', '**Stats:** `20 ❁`, `10 ☣`, `30 ☠`\n\n**Cost:**\n150 Ender Pearls and 100 Obsidian', true)
+
+    const reforgestones = {
+      fishing: ['hardenedwood', 'luckydice', 'deepseaorb'],
+      mining: ['onyx', 'diamonite', 'rockgemstone'],
+	  combat: ['warpedstone']
+    }
+
+		craftmenu.addOptions([
+			{
+				label: 'Deep Sea Orb',
+				value: 'deepseaorb'
+			},
+			{
+				label: 'Hardened Wood',
+				value: 'hardenedwood'
+			},
+			{
+				label: 'Lucky Dice',
+				value: 'luckydice'
+			},
+			{
+				label: 'Onyx',
+				value: 'onyx'
+			},
+			{
+				label: 'Diamonite',
+				value: 'diamonite'
+			},
+			{
+				label: 'Rock Gemstone',
+				value: 'rockgemstone'
+			},
+			{
+				label: 'Warped Stone',
+				value: 'warpedstone'
+			}
 		]);
 
 		row.addComponents(craftmenu);
@@ -141,89 +158,60 @@ module.exports = {
 					{ $inc: { 'data.inventory.items.$.amount': -100 } },
 					{ upsert: true }
 				);
-			} else if (reforgestones.fishing.includes(id)) {
-        if(id == 'hardenedwood' && inv.find((item) => item.name == 'Lilypad' && item.amount >= 25)) {
-          embed.setDescription('Crafted **Hardened Wood**');
-          embed.fields = [];
-          embed.setColor('GREEN');
-
-          const updatePlayer = addItems('Hardened Wood', 1, player);
-
-			    await collection.replaceOne({ _id: interaction.user.id }, updatePlayer);
-
-          await collection.updateOne(
-            { _id: interaction.user.id, 'data.inventory.items.name': 'Lilypad' },
-            { $inc: { 'data.inventory.items.$.amount': -25 } },
-            { upsert: true }
-          );
-        } else if(id == 'luckydice' && inv.find((item) => item.name == 'Shark Fin' && item.amount >= 25) && inv.find((item) => item.name == 'Lilypad' && item.amount >= 50)) {
-          embed.setDescription('Crafted **Lucky Dice**');
-          embed.fields = [];
-          embed.setColor('GREEN');
-
-          const updatePlayer = addItems('Lucky Dice', 1, player);
-
-          await collection.replaceOne({ _id: interaction.user.id }, updatePlayer);
-
-          await collection.updateOne(
-            { _id: interaction.user.id, 'data.inventory.items.name': 'Shark Fin' },
-            { $inc: { 'data.inventory.items.$.amount': -25 } },
-            { upsert: true }
-          );
-          await collection.updateOne(
-            { _id: interaction.user.id, 'data.inventory.items.name': 'Lilypad' },
-            { $inc: { 'data.inventory.items.$.amount': -50 } },
-            { upsert: true }
-          );
-        } else {
-          return interaction.editReply({ embeds: [errEmbed(`Can't craft Reforge Stone due to missing items or coins.`)] });
-        }
+			} else if (reforgestones.fishing.includes(id) || reforgestones.mining.includes(id) || reforgestones.combat.includes(id)) {
         
-			} else if(reforgestones.mining.includes(id)) {
-        if(id == 'onyx' && inv.find((item) => item.name == 'Emerald' && item.amount >= 25)) {
-          embed.setDescription('Crafted **Onyx**');
-          embed.fields = [];
-          embed.setColor('GREEN');
+        let reforge_stone = '';
+        let item1 = 0;
+        let amount1 = 0;
+        let item2 = 0;
+        let amount2 = 0;
 
-          const updatePlayer = addItems('Onyx', 1, player);
+        if(id === 'hardenedwood') reforge_stone = 'Hardened Wood', item1 = 'Lilypad', amount1 = 25;
+        else if(id === 'luckydice') reforge_stone = 'Lucky Dice', item1 = 'Shark Fin', amount1 = 25, item2 = 'Lilypad', amount2 = 50;
+        else if(id === 'onyx') reforge_stone = 'Onyx', item1 = 'Emerald', amount1 = 50;
+        else if(id === 'diamonite') reforge_stone = 'Diamonite', item1 = 'Diamond', amount1 = 75;
+        else if(id === 'rockgemstone') reforge_stone = 'Rock Gemstone', item1 = 'Gemstone', amount1 = 100;
+		else if(id === 'warpedstone') reforge_stone = 'Warped Stone', item1 = 'Ender Pearl', amount1 = 150, item2 = 'Obsidian', amount2 = 100;
+		else if(id === 'deepseaorb') reforge_stone = 'Deep Sea Orb', item1 = 'Lilypad', amount1 = 75, item2 = 'Shark Fin', amount2 = 50;
 
-          await collection.replaceOne({ _id: interaction.user.id }, updatePlayer);
+        let itemcheck1 = inv.find((item) => item.name == item1 && item.amount >= amount1)
+        let itemcheck2 = 'a'
 
-          await collection.updateOne(
-            { _id: interaction.user.id, 'data.inventory.items.name': 'Emerald' },
-            { $inc: { 'data.inventory.items.$.amount': -25 } },
-            { upsert: true }
-          );
-        } else if(id == 'diamonite' && inv.find((item) => item.name == 'Diamond' && item.amount >= 50)) {
-          embed.setDescription('Crafted **Diamonite**');
-          embed.fields = [];
-          embed.setColor('GREEN');
+        console.log(itemcheck1)
 
-          const updatePlayer = addItems('Diamonite', 1, player);
-
-          await collection.replaceOne({ _id: interaction.user.id }, updatePlayer);
-
-          await collection.updateOne(
-            { _id: interaction.user.id, 'data.inventory.items.name': 'Diamond' },
-            { $inc: { 'data.inventory.items.$.amount': -50 } },
-            { upsert: true }
-          );
+        if(item2 != 0 && amount2 != 0) {
+          itemcheck2 = inv.find((item) => item.name == item2 && item.amount >= amount2)
+          console.log(itemcheck2)
         }
 
-      } else if(id == 'rockgemstone' && inv.find((item) => item.name == 'Gemstone' && item.amount >= 75)) {
-        embed.setDescription('Crafted **Rock Gemstone**');
-        embed.fields = [];
-        embed.setColor('GREEN');
+        if(!itemcheck1 || !itemcheck2) {
+          return interaction.editReply({embeds: [errEmbed("Can't craft item because of missing materials.")], components: []})
+        }
 
-        const updatePlayer = addItems('Rock Gemstone', 1, player);
+        const updatePlayer = addItems(reforge_stone, 1, player);
 
         await collection.replaceOne({ _id: interaction.user.id }, updatePlayer);
 
         await collection.updateOne(
-          { _id: interaction.user.id, 'data.inventory.items.name': 'Gemstone' },
-          { $inc: { 'data.inventory.items.$.amount': -75 } },
+          { _id: interaction.user.id, 'data.inventory.items.name': item1 },
+          { $inc: { 'data.inventory.items.$.amount': -amount1 } },
           { upsert: true }
         );
+
+        if(item2 && amount2) {
+          await collection.updateOne(
+            { _id: interaction.user.id, 'data.inventory.items.name': item2 },
+            { $inc: { 'data.inventory.items.$.amount': -amount2 } },
+            { upsert: true }
+          );
+        }
+
+        embed.setDescription(`Crafted **${reforge_stone}**`);
+        embed.fields = [];
+        embed.setColor('GREEN');
+
+        return interaction.editReply({ embeds: [embed], components: [] });
+
       } else {
 				embed.setDescription("Can't craft item due to missing items, coins or you already own the Armor/Sword.");
 				embed.fields = [];
