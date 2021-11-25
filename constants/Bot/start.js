@@ -16,7 +16,6 @@ async function start(client, mclient) {
 	const collection3 = mclient.db('SkyblockSim').collection('auctions');
 
   const collection4 = mclient.db('Sky-Bot').collection('info')
-
   
 
   //Info for Website
