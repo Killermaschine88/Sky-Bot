@@ -79,6 +79,7 @@ module.exports = {
 
         const drag_fighters = [];
         let eyes_placed = 0;
+        let str = '';
         /*
         {
         	id: userid,
