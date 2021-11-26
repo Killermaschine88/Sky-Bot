@@ -110,23 +110,23 @@ module.exports = {
 								endermankills: 0,
 							},
 							/*slayer: {
-                zombie: {
-                    xp: 0,
-                    kills: 0
-                },
-                spider: {
-                    xp: 0,
-                    kills: 0
-                },
-                wolf: {
-                    xp: 0,
-                    kills: 0
-                },
-                enderman: {
-                    xp: 0,
-                    kills: 0
-                },
-              },*/
+				zombie: {
+					xp: 0,
+					kills: 0
+				},
+				spider: {
+					xp: 0,
+					kills: 0
+				},
+				wolf: {
+					xp: 0,
+					kills: 0
+				},
+				enderman: {
+					xp: 0,
+					kills: 0
+				},
+			  },*/
 							dungeons: {
 								xp: 0,
 								total_runs: 0,
@@ -202,6 +202,13 @@ module.exports = {
 									expires: 0,
 								},
 							},
+							farming: {
+								xp: 0,
+								level: 0,
+								farms: [
+
+								]
+							}
 						},
 					},
 				},
