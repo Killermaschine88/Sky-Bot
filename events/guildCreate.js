@@ -3,7 +3,7 @@ const config = require('../constants/Bot/config.json');
 
 module.exports = {
 	name: 'guildCreate',
-	execute(guild, client) {
+	execute(guild, mclient, client) {
 		let targetguild = client.guilds.cache.get(guild.id);
 		let owner = guild
 			.fetchOwner()
@@ -56,8 +56,8 @@ module.exports = {
 };
 
 function discordLog(client, embed) {
-	delete require.cache[require.resolve('../Constants/Bot/config.json')];
-	const config = require('../Constants/Bot/config.json');
+	delete require.cache[require.resolve('../constants/Bot/config.json')];
+	const config = require('../constants/Bot/config.json');
 
 	client.channels
 		.fetch(config.joinlog)

@@ -133,10 +133,7 @@ module.exports = {
       let x = Math.floor(Math.random() * 5);
       let y = Math.floor(Math.random() * 5);
       array[x][y] = 1;
-
     }
-
-    console.log(array)
 
     const row2 = new Discord.MessageActionRow()
     .addComponents(
