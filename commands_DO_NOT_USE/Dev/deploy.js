@@ -16,7 +16,7 @@ module.exports = {
 			const cmdfile2 = require('../../constants/Bot/commandstest.js');
 
 			if (!args[0]) {
-				const command = await client.guilds.cache.get('869124249225429022')?.commands.set(cmdfile.data);
+				const command = await client.guilds.cache.get('869124249225429022')?.commands.set(cmdfile2.data);
 
 				//const command1 = await client.guilds.cache.get('905483235344121887')?.commands.set(cmdfile.data);
 			} else {

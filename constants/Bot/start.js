@@ -16,6 +16,8 @@ async function start(client, mclient) {
 	const collection3 = mclient.db('SkyblockSim').collection('auctions');
 
   const collection4 = mclient.db('Sky-Bot').collection('info')
+
+  const eventchannel = '908000544868691990' //edit to 909717004783595552 on release
   
 
   //Info for Website
@@ -158,8 +160,8 @@ async function start(client, mclient) {
 			);
 
 			client.channels
-				.fetch('908000544868691990')
-				.then((channel) => channel.send({ embeds: [mfonembed] }))
+				.fetch(eventchannel)
+				.then((channel) => channel.send({ embeds: [mfonembed] }).then((msg) => msg.crosspost()))
 				.catch(console.error);
 		},
 		null,
@@ -196,8 +198,8 @@ async function start(client, mclient) {
 			);
 
 			client.channels
-				.fetch('908000544868691990')
-				.then((channel) => channel.send({ embeds: [mfonembed] }))
+				.fetch(eventchannel)
+				.then((channel) => channel.send({ embeds: [mfonembed] }).then((msg) => msg.crosspost()))
 				.catch(console.error);
 		},
 		null,
@@ -211,7 +213,7 @@ async function start(client, mclient) {
 			collection2.updateOne({ _id: 'magic_find' }, { $set: { enabled: false } }, { upsert: true });
 
 			client.channels
-				.fetch('908000544868691990')
+				.fetch(eventchannel)
 				.then((channel) => channel.send({ embeds: [mfoffembed] }))
 				.catch(console.error);
 		},
@@ -226,8 +228,8 @@ async function start(client, mclient) {
 			collection2.updateOne({ _id: 'magic_find' }, { $set: { enabled: false } });
 
 			client.channels
-				.fetch('908000544868691990')
-				.then((channel) => channel.send({ embeds: [mfoffembed] }))
+				.fetch(eventchannel)
+				.then((channel) => channel.send({ embeds: [mfoffembed] }).then((msg) => msg.crosspost()))
 				.catch(console.error);
 		},
 		null,
@@ -264,8 +266,8 @@ async function start(client, mclient) {
 			);
 
 			client.channels
-				.fetch('908000544868691990')
-				.then((channel) => channel.send({ embeds: [mfonembed] }))
+				.fetch(eventchannel)
+				.then((channel) => channel.send({ embeds: [mfonembed] }).then((msg) => msg.crosspost()))
 				.catch(console.error);
 		},
 		null,
@@ -302,8 +304,8 @@ async function start(client, mclient) {
 			);
 
 			client.channels
-				.fetch('908000544868691990')
-				.then((channel) => channel.send({ embeds: [mfonembed] }))
+				.fetch(eventchannel)
+				.then((channel) => channel.send({ embeds: [mfonembed] }).then((msg) => msg.crosspost()))
 				.catch(console.error);
 		},
 		null,
@@ -317,8 +319,8 @@ async function start(client, mclient) {
 			collection2.updateOne({ _id: 'shark_fishing' }, { $set: { enabled: false } }, { upsert: true });
 
 			client.channels
-				.fetch('908000544868691990')
-				.then((channel) => channel.send({ embeds: [sharkoffembed] }))
+				.fetch(eventchannel)
+				.then((channel) => channel.send({ embeds: [sharkoffembed] }).then((msg) => msg.crosspost()))
 				.catch(console.error);
 		},
 		null,
@@ -332,8 +334,8 @@ async function start(client, mclient) {
 			collection2.updateOne({ _id: 'shark_fishing' }, { $set: { enabled: false } }, { upsert: true });
 
 			client.channels
-				.fetch('908000544868691990')
-				.then((channel) => channel.send({ embeds: [sharkoffembed] }))
+				.fetch(eventchannel)
+				.then((channel) => channel.send({ embeds: [sharkoffembed] }).then((msg) => msg.crosspost()))
 				.catch(console.error);
 		},
 		null,

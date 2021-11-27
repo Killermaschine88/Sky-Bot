@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
 	name: 'guildDelete',
-	execute(guild, client) {
+	execute(guild, mclient, client) {
 		discordLog(
 			client,
 			new Discord.MessageEmbed()
@@ -24,11 +24,11 @@ module.exports = {
 };
 
 function discordLog(client, embed) {
-	delete require.cache[require.resolve('../config.json')];
-	const config = require('../config.json');
+	delete require.cache[require.resolve('../constants/Bot/config.json')];
+	const config = require('../constants/Bot/config.json');
 
 	client.channels
-		.fetch(config.joinlog)
+		.fetch(config.leavelog)
 		.then((channel) => channel.send({ embeds: [embed] }))
 		.catch(console.error);
 }

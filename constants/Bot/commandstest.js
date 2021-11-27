@@ -27,22 +27,6 @@ const data = [
 		name: 'vote',
 		description: 'Shows the Bots Vote Site',
 	},
-	/*{
-    name: 'serverinfo',
-    description: 'Shows Info about the server',
-  },
-  {
-    name: 'userinfo',
-    description: 'Shows the Info about a User',
-    options: [
-      {
-        name: 'user',
-        description: 'Discord User',
-        type: 'USER',
-        required: true,
-      },
-    ],
-  },*/
 	//Skyblock Features
 	{
 		name: 'bazaar',
@@ -328,22 +312,6 @@ const data = [
 				description: 'Lets you select different Equipment',
 				type: 'SUB_COMMAND',
 				options: [
-					/*{
-						name: 'type',
-						description: 'Available  Equipment Types',
-						type: 'STRING',
-						required: true,
-						choices: [
-							{
-								name: 'sword',
-								value: 'sword',
-							},
-							{
-								name: 'armor',
-								value: 'armor',
-							},
-						],
-					},*/
 					{
 						name: 'equipment-name',
 						description: 'Name of the Item you want to equip',
@@ -614,7 +582,7 @@ const data = [
           },
         ]
 			},
-      {
+      /*{
 				name: 'slayer',
 				description: 'Allows you to fight slayers',
 				type: 'SUB_COMMAND',
@@ -623,7 +591,7 @@ const data = [
 				name: 'test',
 				description: 'Test skyblock Commands',
 				type: 'SUB_COMMAND',
-			},
+      },*/
 		],
 	},
 ];
