@@ -270,7 +270,7 @@ module.exports = {
 							.setColor('ORANGE')
 							.setTitle('Channel occupied')
 							.setDescription(
-								'This channel is already being used by someone to play dungeons or to fish/mime.\n\nTo reduce lag for them please consider inviting me to your own Server or creating a Thread to play there.'
+								'This channel is already being used by someone to play dungeons or to fish/mine.\n\nTo reduce lag for them please consider inviting me to your own Server or creating a Thread to play there.'
 							)
 							.setFooter('Kind regards Sky Bot Developer');
 						const row = new Discord.MessageActionRow().addComponents(
@@ -329,7 +329,7 @@ module.exports = {
 
 		try {
 			const collection = mclient.db('Sky-Bot').collection('commanduses');
-			collection.updateOne({ _id: interaction.commandName }, { $inc: { uses: 1 } }, { upsert: true });
+			collection.updateOne({ _id: commandExecute }, { $inc: { uses: 1 } }, { upsert: true });
 
       const usedcmd = new Discord.MessageEmbed()
       .setDescription(`**${commandExecute}** has been used.\n\nGuildID: \`${interaction.guild.id}\`\nGuild Name: \`${interaction.guild.name}\`\nUserID: \`${interaction.user.id}\`\nUser: \`${interaction.user.tag}\``)
