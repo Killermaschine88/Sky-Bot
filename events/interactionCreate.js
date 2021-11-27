@@ -28,7 +28,7 @@ module.exports = {
 					"Sadan's Brooch",
 					'Onyx',
 					'Diamonite',
-					'Rock Gemstons',
+					'Rock Gemstone',
 					'Hardened Wood',
 					'Lucky Dice',
 					'Recombobulator 3000',
