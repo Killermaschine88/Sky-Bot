@@ -163,6 +163,14 @@ module.exports = {
       const updatePlayer = addItems(ore, oreamount, player);
 
 			await collection.replaceOne({ _id: interaction.user.id }, updatePlayer);
+
+      const xp = getXP(ore) * oreamount
+
+      await collection.updateOne(
+        { _id: interaction.user.id },
+        { $inc: { 'data.skills.mining': xp }},
+        { upsert: true }
+      )
       
       interaction.editReply({embeds: [embed], components: [row1, row2, row3, row4, row5]})
 
@@ -332,3 +340,20 @@ function getOreAmount(ps) {
   return amount
 }
 // bedrock id 902991050686226433
+
+function getXP(ore) {
+  if(ore == 'Cobblestone') return 1
+  else if(ore == 'Coal') return 3
+  else if(ore == 'Iron Ingot') return 4
+  else if(ore == 'Gold Ingot') return 6
+  else if(ore == 'Lapis Lazuli') return 8
+  else if(ore == 'Redstone') return 10
+  else if(ore == 'Emerald') return 12
+  else if(ore == 'Diamond') return 14
+  else if(ore == 'Obsidian') return 16
+  else if(ore == 'Hardstone') return 18
+  else if(ore == 'Mithril') return 20
+  else if(ore == 'Titanium') return 22
+  else if(ore == 'Gemstone') return 25
+  else return 5
+}
