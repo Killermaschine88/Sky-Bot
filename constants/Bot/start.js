@@ -18,6 +18,19 @@ async function start(client, mclient) {
   const collection4 = mclient.db('Sky-Bot').collection('info')
 
   const eventchannel = '908000544868691990' //edit to 909717004783595552 on release
+
+  //Changing Status
+  let total_members = client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
+    const activities_list = [
+    { type: 'PLAYING',  message: 'Skyblock Simulator'  },
+    { type: 'PLAYING', message: `with ${total_members} members` },
+      { type: 'PLAYING', message: `with ${client.guilds.cache.size} Servers` }
+];
+    setInterval(() => {
+        const index = Math.floor(Math.random() * (activities_list.length - 1) + 1);
+
+        client.user.setActivity(activities_list[index].message, { type: activities_list[index].type });
+    }, 300000);
   
 
   //Info for Website

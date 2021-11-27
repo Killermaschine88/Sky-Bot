@@ -32,17 +32,12 @@ ${color.blue('[INFO]')}${color.blue(' └─ Loaded')} ${color.green(c)} ${color
 		`.trim()
 		);
 
-		client.user.setActivity(`${client.guilds.cache.size} Servers`, {
-			type: 'WATCHING',
-		});
-
 		//Msging Owner on Restart
-		client.users.fetch('570267487393021969').then(async (user) => {
+client.users.fetch('570267487393021969').then(async (user) => {
 			await user.send(`Restarted`);
 		});
 
 		//Startup Stuff from function
-
-		start(client, mclient);
+start(client, mclient);
 	},
 };

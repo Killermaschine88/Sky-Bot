@@ -156,11 +156,11 @@ const data = [
 				description: 'Lets you grind Mobs for Combat XP and Items',
 				type: 'SUB_COMMAND',
 			},
-			{
+			/*{
 				name: 'farm',
 				description: 'Lets you harvest your fields',
 				type: 'SUB_COMMAND'
-			},
+			},*/
 			{
 				name: 'info',
 				description: 'Shows information about yourself or a mentioned User',
