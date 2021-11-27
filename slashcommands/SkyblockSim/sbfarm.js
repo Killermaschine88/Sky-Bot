@@ -13,7 +13,6 @@ module.exports = {
 	aliases: ['sbfarm', 'sbf', 'farm'],
 	cooldown: 5,
     async execute(interaction, mclient) {
-        if (interaction.user.id === '570267487393021969') return interaction.editReply({ content: 'You are the only person that is not allowed to test this command. LLLLLLLLLLLLLLLLLLLLLLLLLLLL' })
         const collection = mclient.db('SkyblockSim').collection('Players');
 		let user = await collection.findOne({ _id: interaction.user.id });
         if (user === null) {
@@ -82,15 +81,15 @@ module.exports = {
             .addComponents(
                 new MessageButton()
                     .setStyle('SUCCESS')
-                    .setLabel('\u200B')
                     .setCustomId('yes')
                     .setEmoji('828976739316662272'),
                 new MessageButton()
                     .setStyle('DANGER')
-                    .setLabel('\u200B')
                     .setCustomId('no')
                     .setEmoji('828976738976530454')
             )
+
+     // console.log(user)
 
 
         const farm_types = Object.keys(farming_menu_selections)
@@ -99,21 +98,21 @@ module.exports = {
         //build_time in ms
         let farms = '\n' + emojis.barrier + ' None'
         let options = []
-        if (user.data.farming.farms.length > 0) {
+        if (user.data.skills.farming.farms.length > 0) {
             farms = ''
-            for (let i = 0; i < user.data.farming.farms.length; i++) {
-                farms += `\n→ **${user.data.farming.farms[i]}**`
-                if (user.data.farming.owned_farms[user.data.farming.farms[i]].done_building > Date.now()) {
-                    farms += ` (Building: **${prettyms(user.data.farming.owned_farms[user.data.farming.farms[i]].done_building - Date.now(), { secondsDecimalDigits: 0 })}**)`
+            for (let i = 0; i < user.data.skills.farming.farms.length; i++) {
+                farms += `\n→ **${user.data.skills.farming.farms[i]}**`
+                if (user.data.skills.farming.owned_farms[user.data.skills.farming.farms[i]].done_building > Date.now()) {
+                    farms += ` (Building: **${prettyms(user.data.skills.farming.owned_farms[user.data.skills.farming.farms[i]].done_building - Date.now(), { secondsDecimalDigits: 0 })}**)`
                 } else {
-                    if (user.data.farming.owned_farms[user.data.farming.farms[i]].done_regrowing > Date.now()) {
-                        farms += ` (Regrowing: **${prettyms(user.data.farming.owned_farms[user.data.farming.farms[i]].done_regrowing - Date.now(), { secondsDecimalDigits: 0 })}**)`
+                    if (user.data.skills.farming.owned_farms[user.data.skills.farming.farms[i]].done_regrowing > Date.now()) {
+                        farms += ` (Regrowing: **${prettyms(user.data.skills.farming.owned_farms[user.data.skills.farming.farms[i]].done_regrowing - Date.now(), { secondsDecimalDigits: 0 })}**)`
                     } else {
                         farms += ' (**READY**)'
                     }
                 }
-                options.push(farming_menu_selections[user.data.farming.farms[i]])
-                farms_to_purchase = farms_to_purchase.filter(e => e !== user.data.farming.farms[i])
+                options.push(farming_menu_selections[user.data.skills.farming.farms[i]])
+                farms_to_purchase = farms_to_purchase.filter(e => e !== user.data.skills.farming.farms[i])
             }
         }
         let can_buy_farms = true;
@@ -140,7 +139,7 @@ module.exports = {
                     .setTitle('Farming')
                     .setColor(0x3585d0)
                     .setThumbnail('https://sky.shiiyu.moe/item/GOLD_HOE')
-                    .setDescription(`${emojis.coin} Coins: **${sbnumberformatter(user.data.profile.coins, 2)}**\n${emojis.farming} Farming: **${toFixed(user.data.farming.level, 2)}**\n\n**Farms**:${farms}`)
+                    .setDescription(`${emojis.coin} Coins: **${sbnumberformatter(user.data.profile.coins, 2)}**\n${emojis.farming} Farming: **${toFixed(user.data.skills.farming.level, 2)}**\n\n**Farms**:${farms}`)
             ], components: components
         }).then(msg => {
             const filter = i => i.user.id === interaction.user.id;
@@ -153,7 +152,7 @@ module.exports = {
                         .setTitle('Build a Farm')
                         .setColor(0x3585d0)
                         .setThumbnail('https://sky.shiiyu.moe/item/DIRT')
-                        .setDescription(`${emojis.coin} Coins: **${sbnumberformatter(user.data.profile.coins, 2)}**\n${emojis.farming} Farming: **${toFixed(user.data.farming.level, 2)}**`)
+                        .setDescription(`${emojis.coin} Coins: **${sbnumberformatter(user.data.profile.coins, 2)}**\n${emojis.farming} Farming: **${toFixed(user.data.skills.farming.level, 2)}**`)
                     for (let i = 0; i < farms_to_purchase.length; i++) {
                         build_embed.addField(`${farms_to_purchase[i]}`, `${emojis.coin} Cost: **${sbnumberformatter(farm_stats[farms_to_purchase[i]].cost, 2)}**\n ${emojis.watch} Time: **${prettyms(farm_stats[farms_to_purchase[i]].build_time, { secondsDecimalDigits: 0 })}**\nExp: **${farm_stats[farms_to_purchase[i]].exp * 10}** / 10\nEarnings: **${farm_stats[farms_to_purchase[i]].money * 10}** / 10`, true)
                         buy_options.push(farming_menu_selections[farms_to_purchase[i]])
@@ -183,19 +182,19 @@ module.exports = {
                                     accept_collector.stop()
                                     if (i.customId === 'yes') {
                                         if (user.data.profile.coins >= farm_stats[selection].cost) {
-                                            if (!user.data.farming.owned_farms) user.data.farming.owned_farms = {}
-                                            user.data.farming.owned_farms[selection] = {
+                                            if (!user.data.skills.farming.owned_farms) user.data.skills.farming.owned_farms = {}
+                                            user.data.skills.farming.owned_farms[selection] = {
                                                 done_building: Date.now() + farm_stats[selection].build_time,
                                                 done_regrowing: Date.now(),
                                                 level: 1
                                             }
-                                            user.data.farming.farms.push(selection)
+                                            user.data.skills.farming.farms.push(selection)
                                             await collection.updateOne(
                                                 { _id: interaction.user.id },
                                                 {
                                                     $set: {
-                                                        'data.farming.owned_farms': user.data.farming.owned_farms,
-                                                        'data.farming.farms': user.data.farming.farms,
+                                                        'data.skills.farming.owned_farms': user.data.skills.farming.owned_farms,
+                                                        'data.skills.farming.farms': user.data.skills.farming.farms,
                                                         'data.profile.coins': user.data.profile.coins - farm_stats[selection].cost
                                                     },
                                                 },
@@ -230,13 +229,13 @@ module.exports = {
                     let status_emoji = ''
                     let can_farm = false;
                     let done_building = true;
-                    if (user.data.farming.owned_farms[farm_selection].done_building > Date.now()) {
-                        status = `Building: **${prettyms(user.data.farming.owned_farms[farm_selection].done_building - Date.now(), { secondsDecimalDigits: 0 })}**`
+                    if (user.data.skills.farming.owned_farms[farm_selection].done_building > Date.now()) {
+                        status = `Building: **${prettyms(user.data.skills.farming.owned_farms[farm_selection].done_building - Date.now(), { secondsDecimalDigits: 0 })}**`
                         status_emoji = emojis.clock
                         done_building = false
                     } else {
-                        if (user.data.farming.owned_farms[farm_selection].done_regrowing > Date.now()) {
-                            status = `Regrowing: **${prettyms(user.data.farming.owned_farms[farm_selection].done_regrowing - Date.now(), { secondsDecimalDigits: 0 })}**`
+                        if (user.data.skills.farming.owned_farms[farm_selection].done_regrowing > Date.now()) {
+                            status = `Regrowing: **${prettyms(user.data.skills.farming.owned_farms[farm_selection].done_regrowing - Date.now(), { secondsDecimalDigits: 0 })}**`
                             status_emoji = emojis.not_ready
                         } else {
                             status = 'Status: **READY**'
@@ -247,40 +246,40 @@ module.exports = {
                     let regrowing_state = can_farm ? 3 : 1
 
                     if (done_building && can_farm) {
-                        if ((user.data.farming.owned_farms[farm_selection].done_regrowing - Date.now()) >= 0) regrowing_state = 1
-                        if ((user.data.farming.owned_farms[farm_selection].done_regrowing - Date.now()) > 1350000) regrowing_state = 2
+                        if ((user.data.skills.farming.owned_farms[farm_selection].done_regrowing - Date.now()) >= 0) regrowing_state = 1
+                        if ((user.data.skills.farming.owned_farms[farm_selection].done_regrowing - Date.now()) > 1350000) regrowing_state = 2
                     }
 
                     const farm_embed = new MessageEmbed()
                         .setTitle(`**${farm_selection}** Farm`)
                         .setColor(0x3585d0)
                         .setThumbnail(SkyShiiyuLink[farm_selection])
-                        .setDescription(`${emojis.coin} Coins: **${sbnumberformatter(user.data.profile.coins, 2)}**\n${emojis.farming} Farming: **${toFixed(user.data.farming.level, 2)}**\n${status_emoji} ${status}\n\n\n${getFarmingField(regrowing_state, farm_selection, false)}`)
+                        .setDescription(`${emojis.coin} Coins: **${sbnumberformatter(user.data.profile.coins, 2)}**\n${emojis.farming} Farming: **${toFixed(user.data.skills.farming.level, 2)}**\n${status_emoji} ${status}\n\n\n${getFarmingField(regrowing_state, farm_selection, false)}`)
                     interaction.editReply({ embeds: [farm_embed], components: [new MessageActionRow().addComponents(new MessageSelectMenu().setCustomId('menu').setPlaceholder('Travel to farm').addOptions(options)), new MessageActionRow().addComponents(new MessageButton().setStyle('PRIMARY').setCustomId('farm').setLabel('Farm').setEmoji(emojis.farming.id).setDisabled(!can_farm))] })
                 } else if (i.customId === 'farm') {
                     i.deferUpdate()
-                    user.data.farming.owned_farms[current_farm].done_regrowing = Date.now() + 2700000
-                    user.data.farming.xp += 75000 * farm_stats[current_farm].exp
-                    user.data.farming.level = getSbLevel(user.data.farming.xp)
+                    user.data.skills.farming.owned_farms[current_farm].done_regrowing = Date.now() + 2700000
+                    user.data.skills.farming.xp += 75000 * farm_stats[current_farm].exp
+                    user.data.skills.farming.level = getSbLevel(user.data.skills.farming.xp)
                     await collection.updateOne(
 						{ _id: interaction.user.id },
 						{
 							$set: {
-								'data.farming.owned_farms': user.data.farming.owned_farms,
-								'data.farming.xp': user.data.farming.xp,
-								'data.farming.level': user.data.farming.level,
+								'data.skills.farming.owned_farms': user.data.skills.farming.owned_farms,
+								'data.skills.farming.xp': user.data.skills.farming.xp,
+								'data.skills.farming.level': user.data.skills.farming.level,
                                 'data.profile.coins': user.data.profile.coins + 25000 * farm_stats[current_farm].money,
 							},
 						},
 						{ upsert: true }
 					);
-                    let status = `Regrowing: **${prettyms(user.data.farming.owned_farms[current_farm].done_regrowing - Date.now(), { secondsDecimalDigits: 0 })}**`
+                    let status = `Regrowing: **${prettyms(user.data.skills.farming.owned_farms[current_farm].done_regrowing - Date.now(), { secondsDecimalDigits: 0 })}**`
                     let status_emoji = emojis.not_ready
                     const farmed_embed = new MessageEmbed()
                         .setTitle(`**${current_farm}** Farm`)
                         .setColor(0x3585d0)
                         .setThumbnail(SkyShiiyuLink[current_farm])
-                        .setDescription(`${emojis.coin} Coins: **${sbnumberformatter(user.data.profile.coins, 2)}**\n${emojis.farming} Farming: **${toFixed(user.data.farming.level, 2)}**\n${status_emoji} ${status}\n\n\n${getFarmingField(1, current_farm, false)}\n\n→ + **${addCommas(75000 * farm_stats[current_farm].exp)}** Farming Exp\n→ + **${addCommas(25000 * farm_stats[current_farm].money)}** Coins`)
+                        .setDescription(`${emojis.coin} Coins: **${sbnumberformatter(user.data.profile.coins, 2)}**\n${emojis.farming} Farming: **${toFixed(user.data.skills.farming.level, 2)}**\n${status_emoji} ${status}\n\n\n${getFarmingField(1, current_farm, false)}\n\n→ + **${addCommas(75000 * farm_stats[current_farm].exp)}** Farming Exp\n→ + **${addCommas(25000 * farm_stats[current_farm].money)}** Coins`)
                     interaction.editReply({ embeds: [farmed_embed], components: [new MessageActionRow().addComponents(new MessageSelectMenu().setCustomId('menu').setPlaceholder('Travel to farm').addOptions(options)), new MessageActionRow().addComponents(new MessageButton().setStyle('PRIMARY').setCustomId('farm').setLabel('Farm').setEmoji(emojis.farming.id).setDisabled(true))] })
                 }
             })
