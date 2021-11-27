@@ -100,6 +100,7 @@ module.exports = {
 								],
 							},
 							slayer: {
+
                 zombie: {
                     xp: 0,
                     kills: 0
@@ -117,6 +118,7 @@ module.exports = {
                     kills: 0
                 },
               },
+
 							dungeons: {
 								xp: 0,
 								total_runs: 0,
@@ -192,6 +194,13 @@ module.exports = {
 									expires: 0,
 								},
 							},
+							farming: {
+								xp: 0,
+								level: 0,
+								farms: [
+
+								]
+							}
 						},
 					},
 				},
