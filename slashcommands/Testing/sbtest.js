@@ -27,7 +27,7 @@ module.exports = {
             .setTitle('No profile found')
             .setDescription(`Create a profile using \`/sb start\``);
 
-        const array = [
+        let array = [
             [0, 1, 1, 0],
             [1, 0, 0, 1],
             [1, 0, 0, 1],
@@ -61,16 +61,20 @@ module.exports = {
         const embed = new Discord.MessageEmbed()
             .setColor(getColor("Dragon's Nest"))
             .setFooter(getFooter("Dragon's Nest"))
-            .setDescription(`Place Summoning Eyes using the attached Buttons once 8 Eyes are placed the Dragon fight will start.\n\n${displayArray(array)}`)
+          .setTitle('Dragon Altar')
+            .setDescription(`Place Summoning Eyes using the attached Buttons once 8 Eyes are placed the Dragon fight will start.\nThe Menu will cancel after 3 Minutes.`)
+      .addField('\u200B', `${displayArray(array)}`, true)
+      .addField('Summoning Eyes placed', 'None', true)
 
         const menu = await interaction.editReply({
             embeds: [embed],
             components: [row]
         });
 
-        const filter = (i) => {
-            return i.deferUpdate();
-        };
+        const drag_embed = new Discord.MessageEmbed()
+      .setTitle('Dragon Fight')
+      .setColor(getColor("Dragon's Nest"))
+      .setFooter(getFooter("Dragon's Nest"))
 
         const collector = menu.createMessageComponentCollector({
             componentType: 'BUTTON',
@@ -80,15 +84,19 @@ module.exports = {
         const drag_fighters = [];
         let eyes_placed = 0;
         let str = '';
-        /*
-        {
-        	id: userid,
-        	placed_eyes: amount of placed eyes
-        }
-        */
+        let drag_spawned = false;
+        
+      const timeout = setTimeout(() => {
+        collector.stop()
+      }, 180000)
 
         collector.on('collect', async (i) => {
             i.deferUpdate()
+          if(eyes_placed >= 8) {
+            clearTimeout(timeout)
+            interaction.editReply({embeds: [drag_embed], components: [row1]})
+            drag_spawned = true
+          }
 
             if (i.customId == 'placeeye') {
 
@@ -105,10 +113,13 @@ module.exports = {
 
                     await collection.updateOne({ _id: i.user.id, 'data.inventory.items.name': 'Summoning Eye' }, {$inc: { 'data.inventory.items.$.amount': -1}});
 
+                  array = findAndReplace(array, 'add')
+
                     if (!drag_fighters.find(fighter => fighter.id == i.user.id)) {
                         drag_fighters.push({
                             id: i.user.id,
-                            placed_eyes: 1
+                            placed_eyes: 1,
+                          name: i.user.username
                         });
                     } else {
                         drag_fighters.find(fighter => fighter.id == i.user.id).placed_eyes++;
@@ -116,7 +127,7 @@ module.exports = {
 
                 } else {
                     interaction.followUp({
-                        content: 'You do not have any Summoning Eyes to place.',
+                        content: 'You don\'t have any Summoning Eyes to place.',
                         ephemeral: true
                     });
                 }
@@ -131,20 +142,52 @@ module.exports = {
                   drag_fighters.splice(drag_fighters.findIndex(fighter => fighter.id == i.user.id), 1);
                 }
                 await collection.updateOne({ _id: i.user.id, 'data.inventory.items.name': 'Summoning Eye' }, {$inc: { 'data.inventory.items.$.amount': 1}});
-                } else {
-                  eyes_placed--;
-                  drag_fighters.splice(drag_fighters.findIndex(fighter => fighter.id == i.user.id), 1);
-                  await collection.updateOne({ _id: i.user.id, 'data.inventory.items.$.name': 'Summoning Eye' }, {$inc: { 'data.inventory.items.$.amount': 1}});
+
+                  array = findAndReplace(array, 'remove')
                 }
               } else {
                 interaction.followUp({
-                  content: 'You do not have any Summoning Eyes to remove.',
+                  content: "You haven't placed any Summoning Eyes",
                   ephemeral: true
                 });
               }
+            } else if(i.customId == 'id name') {
+              
             }
-            console.log(drag_fighters)
+
+          if(drag_fighters.length > 0 && !drag_spawned) {
+            for(const fighter of drag_fighters) {
+              str += `${fighter.name}: ${fighter.placed_eyes}\n`
+            }
+          } else {
+            str += 'None'
+          }
+
+          if(!drag_spawned) {
+            embed.fields = [];
+            embed.addField('\u200B', `${displayArray(array)}`, true)
+      embed.addField('Summoning Eyes placed', `${str}`, true)
+            str = '';
+            interaction.editReply({embeds: [embed]})
+          }
+            //console.log(drag_fighters)
         });
+
+      collector.on('end', async (collected) => {
+        if(!drag_spawned) {
+        if(drag_fighters.length > 0) {
+          for(const fighter of drag_fighters) {
+            if(fighter.placed_eyes == 0) continue;
+            await collection.updateOne({ _id: fighter.id, 'data.inventory.items.name': 'Summoning Eye' }, {$inc: { 'data.inventory.items.$.amount': fighter.placed_eyes}});
+          }
+        }
+        }
+        embed.setColor('RED')
+        embed.setDescription('')
+        embed.fields = [];
+        embed.addField('Timed out', 'Not enough Summoning Eyes have been placed within the 3 Minutes', true)
+        interaction.editReply({embeds: [embed], components: []})
+      })
 
 
     }
@@ -177,4 +220,27 @@ function findAndReplace(array) {
             }
         }
     }
+}
+
+function findAndReplace(array, state){
+  if(state == 'add') {
+    for(let i = 0; i < array.length; i++){
+    for(let j = 0; j < array[i].length; j++){
+      if(array[i][j] == 1){
+        array[i][j] = 2;
+        return array;
+      }
+    }
+  }
+  } else if(state == 'remove') {
+    for(let i = 0; i < array.length; i++){
+    for(let j = 0; j < array[i].length; j++){
+      if(array[i][j] == 2){
+        array[i][j] = 1;
+        return array;
+      }
+    }
+  }
+  }
+  
 }

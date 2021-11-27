@@ -15,7 +15,7 @@ module.exports = {
 			.setTitle('Suggestion sent')
 			.setColor('GREEN')
 			.setDescription(
-				'To see your suggestion, join my [support server](https://discord.gg/Ca6XpTRQaR) and check suggestions channel!'
+				'To see your suggestion, join my [support server](https://discord.gg/Ca6XpTRQaR) and check the suggestions channel.'
 			);
 
 		interaction.editReply({ embeds: [suggested] });
@@ -33,7 +33,7 @@ module.exports = {
 						msg.react('👍') &&
 						msg.react('👎') &&
 						msg.startThread({
-							name: `Suggestion`,
+							name: `Suggestion from ${interaction.user.username}`,
 							// autoArchiveDuration: 60,
 							//reason: 'Needed a separate thread f',
 						})
