@@ -296,7 +296,7 @@ module.exports = {
 
           //removing items from array
            collection2.updateOne(
-                { },
+                { _id: caps(itemname)},
                 { $pull: { sell: { amount: 0 }},
                 $inc: { total_bought: amount, total_spent: costfound }},
                 { multi: true }
@@ -315,12 +315,14 @@ module.exports = {
 
           embed.setDescription(`Purchased Items successfully.`)
           embed.setColor('GREEN')
+          embed.setFooter(getFooter('Bazaar'))
 
           return interaction.editReply({embeds: [embed], components: []})
 
         } else {
           embed.setDescription('Cancelled')
           embed.setColor('RED')
+          embed.setFooter(getFooter('Bazaar'))
           return interaction.editReply({embeds: [embed], components: []})
         }
 
@@ -442,7 +444,7 @@ module.exports = {
 
           //removing items from array
            collection2.updateOne(
-                { },
+                { _id: caps(itemname) },
                 { $pull: { buy: { amount: 0 }},
                 $inc: { total_sold: amount, total_earned: costfound }},
                 { multi: true }
@@ -512,7 +514,7 @@ module.exports = {
       const embed = new Discord.MessageEmbed()
       .setTitle(`Bazaar Info for ${getEmoji(itemname)} ${caps(itemname)}`)
       .setColor('GREEN')
-      .setFooter(getFooter(player))
+      .setFooter(getFooter('Bazaar'))
       .setDescription(`Total items sold: ${item.total_sold} [${item.total_earned.toLocaleString()} coins]\nTotal items purchased: ${item.total_bought} [${item.total_spent.toLocaleString()} coins]`)
       .addField('Insta sell price', `${buy.price}\n`, true)
       .addField('Amount of buy offers', `${buy.offers}`, true)
