@@ -316,12 +316,12 @@ module.exports = {
 			armorcost = 100000;
 		} else if (
 			armorinv.find((item) => item.name === 'Naked') &&
-			coins > 50000 &&
+			coins > 30000 &&
 			!armorinv.find((item) => item.name === 'Leaflet Armor')
 		) {
 			armor_button.setDisabled(false);
 			choosen2 = 'Leaflet Armor';
-			armorcost = 50000;
+			armorcost = 30000;
 		}
 
 		//Booster Cookie
@@ -491,7 +491,7 @@ module.exports = {
 		} else if (armorinv.find((item) => item.name == 'Naked')) {
 			shopembed.addField(
 				'Leaflet Armor',
-				'**Cost:** 50k coins\n\n**Stats:** `50 ❤`, `10 ❈`, `5 ☣`, `10 ☠`',
+				'**Cost:** 30k coins\n\n**Stats:** `50 ❤`, `10 ❈`, `5 ☣`, `10 ☠`',
 				true
 			);
 		}

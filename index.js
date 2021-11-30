@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client({
 	intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'],
 });
-client.options.http.api = 'https://discordapp.com/api'
+//client.options.http.api = 'https://discordapp.com/api'
 const config = require('./constants/Bot/config.json');
 const keepAlive = require('./constants/Bot/keepAlive.js');
 const fs = require('fs');
@@ -128,9 +128,9 @@ client.on('messageCreate', async (message) => {
 	const args = message.content.slice(gprefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
 
-	const command =
+	/*const command =
 		client.commands.get(commandName) ||
-		client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
+		client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));*/
 
 	if (!command) return;
 
@@ -139,7 +139,7 @@ client.on('messageCreate', async (message) => {
 			'You are blacklisted from using this Bot. If you believe this is false. Then message **Baltraz#4874**'
 		);
 
-	const { cooldowns } = client;
+	/*const { cooldowns } = client;
 
 	if (!cooldowns.has(command.name)) {
 		cooldowns.set(command.name, new Discord.Collection());
@@ -166,7 +166,7 @@ client.on('messageCreate', async (message) => {
 	}
 
 	timestamps.set(message.author.id, now);
-	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);*/
 
 	//Once i add to main bot
 	const servercoll = mclient.db('Sky-Bot').collection('Servers');

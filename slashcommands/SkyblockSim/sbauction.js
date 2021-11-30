@@ -55,7 +55,7 @@ module.exports = {
         return interaction.editReply({embeds: [errEmbed("Can't input negative Values.", true)]})
       }
 
-      if(duration < 336) {
+      if(duration > 336) {
         return interaction.editReply({embeds: [errEmbed("Can't input a duration longer than 2 Weeks (336 hours)")]})
       }
 

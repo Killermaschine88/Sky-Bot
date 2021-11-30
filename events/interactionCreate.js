@@ -223,8 +223,10 @@ module.exports = {
 
 		const collection1 = mclient.db('Sky-Bot').collection('settings');
 		let settings = await collection1.findOne({
-			_id: interaction.client.user.id,
+			_id: "844951901653041203",
 		});
+
+    if(settings) {
 
 		if (settings.maintanance.state == true && interaction.user.id != '570267487393021969') {
 			const maintan = new Discord.MessageEmbed()
@@ -234,7 +236,8 @@ module.exports = {
 					`Maintanance Mode enabled because of **${settings.maintanance.reason}**!\nPlease wait while it is being worked on.`
 				);
 			return interaction.reply({ embeds: [maintan] });
-		}
+    }
+    }
 
 		if (interaction.commandName == 'sb') {
 			const collection = mclient.db('SkyblockSim').collection('Players');
