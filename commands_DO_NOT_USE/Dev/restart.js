@@ -17,6 +17,6 @@ module.exports = {
 			.setFooter('I will DM you once im restarted');
 		await message.channel.send({ embeds: [restart] });
 
-		process.exit();
+		process.exit()
 	},
 };

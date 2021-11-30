@@ -259,7 +259,7 @@ module.exports = {
 				}
 			}
 
-			const collection2 = mclient.db('SkyblockSim').collection('blockedchannels');
+			/*const collection2 = mclient.db('SkyblockSim').collection('blockedchannels');
 			let channel = await collection2.findOne({
 				_id: interaction.channelId,
 			});
@@ -288,7 +288,7 @@ module.exports = {
 						});
 					}
 				}
-			}
+      }*/
 		}
 
 		const { cooldowns } = interaction.client;

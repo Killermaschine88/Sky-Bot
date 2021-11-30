@@ -17,7 +17,7 @@ async function start(client, mclient) {
 
   const collection4 = mclient.db('Sky-Bot').collection('info')
 
-  const eventchannel = '908000544868691990' //edit to 909717004783595552 on release
+  const eventchannel = '909717004783595552' //edit to 909717004783595552 on release
 
   //Changing Status
 client.user.setActivity(`with ${client.guilds.cache.size} Servers`, { type: 'PLAYING' })

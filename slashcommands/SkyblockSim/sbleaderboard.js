@@ -66,7 +66,7 @@ module.exports = {
 			// Build a string showing the values of selected type
 			let i = 0;
 			while (i < lbCol.length && i < 10) {
-				lbString += `#${i + 1} - <@!${lbCol[i]._id}>: ${eval(`lbCol[i].${type.data}.toLocaleString()`)}\n`; //change ._id -> data.profile.name
+				lbString += `#${i + 1} - <@!${lbCol[i].data.profile.name}>: ${eval(`lbCol[i].${type.data}.toLocaleString()`)}\n`;
 				i++;
 			}
 

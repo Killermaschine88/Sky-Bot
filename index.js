@@ -6,8 +6,6 @@ client.options.http.api = 'https://discordapp.com/api'
 const config = require('./constants/Bot/config.json');
 const keepAlive = require('./constants/Bot/keepAlive.js');
 const fs = require('fs');
-const prefix = require('@replit/database');
-const prefixx = new prefix();
 const token = process.env['token'];
 global.c = 0;
 let e = 0;
@@ -31,7 +29,7 @@ global.mmclient = mclient;
     .on("warn", console.log)*/
     
 
-/*//Topgg votes detectionsa
+//Topgg votes detectionsa
 const Topgg = require("@top-gg/sdk")
 const express = require("express")
 
@@ -85,7 +83,7 @@ const poster = AutoPoster(toptoken, client)
 poster.on('posted', (stats) => { // ran when succesfully posted
   console.log(`Posted stats to Top.gg | ${stats.serverCount} servers`)
 })
-*/
+
 
 // Bot token login
 client.login(token);
@@ -123,8 +121,7 @@ client.on('messageCreate', async (message) => {
 	if (message.author.bot) return;
 	if (message.channel.type === 'DM') return message.channel.send('I dont work in DMs.');
 
-	let gprefix = await prefixx.get(message.guild.id, { raw: false });
-	if (gprefix === null) gprefix = '.';
+	const gprefix = '!';
 
 	if (!message.content.startsWith(gprefix) || message.author.bot) return;
 
@@ -209,7 +206,7 @@ client.on('messageCreate', async (message) => {
 				.setColor('ORANGE')
 				.setFooter('Greetings Sky Bot Dev')
 				.setDescription(
-					'Message Commands have been remove from Sky Bot due to a change in Discords System which means, Bot Developers are required to use Slash Commands.\n\nClick the attached Button for an Article explaining those changes.'
+					'Message Commands have been remove from Sky Bot due to a change in Discords System which means, Bot Developers are required to use Slash Commands.\nThis server can use Slash Commands so please use them.\n\nClick the attached Button for an Article explaining those changes.'
 				);
 			const row = new Discord.MessageActionRow().addComponents(
 				new Discord.MessageButton()
@@ -247,7 +244,7 @@ for (const file of eventFiles) {
 }
 
 //Loophole to keep the Bot running
-keepAlive();
+//keepAlive();
 
 /* how to export commands 
 //add cooldown: 0, to set a specific cooldown else it is 3 seconds
