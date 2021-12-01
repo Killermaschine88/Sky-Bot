@@ -25,7 +25,7 @@ module.exports = {
 
 		if (player === null) {
 			const nodata = new Discord.MessageEmbed().setColor('RED').setDescription(`No profile found for <@!${id}>`);
-			interaction.editReply({ embeds: [nodata] });
+			await interaction.editReply({ embeds: [nodata] });
 			return;
 		}
 
@@ -293,14 +293,14 @@ module.exports = {
 						)
 						.addField('Location', `${player.data.misc.location}`, true);
 
-					interaction.editReply({ embeds: [main] });
+					await interaction.editReply({ embeds: [main] });
 				} else if (i.customId === 'inv') {
 					await i.deferUpdate();
 					const inv = new Discord.MessageEmbed()
 						.setFooter(getFooter(player))
 						.setColor(getColor(player))
 						.setDescription(`**Inventory for <@${id}>**\n${str}`);
-					interaction.editReply({ embeds: [inv] });
+					await interaction.editReply({ embeds: [inv] });
 				} else if (i.customId === 'slayer') {
 					await i.deferUpdate();
 					const slayer = new Discord.MessageEmbed()
@@ -328,7 +328,7 @@ module.exports = {
 							`XP: **${player.data.slayer.endermanxp}**\nBoss kills: **${player.data.slayer.endermankills}**`,
 							true
 						);
-					interaction.editReply({ embeds: [slayer] });
+					await interaction.editReply({ embeds: [slayer] });
 				} else if (i.customId === 'dungeons') {
 					await i.deferUpdate();
 					const dungeons = new Discord.MessageEmbed()
@@ -337,7 +337,7 @@ module.exports = {
 						.setDescription(
 							`**Dungeons info for <@${id}>**\n<:catacombs:854399510951624775> Dungeons XP [${cata}]: **${player.data.dungeons.xp}**\n<:mage:852079612699607072> Selected class [${classxp}]: \n* Name: **${player.data.dungeons.class.selected.name}**\n* XP: **${player.data.dungeons.class.selected.xp}**`
 						);
-					interaction.editReply({ embeds: [dungeons] });
+					await interaction.editReply({ embeds: [dungeons] });
 				} else if (i.customId === 'armorlist') {
 					await i.deferUpdate();
 					const dungeons = new Discord.MessageEmbed()
@@ -346,7 +346,7 @@ module.exports = {
 						.setDescription(
 							`${armorstr}\nYou can change your armor using \`/sb wardrobe item-name\`\nExample: \`/sb wardrobe Naked\``
 						);
-					interaction.editReply({ embeds: [dungeons] });
+					await interaction.editReply({ embeds: [dungeons] });
 				} else if (i.customId === 'swordlist') {
 					await i.deferUpdate();
 					const dungeons = new Discord.MessageEmbed()
@@ -355,7 +355,7 @@ module.exports = {
 						.setDescription(
 							`${swordstr}\nYou can change your sword using \`/sb wardrobe item-name\`\nExample: \`/sb wardrobe Fist\``
 						);
-					interaction.editReply({ embeds: [dungeons] });
+					await interaction.editReply({ embeds: [dungeons] });
 				} else if (i.customId == 'settings') {
 					await i.deferUpdate();
 					let settingembed = new Discord.MessageEmbed();
@@ -366,7 +366,7 @@ module.exports = {
 					settingembed.setDescription(`Settings info for <@${id}>`);
 					settingembed.addField('Image Shown', `${player.data.settings.imgshown}`, true);
 					settingembed.addField('Confirmation Message', `${set}`);
-					interaction.editReply({ embeds: [settingembed] });
+					await interaction.editReply({ embeds: [settingembed] });
 				}
 			}
 		});

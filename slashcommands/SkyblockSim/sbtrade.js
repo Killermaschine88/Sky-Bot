@@ -34,7 +34,7 @@ module.exports = {
 				.setColor('RED')
 				.setFooter('Skyblock Simulator');
 
-			return interaction.editReply({ embeds: [ongoingtrade] });
+			return await interaction.editReply({ embeds: [ongoingtrade] });
 		}
 
 		if (action == 'send-offer') {
@@ -44,7 +44,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
-				return interaction.editReply({ embeds: [nouserembed] });
+				return await interaction.editReply({ embeds: [nouserembed] });
 			}
 
 			if (tradeitem == null || amount == null) {
@@ -53,7 +53,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
-				return interaction.editReply({ embeds: [invalid] });
+				return await interaction.editReply({ embeds: [invalid] });
 			}
 
 			if (tradeitem.includes('coin')) {
@@ -68,7 +68,7 @@ module.exports = {
 						.setColor('RED')
 						.setFooter('Skyblock Simulator');
 
-					return interaction.editReply({ embeds: [lowitemsembed] });
+					return await interaction.editReply({ embeds: [lowitemsembed] });
 				}
 
 				await collection1.updateOne(
@@ -123,7 +123,7 @@ module.exports = {
 					.setColor('GREEN')
 					.setFooter('Skyblock Simulator');
 
-				return interaction.editReply({ embeds: [sentembed] });
+				return await interaction.editReply({ embeds: [sentembed] });
 			}
 
 			let finditem = player.data.inventory.items.find((item) => item.name == caps(tradeitem));
@@ -137,7 +137,7 @@ module.exports = {
 					.setFooter('Skyblock Simulator')
 					.setColor('RED');
 
-				return interaction.editReply({ embeds: [noitemembed] });
+				return await interaction.editReply({ embeds: [noitemembed] });
 			}
 
 			if (amount > finditem.amount) {
@@ -149,7 +149,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
-				return interaction.editReply({ embeds: [lowitemsembed] });
+				return await interaction.editReply({ embeds: [lowitemsembed] });
 			}
 
 			await collection1.updateOne(
@@ -205,7 +205,7 @@ module.exports = {
 				.setColor('GREEN')
 				.setFooter('Skyblock Simulator');
 
-			return interaction.editReply({ embeds: [sentembed] });
+			return await interaction.editReply({ embeds: [sentembed] });
 		} else if (action == 'reply-offer') {
 			if (!user.id || user.id == interaction.user.id || user.bot) {
 				let nouserembed = new Discord.MessageEmbed()
@@ -213,7 +213,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
-				return interaction.editReply({ embeds: [nouserembed] });
+				return await interaction.editReply({ embeds: [nouserembed] });
 			}
 			let existingsent = await collection1.findOne({ _id: user.id });
 			if (existingsent == null) {
@@ -222,7 +222,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
-				return interaction.editReply({ embeds: [embed] });
+				return await interaction.editReply({ embeds: [embed] });
 			}
 
 			if (tradeitem == null || amount == null) {
@@ -231,7 +231,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
-				return interaction.editReply({ embeds: [invalid] });
+				return await interaction.editReply({ embeds: [invalid] });
 			}
 
 			if (tradeitem.includes('coin')) {
@@ -246,7 +246,7 @@ module.exports = {
 						.setColor('RED')
 						.setFooter('Skyblock Simulator');
 
-					return interaction.editReply({ embeds: [lowitemsembed] });
+					return await interaction.editReply({ embeds: [lowitemsembed] });
 				}
 
 				////////////////////////////////////////////////
@@ -296,7 +296,7 @@ module.exports = {
 					.setColor('GREEN')
 					.setFooter('Skyblock Simulator');
 
-				return interaction.editReply({ embeds: [sentembed] });
+				return await interaction.editReply({ embeds: [sentembed] });
 			}
 
 			let finditem = player.data.inventory.items.find((item) => item.name == caps(tradeitem));
@@ -308,7 +308,7 @@ module.exports = {
 					.setFooter('Skyblock Simulator')
 					.setColor('RED');
 
-				return interaction.editReply({ embeds: [noitemembed] });
+				return await interaction.editReply({ embeds: [noitemembed] });
 			}
 
 			if (amount > finditem.amount) {
@@ -320,7 +320,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
-				return interaction.editReply({ embeds: [lowitemsembed] });
+				return await interaction.editReply({ embeds: [lowitemsembed] });
 			}
 
 			await collection1.updateOne(
@@ -370,7 +370,7 @@ module.exports = {
 				.setColor('GREEN')
 				.setFooter('Skyblock Simulator');
 
-			return interaction.editReply({ embeds: [sentembed] });
+			return await interaction.editReply({ embeds: [sentembed] });
 		} else if (action == 'accept-offer') {
 			let offer = await collection1.findOne({ _id: interaction.user.id });
 			if (offer == null) {
@@ -379,7 +379,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
-				return interaction.editReply({ embeds: [embed] });
+				return await interaction.editReply({ embeds: [embed] });
 			}
 			let user1 = await collection.findOne({ _id: offer.reciever.id });
 			let user2 = await await collection.findOne({
@@ -442,7 +442,7 @@ module.exports = {
 				.setColor('GREEN')
 				.setFooter('Skyblock Simulator');
 
-			interaction.editReply({ embeds: [tradedone] });
+			await interaction.editReply({ embeds: [tradedone] });
 		} else if (action == 'deny-offer') {
 			let offer = await collection1.findOne({ _id: interaction.user.id });
 			if (offer == null) {
@@ -451,7 +451,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter('Skyblock Simulator');
 
-				return interaction.editReply({ embeds: [embed] });
+				return await interaction.editReply({ embeds: [embed] });
 			}
 			let user1 = await collection.findOne({ _id: offer.reciever.id });
 			let user2 = await await collection.findOne({
@@ -514,7 +514,7 @@ module.exports = {
 				.setColor('GREEN')
 				.setFooter('Skyblock Simulator');
 
-			interaction.editReply({ embeds: [tradedone] });
+			await interaction.editReply({ embeds: [tradedone] });
 		}
 	},
 };

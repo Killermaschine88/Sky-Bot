@@ -216,7 +216,7 @@ module.exports = {
 				)
 				.setFooter('Skyblock Simulator');
 
-			menu.edit({ embeds: [created] });
+			await interaction.editReply({ embeds: [created] });
 			return;
 		} else {
 			const profilealready = new Discord.MessageEmbed()
@@ -226,7 +226,7 @@ module.exports = {
 					`Use \`/sb info\` to see your stats, \`/sb grind\` to earn coins and \`/sb wiki\` for info about the simulator.`
 				)
 				.setFooter('Skyblock Simulator');
-			menu.edit({ embeds: [profilealready] });
+			await interaction.editReply({ embeds: [profilealready] });
 		}
 	},
 };

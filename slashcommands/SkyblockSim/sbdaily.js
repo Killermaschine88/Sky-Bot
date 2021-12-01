@@ -18,7 +18,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No profile found')
 				.setDescription(`Create a profile using \`/sb start\``);
-			interaction.editReply({ embeds: [noprofile] });
+			await interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
@@ -70,7 +70,7 @@ module.exports = {
 				failedstreak.setFooter(`${getFooter(player)}\nDaily streak: 1`);
 				failedstreak.setColor(getColor(player));
 
-				interaction.editReply({ embeds: [failedstreak] });
+				await interaction.editReply({ embeds: [failedstreak] });
 				return;
 			} else {
 				await collection.updateOne(
@@ -105,7 +105,7 @@ module.exports = {
 				claimed.setFooter(`${getFooter(player)}\nDaily streak: ${player.data.misc.daily.streak + 1}`);
 				claimed.setColor(getColor(player));
 
-				interaction.editReply({ embeds: [claimed] });
+				await interaction.editReply({ embeds: [claimed] });
 				return;
 			}
 		} else {
@@ -115,7 +115,7 @@ module.exports = {
 				.setColor(getColor(player))
 				.setFooter(getFooter(player));
 
-			interaction.editReply({ embeds: [tooEarly] });
+			await interaction.editReply({ embeds: [tooEarly] });
 			return;
 		}
 	},

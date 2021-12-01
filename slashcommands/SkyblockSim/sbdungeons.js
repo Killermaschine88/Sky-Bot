@@ -265,7 +265,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No Profile found')
 				.setDescription(`Create a profile using \`/sb start\``);
-			return interaction.editReply({ embeds: [noprofile] });
+			return await interaction.editReply({ embeds: [noprofile] });
 		}
 
 		//Checks if the Player already has an open Dungeon Run
@@ -275,7 +275,7 @@ module.exports = {
 				.setDescription('Dungeons automatically close after 1 minute of inactivity')
 				.setColor('RED')
 				.setFooter('Skyblock Simulator');
-			return interaction.editReply({ embeds: [runopen] });
+			return await interaction.editReply({ embeds: [runopen] });
 		}
 
 		//Players Stats
@@ -381,7 +381,7 @@ module.exports = {
 				componentType: 'BUTTON',
 				time: 60000,
 			})
-			.then((i) => {
+			.then(async (i) => {
 				const { customId: id } = i;
 
 				if (id == 'f1') floor = 1;
@@ -389,7 +389,7 @@ module.exports = {
 				else if (id === 'f3') floor = 3;
 				else {
 					const cancelled = new MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
-					interaction.editReply({ embeds: [cancelled], components: [] });
+					await interaction.editReply({ embeds: [cancelled], components: [] });
 					return;
 				}
 			})
@@ -398,7 +398,7 @@ module.exports = {
 		//console.log(floor)
 
 		if (floor == null) {
-			return interaction.editReply({ components: [] });
+			return await interaction.editReply({ components: [] });
 		}
 
 		const invalidreqs = new MessageEmbed()
@@ -409,13 +409,13 @@ module.exports = {
 			.setColor('RED');
 
 		if (floor == 1 && combatlvl < 8) {
-			interaction.editReply({ embeds: [invalidreqs], components: [] });
+			await interaction.editReply({ embeds: [invalidreqs], components: [] });
 			return;
 		} else if (floor == 2 && catalevel < 4) {
-			interaction.editReply({ embeds: [invalidreqs], components: [] });
+			await interaction.editReply({ embeds: [invalidreqs], components: [] });
 			return;
 		} else if (floor == 3 && catalevel < 8) {
-			interaction.editReply({ embeds: [invalidreqs], components: [] });
+			await interaction.editReply({ embeds: [invalidreqs], components: [] });
 			return;
 		}
 
@@ -719,7 +719,7 @@ module.exports = {
 			}
 		}
 		test.setDescription(`🎯 Score: **${score}**\n\n${mapArray(map)}`);
-		interaction.editReply({ embeds: [test], components: [row1, row2] });
+		await interaction.editReply({ embeds: [test], components: [row1, row2] });
 
 		collector.on('collect', async (i) => {
 			const { customId: id } = i;
@@ -728,7 +728,7 @@ module.exports = {
 				let x, y;
 				if (test.fields.length > 0) {
 					test.fields = []; // remove the addition field like the "killed a mod with x hp left" // no, ur dumb
-					interaction.editReply({ embeds: [test] });
+					await interaction.editReply({ embeds: [test] });
 				}
 
 				if (id == 1) (x = 0), (y = 0);
@@ -968,7 +968,7 @@ module.exports = {
 
 					//   if(noButtonedit == false) {
 
-					interaction.editReply({ embeds: [test], components: [bossrow] });
+					await interaction.editReply({ embeds: [test], components: [bossrow] });
 					//    }
 
 					if (mhp <= 0) {
@@ -1001,7 +1001,7 @@ module.exports = {
 
 						//     if(noButtonedit == false) {
 
-						interaction.editReply({ embeds: [test], components: [bossrow] });
+						await interaction.editReply({ embeds: [test], components: [bossrow] });
 						//    }
 
 						await sleep(1000); // waiting a second so you can actually read the message
@@ -1063,7 +1063,7 @@ module.exports = {
 						atLoot = true;
 						//    if(noButtonedit == false) {
 
-						interaction.editReply({ embeds: [test], components: [lootrow] }); //add row for chests
+						await interaction.editReply({ embeds: [test], components: [lootrow] }); //add row for chests
 						//    }
 					}
 				} else {
@@ -1092,7 +1092,7 @@ module.exports = {
 					row2.components[1].disabled = true; // down arrow
 					row2.components[2].disabled = true; // right arrow
 
-					interaction.editReply({ embeds: [test], components: [row1, row2] });
+					await interaction.editReply({ embeds: [test], components: [row1, row2] });
 
 					if (mhp <= 0) {
 						fightEnded = true;
@@ -1147,7 +1147,7 @@ module.exports = {
 						row2.components[0].disabled = false; // left arrow
 						row2.components[1].disabled = false; // down arrow
 						row2.components[2].disabled = false; // right arrow
-						interaction.editReply({ embeds: [test], components: [row1, row2] });
+						await interaction.editReply({ embeds: [test], components: [row1, row2] });
 
 						await sleep(1000); // waiting a second so you can actually read the message
 					} else if (php <= 0) {
@@ -1180,7 +1180,7 @@ module.exports = {
 						test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray();
 					}
 					test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray();
-					interaction.editReply({ embeds: [test], components: [row1, row2] }); // Components need to get adjusted might be wrong
+					await interaction.editReply({ embeds: [test], components: [row1, row2] }); // Components need to get adjusted might be wrong
 				}
 			} else if (id == 'interact') {
 				//console.log('bing')
@@ -1309,7 +1309,7 @@ module.exports = {
 						.setColor('GREEN')
 						.setFooter('Skyblock Simulator');
 					//if(noButtonedit == false) {
-					interaction.editReply({ embeds: [lootembed], components: [] });
+					await interaction.editReply({ embeds: [lootembed], components: [] });
 					//  }
 					runFinished = true;
 					collector.stop();
@@ -1330,7 +1330,7 @@ module.exports = {
 						.setColor('GREEN')
 						.setFooter('Skyblock Simulator');
 					// if(noButtonedit == false) {
-					interaction.editReply({ embeds: [lootembed], components: [] });
+					await interaction.editReply({ embeds: [lootembed], components: [] });
 					//   }
 					runFinished = true;
 					collector.stop();
@@ -1356,7 +1356,7 @@ module.exports = {
 								.setColor('GREEN')
 								.setFooter('Skyblock Simulator');
 							// if(noButtonedit == false) {
-							interaction.editReply({ embeds: [lootembed], components: [] });
+							await interaction.editReply({ embeds: [lootembed], components: [] });
 							//  }
 							runFinished = true;
 							collector.stop();
@@ -1388,7 +1388,7 @@ module.exports = {
 								.setColor('GREEN')
 								.setFooter('Skyblock Simulator');
 							//   if(noButtonedit == false) {
-							interaction.editReply({ embeds: [lootembed], components: [] });
+							await interaction.editReply({ embeds: [lootembed], components: [] });
 							//   }
 							runFinished = true;
 							collector.stop();
@@ -1420,7 +1420,7 @@ module.exports = {
 								.setColor('GREEN')
 								.setFooter('Skyblock Simulator');
 							//      if(noButtonedit == false) {
-							interaction.editReply({ embeds: [lootembed], components: [] });
+							await interaction.editReply({ embeds: [lootembed], components: [] });
 							//  }
 							runFinished = true;
 							collector.stop();
@@ -1449,7 +1449,7 @@ module.exports = {
 								.setColor('GREEN')
 								.setFooter('Skyblock Simulator');
 							//  if(noButtonedit == false) {
-							interaction.editReply({ embeds: [lootembed], components: [] });
+							await interaction.editReply({ embeds: [lootembed], components: [] });
 							//   }
 							runFinished = true;
 							collector.stop();
@@ -1465,7 +1465,7 @@ module.exports = {
 				test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray();
 			}
 			if (!inTTT && !inQuiz && !bossFight)
-				return test.setColor('GREY'), interaction.editReply({ embeds: [test], components: [row1, row2] });
+				return test.setColor('GREY'), await interaction.editReply({ embeds: [test], components: [row1, row2] });
 		});
 		collector.on('end', async (collected) => {
 			try {

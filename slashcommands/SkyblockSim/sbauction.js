@@ -43,24 +43,24 @@ module.exports = {
 				embed.setDescription(
 					'You currently have 3 Auctions running, wait for them to finish to put up new ones.'
 				);
-				return interaction.editReply({ embeds: [err] });
+				return await interaction.editReply({ embeds: [err] });
 			}
 
 			if (!itemname || !duration || !startbid) {
 				err.setDescription('Item name, duration and starting bid are required when creating an auction.');
-				return interaction.editReply({ embeds: [err] });
+				return await interaction.editReply({ embeds: [err] });
 			}
 
       if(duration <= 0 || startbid <= 0) {
-        return interaction.editReply({embeds: [errEmbed("Can't input negative Values.", true)]})
+        return await interaction.editReply({embeds: [errEmbed("Can't input negative Values.", true)]})
       }
 
       if(duration > 336) {
-        return interaction.editReply({embeds: [errEmbed("Can't input a duration longer than 2 Weeks (336 hours)")]})
+        return await interaction.editReply({embeds: [errEmbed("Can't input a duration longer than 2 Weeks (336 hours)")]})
       }
 
       if(bazaar_items.includes(caps(itemname))) {
-        return interaction.editReply({embeds: [errEmbed("You can't auction any Items which can be sold at the Bazaar.", true)]})
+        return await interaction.editReply({embeds: [errEmbed("You can't auction any Items which can be sold at the Bazaar.", true)]})
       }
 
 			if (
@@ -69,7 +69,7 @@ module.exports = {
 				)
 			) {
 				err.setDescription(`Can't find any ${caps(itemname)} in your Inventory.`);
-				return interaction.editReply({ embeds: [err] });
+				return await interaction.editReply({ embeds: [err] });
 			}
 
 			let ahid = getAuctionID();
@@ -134,39 +134,39 @@ module.exports = {
 				await user.send({ embeds: [nobids] });
 			} catch (e) {}
 
-			return interaction.editReply({ embeds: [ahmade] });
+			return await interaction.editReply({ embeds: [ahmade] });
 		} else if (action == 'bid') {
 
 			if (!amount || !auctionid) {
 				err.setDescription('Amount of coins and auction id are required when bidding on an auction.');
-				return interaction.editReply({ embeds: [err] });
+				return await interaction.editReply({ embeds: [err] });
 			}
 
       if(amount <= 0) {
-        return interaction.editReply({embeds: [errEmbed("Can't input negative Values.", true)]})
+        return await interaction.editReply({embeds: [errEmbed("Can't input negative Values.", true)]})
       }
 
 			const ah = await collection2.findOne({ _id: auctionid });
 
 			if (!ah) {
 				err.setDescription(`Can't find any running auctions with id: ${auctionid}.`);
-				return interaction.editReply({ embeds: [err] });
+				return await interaction.editReply({ embeds: [err] });
 			}
 			if (ah.item.last_bidid == interaction.user.id) {
 				err.setDescription("You can't overbid yourself on an auction.");
-				return interaction.editReply({ embeds: [err] });
+				return await interaction.editReply({ embeds: [err] });
 			}
 
 			if ((Date.now() / 1000).toFixed() > ah.auction.expiration) {
 				err.setDescription('This auction has already expired.');
-				return interaction.editReply({ embeds: [err] });
+				return await interaction.editReply({ embeds: [err] });
 			}
 
 			if (amount >= player.data.profile.coins || amount * 1.1 < ah.item.bid) {
 				err.setDescription(
 					"You don't have enough coins to bid on this auction or the bid amount isn't 10% more than the current bid."
 				);
-				return interaction.editReply({ embeds: [err] });
+				return await interaction.editReply({ embeds: [err] });
 			}
 
 			await collection2.updateOne(
@@ -222,7 +222,7 @@ module.exports = {
 				await user.send({ embeds: [nobids] });
 			} catch (e) {}
 
-			return interaction.editReply({ embeds: [embed] });
+			return await interaction.editReply({ embeds: [embed] });
 		} else if (action == 'list') {
 			const auctions = await collection2.find({}).toArray();
 
@@ -233,7 +233,7 @@ module.exports = {
 			if (!auctions || auctions.length == 0) {
 				embed.setDescription('Currently no running auctions.');
 
-				return interaction.editReply({ embeds: [embed] });
+				return await interaction.editReply({ embeds: [embed] });
 			}
 
 			for (const ah of auctions) {
@@ -248,18 +248,18 @@ module.exports = {
 				}
 			}
 
-			return interaction.editReply({ embeds: [embed] });
+			return await interaction.editReply({ embeds: [embed] });
 		} else if (action == 'view') {
 			if (!auctionid) {
 				err.setDescription('An auction id is needed when viewing an auction.');
-				return interaction.editReply({ embeds: [err] });
+				return await interaction.editReply({ embeds: [err] });
 			}
 
 			const ah = await collection2.findOne({ _id: auctionid });
 
 			if (!ah) {
 				err.setDescription(`No auction found with id: ${auctionid}`);
-				return interaction.editReply({ embeds: [err] });
+				return await interaction.editReply({ embeds: [err] });
 			}
 
 			const embed = new Discord.MessageEmbed()
@@ -271,7 +271,7 @@ module.exports = {
 					true
 				);
 
-			return interaction.editReply({ embeds: [embed] });
+			return await interaction.editReply({ embeds: [embed] });
 		}
 	},
 };

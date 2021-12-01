@@ -14,6 +14,7 @@ const experience_table = [
 ]
 
 function caps(words) {
+  if(words.toLowerCase() == 'eye of ender') return 'Eye of Ender'
 	let separateWord = words.toLowerCase().split(' ');
 	for (let i = 0; i < separateWord.length; i++) {
 		separateWord[i] = separateWord[i].charAt(0).toUpperCase() + separateWord[i].substring(1);

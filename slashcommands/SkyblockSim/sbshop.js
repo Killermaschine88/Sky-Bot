@@ -19,7 +19,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No profile found')
 				.setDescription(`Create a profile using \`/sb start\``);
-			interaction.editReply({ embeds: [noprofile] });
+			await interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
@@ -608,7 +608,7 @@ module.exports = {
 							.setDescription(`Purchased **${rodname}** for 50 gems and ${amount} Lilypads.`)
 							.setColor('GREEN');
 
-						interaction.editReply({
+						await interaction.editReply({
 							embeds: [finished],
 							components: [],
 						});
@@ -619,7 +619,7 @@ module.exports = {
 							.setDescription(`Purchased **${rodname}** for ${cost} coins and ${amount} lilypads.`)
 							.setColor('GREEN');
 
-						interaction.editReply({
+						await interaction.editReply({
 							embeds: [finished],
 							components: [],
 						});
@@ -644,14 +644,12 @@ module.exports = {
 						{ upsert: true }
 					);
 
-          console.log('a')
-
 					const purchased = new Discord.MessageEmbed()
 						.setFooter(getFooter(player))
 						.setDescription('Purchased Booster Cookie')
 						.setColor('GREEN');
 
-					return interaction.editReply({
+					return await interaction.editReply({
 						embeds: [purchased],
 						components: [],
 					});
@@ -686,7 +684,7 @@ module.exports = {
 						)
 						.setColor('GREEN')
 						.setFooter(getFooter(player));
-					return interaction.editReply({
+					return await interaction.editReply({
 						embeds: [lootembed],
 						components: [],
 					});
@@ -721,7 +719,7 @@ module.exports = {
 						.setDescription(`**${choosen2}** purchased! Use \`/sb wardrobe\` to equip it.`)
 						.setColor('GREEN')
 						.setFooter(getFooter(player));
-					return interaction.editReply({
+					return await interaction.editReply({
 						embeds: [lootembed],
 						components: [],
 					});
@@ -762,7 +760,7 @@ module.exports = {
 							.setDescription(`Purchased **${pickname}** for ${pickcoins} coins and ${itemamount} ${itemname}.`)
 							.setColor('GREEN');
 
-						interaction.editReply({
+						await interaction.editReply({
 							embeds: [finished],
 							components: [],
 						});
@@ -772,7 +770,7 @@ module.exports = {
 						.setTitle('Menu Cancelled')
 						.setColor('RED')
 						.setFooter(getFooter(player));
-					interaction.editReply({
+					await interaction.editReply({
 						embeds: [cancelled],
 						components: [],
 					});

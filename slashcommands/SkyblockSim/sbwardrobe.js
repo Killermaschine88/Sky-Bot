@@ -19,7 +19,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No profile found')
 				.setDescription(`Create a profile using \`/sb start\``);
-			interaction.editReply({ embeds: [noprofile] });
+			await interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
@@ -77,7 +77,7 @@ module.exports = {
       } else {
         const err = new Discord.MessageEmbed()
 
-        return interaction.editReply({embeds: [errEmbed(`Couldn't find any Armor or Sword matching \`${caps(itemname)}\`.`, true)]})
+        return await interaction.editReply({embeds: [errEmbed(`Couldn't find any Armor or Sword matching \`${caps(itemname)}\`.`, true)]})
       }
 
       const embed = new Discord.MessageEmbed()
@@ -86,6 +86,6 @@ module.exports = {
       .setDescription(`Successfully changed ${type} to ${caps(itemname)}.`)
       .setFooter(getFooter(player))
 
-      return interaction.editReply({embeds: [embed]})
+      return await interaction.editReply({embeds: [embed]})
 	},
 };

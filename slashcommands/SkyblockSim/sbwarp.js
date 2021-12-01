@@ -18,7 +18,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No profile found')
 				.setDescription(`Create a profile using \`/sb start\``);
-			return interaction.editReply({ embeds: [noprofile] });
+			return await interaction.editReply({ embeds: [noprofile] });
 		}
 
 		let activity = player.data.misc.is_fishing
@@ -34,7 +34,7 @@ module.exports = {
 				.setTitle('Warp Blocked')
 				.setDescription(`Warping blocked! You are currently ${activity}!`)
 				.setFooter(getFooter(player));
-			return interaction.editReply({ embeds: [activityEmbed] });
+			return await interaction.editReply({ embeds: [activityEmbed] });
 		}
 
 		//Some Values
@@ -93,7 +93,7 @@ module.exports = {
 				componentType: 'BUTTON',
 				time: 60000,
 			})
-			.then((i) => {
+			.then(async (i) => {
 				if (i.customId === 'combat') {
 					type = 'combat';
 				} else if (i.customId === 'mining') {
@@ -104,7 +104,7 @@ module.exports = {
 					type = 'foraging';
 				} else {
 					const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
-					interaction.editReply({ embeds: [cancelled], components: [] });
+					await interaction.editReply({ embeds: [cancelled], components: [] });
 					return;
 				}
 			})
@@ -173,7 +173,7 @@ module.exports = {
 
 			//add b4 back for the end once added
 			const row = new Discord.MessageActionRow().addComponents(b1, b2, b3, b4, b5);
-			interaction.editReply({ embeds: [combatembed], components: [row] });
+			await interaction.editReply({ embeds: [combatembed], components: [row] });
 		} else if (type === 'mining') {
 			const miningembed = new Discord.MessageEmbed()
 				.setTitle('Skyblock Simulator Mining Islands')
@@ -251,12 +251,12 @@ module.exports = {
 
 			const row = new Discord.MessageActionRow().addComponents(b0, b1, b2);
 			const row1 = new Discord.MessageActionRow().addComponents(b3, b4, b5);
-			interaction.editReply({ embeds: [miningembed], components: [row, row1] });
+			await interaction.editReply({ embeds: [miningembed], components: [row, row1] });
 		} else if (type === 'farming') {
 		} else if (type === 'foraging') {
 		} else {
 			const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
-			interaction.editReply({ embeds: [cancelled], components: [] });
+			await interaction.editReply({ embeds: [cancelled], components: [] });
 			return;
 		}
 
@@ -267,7 +267,7 @@ module.exports = {
 					componentType: 'BUTTON',
 					time: 60000,
 				})
-				.then((i) => {
+				.then(async (i) => {
 					if (i.customId === 'hub') {
 						island = 'Hub';
 					} else if (i.customId === 'spidersden') {
@@ -278,7 +278,7 @@ module.exports = {
 						island = 'The End';
 					} else if (i.customId === 'cancel') {
 						const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
-						interaction.editReply({ embeds: [cancelled], components: [] });
+						await interaction.editReply({ embeds: [cancelled], components: [] });
 						return;
 					}
 				})
@@ -290,7 +290,7 @@ module.exports = {
 					componentType: 'BUTTON',
 					time: 60000,
 				})
-				.then((i) => {
+				.then(async (i) => {
 					if (i.customId === 'coalmine') {
 						location = 'Coal Mine';
 					} else if (i.customId === 'goldmine') {
@@ -303,7 +303,7 @@ module.exports = {
 						location = 'Crystal Hollows';
 					} else if (i.customId === 'cancel') {
 						const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
-						interaction.editReply({ embeds: [cancelled], components: [] });
+						await interaction.editReply({ embeds: [cancelled], components: [] });
 						return;
 					}
 				})
@@ -349,7 +349,7 @@ module.exports = {
 
 				const row = new Discord.MessageActionRow().addComponents(b1, b2, b3, b4);
 
-				interaction.editReply({ embeds: [hubwarp], components: [row] });
+				await interaction.editReply({ embeds: [hubwarp], components: [row] });
 
 				await menu
 					.awaitMessageComponent({
@@ -357,7 +357,7 @@ module.exports = {
 						componentType: 'BUTTON',
 						time: 60000,
 					})
-					.then((i) => {
+					.then(async (i) => {
 						if (i.customId === 'graveyard') {
 							location = 'Graveyard';
 						} else if (i.customId === 'ruins') {
@@ -366,7 +366,7 @@ module.exports = {
 							location = 'Highlevel';
 						} else {
 							const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
-							interaction.editReply({ embeds: [cancelled], components: [] });
+							await interaction.editReply({ embeds: [cancelled], components: [] });
 							return;
 						}
 					})
@@ -408,7 +408,7 @@ module.exports = {
 
 				const row = new Discord.MessageActionRow().addComponents(b1, b2, b3, b4);
 
-				interaction.editReply({ embeds: [spiderwarp], components: [row] });
+				await interaction.editReply({ embeds: [spiderwarp], components: [row] });
 
 				await menu
 					.awaitMessageComponent({
@@ -416,7 +416,7 @@ module.exports = {
 						componentType: 'BUTTON',
 						time: 60000,
 					})
-					.then((i) => {
+					.then(async (i) => {
 						if (i.customId === 'lowerhill') {
 							location = 'Lower Spiders Hill';
 						} else if (i.customId === 'upperhill') {
@@ -425,7 +425,7 @@ module.exports = {
 							location = 'Spider Cave';
 						} else {
 							const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
-							interaction.editReply({ embeds: [cancelled], components: [] });
+							await interaction.editReply({ embeds: [cancelled], components: [] });
 							return;
 						}
 					})
@@ -465,7 +465,7 @@ module.exports = {
 
 				const row = new Discord.MessageActionRow().addComponents(b1, b2, b3, b4);
 
-				interaction.editReply({ embeds: [blazingwarp], components: [row] });
+				await interaction.editReply({ embeds: [blazingwarp], components: [row] });
 
 				await menu
 					.awaitMessageComponent({
@@ -473,7 +473,7 @@ module.exports = {
 						componentType: 'BUTTON',
 						time: 60000,
 					})
-					.then((i) => {
+					.then(async (i) => {
 						if (i.customId === 'moltencastle') {
 							location = 'Molten Castle';
 						} else if (i.customId === 'moltenbridge') {
@@ -482,7 +482,7 @@ module.exports = {
 							location = 'Lava Field';
 						} else {
 							const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
-							interaction.editReply({ embeds: [cancelled], components: [] });
+							await interaction.editReply({ embeds: [cancelled], components: [] });
 							return;
 						}
 					})
@@ -521,7 +521,7 @@ module.exports = {
 
 				const row = new Discord.MessageActionRow().addComponents(b1, b2, b3, b4);
 
-				interaction.editReply({ embeds: [blazingwarp], components: [row] });
+				await interaction.editReply({ embeds: [blazingwarp], components: [row] });
 
 				await menu
 					.awaitMessageComponent({
@@ -529,7 +529,7 @@ module.exports = {
 						componentType: 'BUTTON',
 						time: 60000,
 					})
-					.then((i) => {
+					.then(async (i) => {
 						if (i.customId === 'endgate') {
 							location = 'End Gate';
 						} else if (i.customId === 'dragonnest') {
@@ -538,7 +538,7 @@ module.exports = {
 							location = 'Void Sepulture';
 						} else {
 							const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
-							interaction.editReply({ embeds: [cancelled], components: [] });
+							await interaction.editReply({ embeds: [cancelled], components: [] });
 							return;
 						}
 					})
@@ -611,7 +611,7 @@ module.exports = {
 			const row = new Discord.MessageActionRow().addComponents(b1, b2, b3, b4);
 			const row1 = new Discord.MessageActionRow().addComponents(b5, b6, b7);
 
-			interaction.editReply({ embeds: [cavernswarp], components: [row, row1] });
+			await interaction.editReply({ embeds: [cavernswarp], components: [row, row1] });
 
 			await menu
 				.awaitMessageComponent({
@@ -619,7 +619,7 @@ module.exports = {
 					componentType: 'BUTTON',
 					time: 60000,
 				})
-				.then((i) => {
+				.then(async (i) => {
 					if (i.customId === 'gunpowdermines') {
 						location = 'Gunpowder Mines';
 					} else if (i.customId === 'lapisquarry') {
@@ -634,7 +634,7 @@ module.exports = {
 						location = 'Obsidian Sanctuary';
 					} else {
 						const cancelled = new Discord.MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
-						interaction.editReply({ embeds: [cancelled], components: [] });
+						await interaction.editReply({ embeds: [cancelled], components: [] });
 						return;
 					}
 				})
@@ -655,7 +655,7 @@ module.exports = {
 			// interaction.editReply({ embeds: [confirm], components: [row] })
 
 			if (player.data.settings.confirmation == true) {
-				interaction.editReply({ embeds: [confirm], components: [row] });
+				await interaction.editReply({ embeds: [confirm], components: [row] });
 
 				await menu
 					.awaitMessageComponent({
@@ -675,12 +675,12 @@ module.exports = {
 								.setDescription(`Travelled to the **${location}**.`)
 								.setColor(getColor(player))
 								.setFooter(getFooter(player));
-							interaction.editReply({ embeds: [travelled], components: [] });
+							await interaction.editReply({ embeds: [travelled], components: [] });
 						} else {
 							const cancelled = new Discord.MessageEmbed()
 								.setTitle('Cancelled Traveling')
 								.setColor('RED');
-							interaction.editReply({ embeds: [cancelled], components: [] });
+							await interaction.editReply({ embeds: [cancelled], components: [] });
 							return;
 						}
 					})
@@ -696,7 +696,7 @@ module.exports = {
 					.setDescription(`Travelled to the **${location}**.`)
 					.setColor(getColor(player))
 					.setFooter(getFooter(player));
-				interaction.editReply({ embeds: [travelled], components: [] });
+				await interaction.editReply({ embeds: [travelled], components: [] });
 			}
 		}
 	},

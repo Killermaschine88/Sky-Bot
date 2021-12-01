@@ -66,6 +66,7 @@ module.exports = {
 			// Build a string showing the values of selected type
 			let i = 0;
 			while (i < lbCol.length && i < 10) {
+        //console.log(lbCol[i]._id + ' ' + lbCol[i].data.profile.name)
 				lbString += `#${i + 1} - ${lbCol[i].data.profile.name}: ${eval(`lbCol[i].${type.data}.toLocaleString()`)}\n`;
 				i++;
 			}
@@ -78,7 +79,7 @@ module.exports = {
 		});
 
 		leaderCollector.on('end', async (collected) => {
-			interaction.editReply({components: []})
+			await interaction.editReply({components: []})
 		});
 	},
 };

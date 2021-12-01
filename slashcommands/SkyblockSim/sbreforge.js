@@ -19,7 +19,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No Profile found')
 				.setDescription(`Create a profile using \`/sb start\``);
-			interaction.editReply({ embeds: [noprofile] });
+			await interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
@@ -43,7 +43,7 @@ module.exports = {
 				.setColor('RED')
 				.setFooter(getFooter(player))
 				.setDescription('Cannot have a negative item ID.');
-			return interaction.editReply({ embeds: [embed] });
+			return await interaction.editReply({ embeds: [embed] });
 		}
 
 		//returning error if invalid itemId
@@ -56,7 +56,7 @@ module.exports = {
 				.setColor('RED')
 				.setFooter(getFooter(player));
 
-			return interaction.editReply({ embeds: [errembed] });
+			return await interaction.editReply({ embeds: [errembed] });
 		}
 
 		if (type == 'armor' && armor.length <= itemId) {
@@ -68,7 +68,7 @@ module.exports = {
 				.setColor('RED')
 				.setFooter(getFooter(player));
 
-			return interaction.editReply({ embeds: [errembed] });
+			return await interaction.editReply({ embeds: [errembed] });
 		}
 
 		if (type == 'sword') {
@@ -82,7 +82,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter(getFooter(player));
 
-				return interaction.editReply({ embeds: [errembed] });
+				return await interaction.editReply({ embeds: [errembed] });
 			}
 
 			if (!player.data.inventory.items.find((item) => item.name.toLowerCase() == reforge && item.amount > 0)) {
@@ -92,7 +92,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter(getFooter(player));
 
-				return interaction.editReply({ embeds: [errembed] });
+				return await interaction.editReply({ embeds: [errembed] });
 			}
 
 			if (reforge == 'dragon claw') {
@@ -149,7 +149,7 @@ module.exports = {
 				.setColor(getColor(player))
 				.setFooter(getFooter(player));
 
-			return interaction.editReply({ embeds: [applied] });
+			return await interaction.editReply({ embeds: [applied] });
 		} else if (type == 'armor') {
 			let validreforges = [
 				'deep sea orb',
@@ -167,7 +167,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter(getFooter(player));
 
-				return interaction.editReply({ embeds: [errembed] });
+				return await interaction.editReply({ embeds: [errembed] });
 			}
 
 			if (!player.data.inventory.items.find((item) => item.name.toLowerCase() == reforge && item.amount > 0)) {
@@ -177,7 +177,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter(getFooter(player));
 
-				return interaction.editReply({ embeds: [errembed] });
+				return await interaction.editReply({ embeds: [errembed] });
 			}
 
 			if (reforge == 'deep sea orb') {
@@ -235,7 +235,7 @@ module.exports = {
 				.setColor(getColor(player))
 				.setFooter(getFooter(player));
 
-			return interaction.editReply({ embeds: [applied] });
+			return await interaction.editReply({ embeds: [applied] });
 		} else if (type == 'pickaxe') {
 			let validreforges = ['onyx', 'diamonite', 'rock gemstone', 'recombobulator 3000'];
 
@@ -246,7 +246,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter(getFooter(player));
 
-				return interaction.editReply({ embeds: [errembed] });
+				return await interaction.editReply({ embeds: [errembed] });
 			}
 
 			if (!player.data.inventory.items.find((item) => item.name.toLowerCase() == reforge && item.amount > 0)) {
@@ -256,7 +256,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter(getFooter(player));
 
-				return interaction.editReply({ embeds: [errembed] });
+				return await interaction.editReply({ embeds: [errembed] });
 			}
 
 			if (reforge == 'onyx') {
@@ -308,7 +308,7 @@ module.exports = {
 				.setColor(getColor(player))
 				.setFooter(getFooter(player));
 
-			return interaction.editReply({ embeds: [applied] });
+			return await interaction.editReply({ embeds: [applied] });
 		} else if (type == 'rod') {
 			let validreforges = ['hardened wood', 'lucky dice', 'recombobulator 3000'];
 
@@ -319,7 +319,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter(getFooter(player));
 
-				return interaction.editReply({ embeds: [errembed] });
+				return await interaction.editReply({ embeds: [errembed] });
 			}
 
 			if (!player.data.inventory.items.find((item) => item.name.toLowerCase() == reforge && item.amount > 0)) {
@@ -329,7 +329,7 @@ module.exports = {
 					.setColor('RED')
 					.setFooter(getFooter(player));
 
-				return interaction.editReply({ embeds: [errembed] });
+				return await interaction.editReply({ embeds: [errembed] });
 			}
 
 			if (reforge == 'hardened wood') {
@@ -379,7 +379,7 @@ module.exports = {
 				.setColor(getColor(player))
 				.setFooter(getFooter(player));
 
-			return interaction.editReply({ embeds: [applied] });
+			return await interaction.editReply({ embeds: [applied] });
 		}
 	},
 };

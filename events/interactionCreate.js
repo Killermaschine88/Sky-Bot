@@ -173,6 +173,7 @@ module.exports = {
 		}
 
 		if (!interaction.isCommand()) return;
+    await interaction.deferReply()
 
 		if (config.blacklistedusers.includes(interaction.user.id)) {
 			let blockedembed = new Discord.MessageEmbed()
@@ -182,7 +183,7 @@ module.exports = {
 				)
 				.setColor('RED');
 
-			return interaction.reply({
+			return interaction.editReply({
 				embeds: [blockedembed],
 				ephemeral: true,
 			});
@@ -207,7 +208,7 @@ module.exports = {
 					.setStyle('LINK')
 			);
 
-			interaction.reply({
+			interaction.editReply({
 				embeds: [embed],
 				components: [row],
 				ephemeral: true,
@@ -235,7 +236,7 @@ module.exports = {
 				.setDescription(
 					`Maintanance Mode enabled because of **${settings.maintanance.reason}**!\nPlease wait while it is being worked on.`
 				);
-			return interaction.reply({ embeds: [maintan] });
+			return interaction.editReply({ embeds: [maintan] });
     }
     }
 
@@ -320,7 +321,7 @@ module.exports = {
 						`You need to wait **${timeLeft.toFixed(1)}s** before using **${commandExecute}** again.`
 					);
 
-				return interaction.reply({
+				return interaction.editReply({
 					embeds: [cdembed],
 					ephemeral: true,
 				});
@@ -338,11 +339,11 @@ module.exports = {
       .setDescription(`**${commandExecute}** has been used.\n\nGuildID: \`${interaction.guild.id}\`\nGuild Name: \`${interaction.guild.name}\`\nUserID: \`${interaction.user.id}\`\nUser: \`${interaction.user.tag}\``)
     interaction.client.channels.fetch('855512734514937906').then(channel => channel.send({ embeds: [usedcmd] }))
 
-			await interaction.deferReply();
+			//await interaction.deferReply();
 			await interaction.client.slashcommands.get(commandExecute).execute(interaction, mclient);
 		} catch (error) {
 			console.error(error);
-			interaction.followUp({
+			interaction.editReply({
 				content: 'There was an error while executing this command and the Bot Dev has been notified.',
 				ephemeral: true,
 			});

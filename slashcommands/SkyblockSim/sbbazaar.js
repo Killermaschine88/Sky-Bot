@@ -25,7 +25,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No Profile found')
 				.setDescription(`Create a profile using \`/sb start\``);
-			interaction.editReply({ embeds: [noprofile] });
+			await interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
@@ -58,25 +58,25 @@ module.exports = {
     if(action == 'buy-order') {
 
       if(!itemname || !amount || !price) {
-        return interaction.editReply({embeds: [errEmbed("Item name, amount and price are required for this action.", true)]})
+        return await interaction.editReply({embeds: [errEmbed("Item name, amount and price are required for this action.", true)]})
       }
 
       if(!bazaar_items.includes(caps(itemname))) {
-        return interaction.editReply({embeds: [errEmbed(`${itemname} can't be bought at the bazaar.`, true)]})
+        return await interaction.editReply({embeds: [errEmbed(`${itemname} can't be bought at the bazaar.`, true)]})
       }
 
       const itemcheck = await collection2.findOne({ _id: caps(itemname) })
       
       if(!itemcheck) {
-        return interaction.editReply({embeds: [errEmbed(`No bazaar entry found for ${itemname} if you believe this is wrong contact **Baltraz#4874**`, true)]})
+        return await interaction.editReply({embeds: [errEmbed(`No bazaar entry found for ${itemname} if you believe this is wrong contact **Baltraz#4874**`, true)]})
       }
 
       if(amount <= 0 || price <= 0) {
-        return interaction.editReply({embeds: [errEmbed("Can't create sell offer for negative Items or negative Price.", true)]})
+        return await interaction.editReply({embeds: [errEmbed("Can't create sell offer for negative Items or negative Price.", true)]})
       }
       
       if(player.data.profile.coins < amount * price) {
-        return interaction.editReply({embeds: [errEmbed("You don't have enough coins to setup this buy order.", true)]})
+        return await interaction.editReply({embeds: [errEmbed("You don't have enough coins to setup this buy order.", true)]})
       }
 
       const bz_id = getBazaarID()
@@ -115,32 +115,32 @@ module.exports = {
       .setColor('GREEN')
       .setFooter(getFooter(player))
 
-      return interaction.editReply({embeds: [embed]})
+      return await interaction.editReply({embeds: [embed]})
 
     } else if(action == 'sell-order') {
 
       if(!itemname || !amount || !price) {
-        return interaction.editReply({embeds: [errEmbed("Item name, amount and price are required for this action.", true)]})
+        return await interaction.editReply({embeds: [errEmbed("Item name, amount and price are required for this action.", true)]})
       }
 
       if(!bazaar_items.includes(caps(itemname))) {
-        return interaction.editReply({embeds: [errEmbed(`${itemname} can't be sold at the bazaar.`, true)]})
+        return await interaction.editReply({embeds: [errEmbed(`${itemname} can't be sold at the bazaar.`, true)]})
       }
 
       const itemcheck = await collection2.findOne({ _id: caps(itemname) })
       
       if(!itemcheck) {
-        return interaction.editReply({embeds: [errEmbed(`No bazaar entry found for ${itemname} if you believe this is wrong contact **Baltraz#4874**`, true)]})
+        return await interaction.editReply({embeds: [errEmbed(`No bazaar entry found for ${itemname} if you believe this is wrong contact **Baltraz#4874**`, true)]})
       }
 
       const founditem = player.data.inventory.items.find(item => item.name.toLowerCase() == itemname.toLowerCase())
 
       if(!founditem || founditem.amount <= 0) {
-        return interaction.editReply({embeds: [errEmbed(`Couldn't find any ${caps(itemname)} in your inventory.`, true)]})
+        return await interaction.editReply({embeds: [errEmbed(`Couldn't find any ${caps(itemname)} in your inventory.`, true)]})
       }
 
       if(amount <= 0 || price <= 0) {
-        return interaction.editReply({embeds: [errEmbed("Can't create sell offer for negative Items or negative Price.", true)]})
+        return await interaction.editReply({embeds: [errEmbed("Can't create sell offer for negative Items or negative Price.", true)]})
       }
       
       if(founditem.amount < amount) {
@@ -183,16 +183,16 @@ module.exports = {
       .setColor('GREEN')
       .setFooter(getFooter(player))
 
-      return interaction.editReply({embeds: [embed]})
+      return await interaction.editReply({embeds: [embed]})
       
     } else if(action == 'buy-instantly') {
 
       if(!itemname || !amount) {
-        return interaction.editReply({embeds: [errEmbed("Item name and amount are required for this action.", true)]})
+        return await interaction.editReply({embeds: [errEmbed("Item name and amount are required for this action.", true)]})
       }
 
       if(amount <= 0) {
-        return interaction.editReply({embeds: [errEmbed("Can't input negative Amount.", true)]})
+        return await interaction.editReply({embeds: [errEmbed("Can't input negative Amount.", true)]})
       }
 
       const founditem = player.data.inventory.items.find(item => item.name.toLowerCase() == itemname.toLowerCase())
@@ -200,7 +200,7 @@ module.exports = {
       const item = await collection2.findOne({ _id: caps(itemname) })
 
       if(item.sell.length == 0) {
-        return interaction.editReply({embeds: [errEmbed(`Couldn't find any sell offers for ${caps(itemname)}.`, true)]})
+        return await interaction.editReply({embeds: [errEmbed(`Couldn't find any sell offers for ${caps(itemname)}.`, true)]})
       }
 
       let amountfound = 0
@@ -239,7 +239,7 @@ module.exports = {
 
         if(id == 'yes') {
           if(player.data.profile.coins < costfound) {
-            return interaction.editReply({embeds: [errEmbed(`Not enough coins to purchased ${caps(itemname)}`)], components: []})
+            return await interaction.editReply({embeds: [errEmbed(`Not enough coins to purchased ${caps(itemname)}`)], components: []})
           }
 
           //handle user buying items
@@ -317,13 +317,13 @@ module.exports = {
           embed.setColor('GREEN')
           embed.setFooter(getFooter('Bazaar'))
 
-          return interaction.editReply({embeds: [embed], components: []})
+          return await interaction.editReply({embeds: [embed], components: []})
 
         } else {
           embed.setDescription('Cancelled')
           embed.setColor('RED')
           embed.setFooter(getFooter('Bazaar'))
-          return interaction.editReply({embeds: [embed], components: []})
+          return await interaction.editReply({embeds: [embed], components: []})
         }
 
       }).catch((err) => interaction.editReply({components: []}));
@@ -331,17 +331,17 @@ module.exports = {
     } else if(action == 'sell-instantly') {
 
       if(!itemname || !amount) {
-        return interaction.editReply({embeds: [errEmbed("Item name and amount are required for this action.", true)]})
+        return await interaction.editReply({embeds: [errEmbed("Item name and amount are required for this action.", true)]})
       }
 
       if(amount <= 0) {
-        return interaction.editReply({embeds: [errEmbed("Can't input negative Amount.", true)]})
+        return await interaction.editReply({embeds: [errEmbed("Can't input negative Amount.", true)]})
       }
 
       const founditem = player.data.inventory.items.find(item => item.name.toLowerCase() == itemname.toLowerCase())
 
       if(!founditem || founditem.amount <= 0) {
-        return interaction.editReply({embeds: [errEmbed(`Couldn't find any ${caps(itemname)} in your inventory.`, true)]})
+        return await interaction.editReply({embeds: [errEmbed(`Couldn't find any ${caps(itemname)} in your inventory.`, true)]})
       }
 
       if(founditem.amount < amount) {
@@ -351,7 +351,7 @@ module.exports = {
       const item = await collection2.findOne({ _id: caps(itemname) })
 
       if(item.buy.length == 0) {
-        return interaction.editReply({embeds: [errEmbed(`Couldn't find any buy offers for ${caps(itemname)}.`, true)]})
+        return await interaction.editReply({embeds: [errEmbed(`Couldn't find any buy offers for ${caps(itemname)}.`, true)]})
       }
 
       let amountfound = 0
@@ -464,12 +464,12 @@ module.exports = {
           embed.setDescription(`Sold Items successfully.`)
           embed.setColor('GREEN')
 
-          return interaction.editReply({embeds: [embed], components: []})
+          return await interaction.editReply({embeds: [embed], components: []})
 
         } else {
           embed.setDescription('Cancelled')
           embed.setColor('RED')
-          return interaction.editReply({embeds: [embed], components: []})
+          return await interaction.editReply({embeds: [embed], components: []})
         }
 
       }).catch((err) => interaction.editReply({components: []}));      
@@ -477,13 +477,13 @@ module.exports = {
     } else if(action == 'item-info') {
 
       if(!itemname) {
-        return interaction.editReply({embeds: [errEmbed("Item name is required for this action.", true)]})
+        return await interaction.editReply({embeds: [errEmbed("Item name is required for this action.", true)]})
       }
 
       const item = await collection2.findOne({ _id: caps(itemname) })
 
       if(!item) {
-        return interaction.editReply({embeds: [errEmbed(`No bazaar entry found for ${itemname} if you believe this is wrong contact **Baltraz#4874**`, true)]})
+        return await interaction.editReply({embeds: [errEmbed(`No bazaar entry found for ${itemname} if you believe this is wrong contact **Baltraz#4874**`, true)]})
       }
 
       let totalitems_buyoffer = 0
@@ -524,7 +524,7 @@ module.exports = {
       .addField('Amount of items in sell offers', `${sell.total_amount}`, true)
 
 
-      interaction.editReply({embeds: [embed]})
+      return await interaction.editReply({embeds: [embed]})
       
     } else if(action == 'cancel-orders') {
 
@@ -561,14 +561,14 @@ module.exports = {
       .setFooter(getFooter('Bazaar'))
       .setDescription(`**Buy orders**\n${buy_str}\n**Sell orders**\n${sell_str}`)
 
-      return interaction.editReply({embeds: [embed]})
+      return await interaction.editReply({embeds: [embed]})
 
       } else if(itemname && bzid) {
 
         const founditem = await collection2.findOne({ _id: caps(itemname) })
 
         if(!founditem) {
-          return interaction.editReply({embeds: [errEmbed(`No bazaar entry found for ${itemname} if you believe this is wrong contact **Baltraz#4874**`, true)]})
+          return await interaction.editReply({embeds: [errEmbed(`No bazaar entry found for ${itemname} if you believe this is wrong contact **Baltraz#4874**`, true)]})
         }
 
         const buycheck = founditem.buy.find(item => item.bz_id == bzid)
@@ -597,7 +597,7 @@ module.exports = {
           .setColor(getColor('Bazaar'))
           .setFooter(getFooter('Bazaar'))
 
-          return interaction.editReply({embeds: [embed]})
+          return await interaction.editReply({embeds: [embed]})
 
         } else if(sellcheck) {
 
@@ -623,16 +623,16 @@ module.exports = {
           .setColor(getColor('Bazaar'))
           .setFooter(getFooter('Bazaar'))
 
-          return interaction.editReply({embeds: [embed]})
+          return await interaction.editReply({embeds: [embed]})
 
         } else {
 
-          return interaction.editReply({embeds: [errEmbed(`Couldn't find any buy or sell orders with\nID: ${bzid}\nItem: ${caps(itemname)}.\n\nTo find running orders use \`/sb bazaar cancel-orders\` without any extra input.`)]})
+          return await interaction.editReply({embeds: [errEmbed(`Couldn't find any buy or sell orders with\nID: ${bzid}\nItem: ${caps(itemname)}.\n\nTo find running orders use \`/sb bazaar cancel-orders\` without any extra input.`)]})
 
         }
 
       } else {
-        return interaction.editReply({embeds: [errEmbed(`Item name and bazaar id are required for this action.`)]})
+        return await interaction.editReply({embeds: [errEmbed(`Item name and bazaar id are required for this action.`)]})
       }
 
 
@@ -669,7 +669,7 @@ module.exports = {
       .addField('Total sell orders', `${total_sellorders}`, true)
       .addField('Total items in sell orders', `${total_sellorder_items}`, true)
 
-      return interaction.editReply({embeds: [embed]})
+      return await interaction.editReply({embeds: [embed]})
     }
 
 

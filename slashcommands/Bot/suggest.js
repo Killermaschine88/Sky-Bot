@@ -26,7 +26,7 @@ module.exports = {
 			.setFooter(`${interaction.user.id}`);
 
 		interaction.client.channels
-			.fetch('906928690640879716')
+			.fetch('909871468136001606')
 			.then((channel) =>
 				channel.send({ embeds: [suggestembed] }).then(
 					(msg) =>

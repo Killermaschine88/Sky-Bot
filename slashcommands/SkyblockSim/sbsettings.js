@@ -19,7 +19,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No Profile found')
 				.setDescription(`Create a profile using \`/sb start\``);
-			interaction.editReply({ embeds: [noprofile] });
+			await interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
@@ -46,7 +46,7 @@ module.exports = {
 				.setTitle('Setting changed')
 				.setColor('GREEN')
 				.setDescription(`Images shown is now ${show}.`);
-			interaction.editReply({ embeds: [embed] });
+			await interaction.editReply({ embeds: [embed] });
 			return;
 		} else if (choosen === 'confirmation') {
 			await collection.updateOne(
@@ -60,7 +60,7 @@ module.exports = {
 				.setTitle('Setting changed')
 				.setColor('GREEN')
 				.setDescription(`Confirmation messages are now ${show}.`);
-			interaction.editReply({ embeds: [embed] });
+			await interaction.editReply({ embeds: [embed] });
 			return;
 		}
 	},

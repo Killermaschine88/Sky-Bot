@@ -21,7 +21,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No profile found')
 				.setDescription(`Create a profile using \`/sb start\``);
-			interaction.editReply({ embeds: [noprofile] });
+			await interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
@@ -183,7 +183,7 @@ module.exports = {
         }
 
         if(!itemcheck1 || !itemcheck2) {
-          return interaction.editReply({embeds: [errEmbed("Can't craft item because of missing materials.")], components: []})
+          return await interaction.editReply({embeds: [errEmbed("Can't craft item because of missing materials.")], components: []})
         }
 
         const updatePlayer = addItems(reforge_stone, 1, player);
@@ -208,7 +208,7 @@ module.exports = {
         embed.fields = [];
         embed.setColor('GREEN');
 
-        return interaction.editReply({ embeds: [embed], components: [] });
+        return await interaction.editReply({ embeds: [embed], components: [] });
 
       } else {
 				embed.setDescription("Can't craft item due to missing items, coins or you already own the Armor/Sword.");
@@ -221,7 +221,7 @@ module.exports = {
 
 		leaderCollector.on('end', async (collected) => {
 
-      interaction.editReply({components: []})
+      await interaction.editReply({components: []})
       
 		});
 	},

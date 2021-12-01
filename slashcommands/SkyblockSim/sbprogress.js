@@ -31,7 +31,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No profile found')
 				.setDescription(`The specified user hasn\'t played Skyblock Simulator yet.`);
-			interaction.editReply({ embeds: [noprofile] });
+			await interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
@@ -108,6 +108,6 @@ module.exports = {
 			true
 		);
 
-		interaction.editReply({ embeds: [embed] });
+		await interaction.editReply({ embeds: [embed] });
 	},
 };

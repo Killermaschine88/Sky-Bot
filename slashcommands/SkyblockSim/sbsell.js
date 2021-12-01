@@ -20,7 +20,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No profile found')
 				.setDescription(`Create a profile using \`/sb start\``);
-			return interaction.editReply({ embeds: [noprofile] });
+			return await interaction.editReply({ embeds: [noprofile] });
 		}
 
 		if (player.data.misc.is_massselling) {
@@ -29,7 +29,7 @@ module.exports = {
 				.setTitle('Selling blocked!')
 				.setDescription('Selling blocked! You are currently mass-selling.')
 				.setFooter(getFooter(player));
-			return interaction.editReply({ embeds: [nosell] });
+			return await interaction.editReply({ embeds: [nosell] });
 		}
 
 		let sellall = interaction.options.getString('sell-all');
@@ -50,7 +50,7 @@ module.exports = {
 				.setTitle('Started selling all items...')
 				.setColor('GREEN')
 				.setFooter(getFooter(player));
-			interaction.editReply({ embeds: [b4embed] });
+			await interaction.editReply({ embeds: [b4embed] });
 
 			await collection.updateOne({ _id: interaction.user.id }, { $set: { 'data.misc.is_massselling': true } });
 			for (const item of player.data.inventory.items) {
@@ -93,7 +93,7 @@ module.exports = {
 				.setColor('GREEN')
 				.setFooter(getFooter(player))
 				.setDescription(`Sold ${sellallitems} items for **${sellallcoins.toFixed(2)} coins**.\nTook ${taken}`);
-			return interaction.editReply({ embeds: [embed] });
+			return await interaction.editReply({ embeds: [embed] });
 		}
 
 		//Variables for Checks
@@ -110,7 +110,7 @@ module.exports = {
 				.setColor('RED')
 				.setDescription(`\`${sellitem}\` is not a valid item name or was not found in your inventory.`)
 				.setFooter(getFooter(player));
-			interaction.editReply({ embeds: [invaliditemembed] });
+			await interaction.editReply({ embeds: [invaliditemembed] });
 			return;
 		}
 
@@ -120,7 +120,7 @@ module.exports = {
 				.setColor('RED')
 				.setFooter(getFooter(player))
 				.setDescription('Cannot sell a negative number of items');
-			return interaction.editReply({ embeds: [embed] });
+			return await interaction.editReply({ embeds: [embed] });
 		}
 
 		//Check if more than 1 of said item exists
@@ -129,7 +129,7 @@ module.exports = {
 				.setFooter(getFooter(player))
 				.setColor('RED')
 				.setDescription(`You don\'t have any ${sellitem} to be sold.`);
-			interaction.editReply({ embeds: [noitems] });
+			await interaction.editReply({ embeds: [noitems] });
 			return;
 		}
 
@@ -183,7 +183,7 @@ module.exports = {
 				.setDescription(
 					`Successfully sold **${amount}x ${sellitem}** for **${earnedcoins.toLocaleString()} coins**`
 				);
-			interaction.editReply({ embeds: [sold] });
+			await interaction.editReply({ embeds: [sold] });
 			return;
 		}
 	},

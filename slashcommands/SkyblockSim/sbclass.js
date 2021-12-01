@@ -21,7 +21,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No Profile found')
 				.setDescription(`Create a profile using \`/sb start\``);
-			interaction.editReply({ embeds: [noprofile] });
+			await interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
@@ -42,7 +42,7 @@ module.exports = {
 				.setDescription(
 					`**Available classes and their stats**\n\n**Assassin [${assassinlevel}]**\n2 Strength per level\n\n**Berserker [${berserkerlevel}]**\n1 strength and 1 defense per level\n\n**Tank [${tanklevel}]**\n1 defense and 2 health per level\n\n\n**Currently Selected**\nName: ${currentclass}\nXP: ${currentxp}`
 				);
-			interaction.editReply({ embeds: [classes] });
+			await interaction.editReply({ embeds: [classes] });
 			return;
 		}
 
@@ -86,6 +86,6 @@ module.exports = {
 			.setColor(getColor(player))
 			.setFooter(getFooter(player));
 
-		interaction.editReply({ embeds: [selection] });
+		await interaction.editReply({ embeds: [selection] });
 	},
 };

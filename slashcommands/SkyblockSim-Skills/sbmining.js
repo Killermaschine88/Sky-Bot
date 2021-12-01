@@ -101,7 +101,7 @@ module.exports = {
 		const collector = menu.createMessageComponentCollector({
 			filter,
 			componentType: 'BUTTON',
-			time: 858000,
+			time: 720000,
 		});
 
 		await collection.updateOne(

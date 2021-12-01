@@ -22,7 +22,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No Profile found')
 				.setDescription(`Create a profile using \`/sb start\``);
-			interaction.editReply({ embeds: [noprofile] });
+			await interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
@@ -52,7 +52,7 @@ module.exports = {
 				.setColor('RED')
 				.setFooter('Skyblock Simulator');
 
-			interaction.editReply({ embeds: [badarea] });
+			await interaction.editReply({ embeds: [badarea] });
 			return;
 		}
 
@@ -75,7 +75,7 @@ module.exports = {
 				.setColor('RED')
 				.setDescription(`Failed to find any mobs in the **${location}**`)
 				.setFooter(getFooter(player));
-			interaction.editReply({ embeds: [nomobsfound] });
+			await interaction.editReply({ embeds: [nomobsfound] });
 			return;
 		}
 
@@ -178,6 +178,6 @@ module.exports = {
 				`<:berserker:852079613052059658> Killing **${mobkills} ${mobname}s** at the **${location}** dropped you **${amount}x ${mobdrop}**`
 			);
 		}
-		interaction.editReply({ embeds: [endembed] });
+		await interaction.editReply({ embeds: [endembed] });
 	},
 };

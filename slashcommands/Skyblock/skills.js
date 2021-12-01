@@ -40,7 +40,7 @@ module.exports = {
 		const apiData = await getApiData(ign, method); // Gets all skyblock player data from Senither's Hypixel API Facade
 
 		if (apiData.status != 200) {
-			return waitingembed.edit({
+			return interaction.editReply({
 				embeds: [new Discord.MessageEmbed().setDescription(apiData.reason).setColor('DC143C').setTimestamp()],
 			});
 		}
@@ -48,7 +48,7 @@ module.exports = {
 		// IGN is valid and player has skyblock profiles
 
 		if (apiData.data.skills.apiEnabled == false)
-			return message.channel.send({
+			return interaction.editReply({
 				embeds: [
 					new Discord.MessageEmbed()
 						.setAuthor(
@@ -151,7 +151,7 @@ module.exports = {
 			ttaxp = ttaxp + 'K';
 		}
 
-		return waitingembed.edit({
+		return interaction.editReply({
 			embeds: [
 				new Discord.MessageEmbed()
 					.setTitle(`Skill data for ${ign}`)
