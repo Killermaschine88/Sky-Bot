@@ -40,7 +40,7 @@ module.exports = {
 		embed.setFooter(getFooter('Skyblock'));
 		embed.setColor(getColor('Skyblock'));
 
-		await interaction.editReply({
+		const menu = await interaction.editReply({
 			embeds: [embed],
 			components: [leaderRow],
 		});
@@ -48,7 +48,7 @@ module.exports = {
 		// Wait for a selectbox option to be chosen and then
 		// send a leaderboard of the selected type
 		const filter = (i) => i.customId === 'leaderSelect' && i.user.id === interaction.user.id;
-		const leaderCollector = await interaction.channel.createMessageComponentCollector({
+		const leaderCollector = await menu.createMessageComponentCollector({
 			filter,
 			componentType: 'SELECT_MENU',
 			time: 300000,
@@ -75,11 +75,15 @@ module.exports = {
 			embed.setDescription(lbString);
 			embed.setFooter(`${getFooter('Skyblock')}\nYou are #${index + 1} out of ${lbCol.length}`);
 
+      try {
 			await collectedTypeInteraction.update({ embeds: [embed] });
+      } catch (e) {}
 		});
 
 		leaderCollector.on('end', async (collected) => {
+      try{
 			await interaction.editReply({components: []})
+      } catch (e) {}
 		});
 	},
 };

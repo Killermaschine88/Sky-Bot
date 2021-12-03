@@ -242,7 +242,7 @@ module.exports = {
 		} else if (
 			swordinv.find((item) => item.name == 'Zombie Sword') &&
 			coins > 1000000 &&
-			!swordinv.find((item) => item.name == 'Leaping Sword')
+			!swordinv.find((item) => item.name == "Tactician's Sword")
 		) {
 			sword_button.setDisabled(false);
 			choosen = "Tactician's Sword";
@@ -586,8 +586,8 @@ module.exports = {
 								'data.equipment.fishing.rod.name': rodname,
 								'data.equipment.fishing.rod.sea_creature_chance': rodscc,
 								'data.equipment.fishing.rod.fishing_speed': rodspeed,
-								reforge: 'None',
-								recombobulated: false,
+								'data.equipment.fishing.rod.reforge': 'None',
+								'data.equipment.fishing.rod.recombobulated': false,
 							},
 						},
 						{ upsert: true }

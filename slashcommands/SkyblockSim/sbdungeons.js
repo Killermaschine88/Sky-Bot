@@ -370,8 +370,8 @@ module.exports = {
 			components: [floors],
 		});
 
-		const filter = (i) => {
-			i.deferUpdate();
+		const filter = async (i) => {
+			await i.deferUpdate();
 			return i.user.id === interaction.user.id;
 		};
 

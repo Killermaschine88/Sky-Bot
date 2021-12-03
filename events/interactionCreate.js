@@ -173,7 +173,12 @@ module.exports = {
 		}
 
 		if (!interaction.isCommand()) return;
+    try {
     await interaction.deferReply()
+    } catch (err) {
+      console.log(err)
+      return
+    }
 
 		if (config.blacklistedusers.includes(interaction.user.id)) {
 			let blockedembed = new Discord.MessageEmbed()

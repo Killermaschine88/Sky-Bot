@@ -24,7 +24,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No profile found')
 				.setDescription(`Create a profile using \`/sb start\``);
-			interaction.editReply({ embeds: [noprofile] });
+			await interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
@@ -33,7 +33,7 @@ module.exports = {
 				.setTitle('You are already fishing')
 				.setColor('RED')
 				.setFooter(getFooter('Pond'));
-			interaction.editReply({ embeds: [alreadyfishing] });
+			await interaction.editReply({ embeds: [alreadyfishing] });
 			return;
 		}
 
@@ -172,7 +172,7 @@ module.exports = {
 					); //rod in water
 				}
 
-				interaction.editReply({ embeds: [pond], components: [row3] });
+				await interaction.editReply({ embeds: [pond], components: [row3] });
 
 				await sleep(fishing_time);
 
@@ -184,7 +184,7 @@ module.exports = {
 					); //fish close to rod
 				}
 
-				interaction.editReply({ embeds: [pond], components: [row1] });
+				await interaction.editReply({ embeds: [pond], components: [row1] });
 			} else if (i.customId === 'lure' && rod_casted === true) {
 				let creature = isSeaCreature(sea_creature_chance, isCreature);
 				if (creature === 'yes') {
@@ -197,7 +197,7 @@ module.exports = {
 						`${foundmob.name} caught!`,
 						`Player health: ❤️ **${php}**\nMob health: ❤️ **${mhp}**`
 					);
-					interaction.editReply({ embeds: [pond], components: [row2] });
+					await interaction.editReply({ embeds: [pond], components: [row2] });
 					rod_casted = false;
 				} else {
 					let raredrop = isRareDrop(fishinglvl);
@@ -215,7 +215,7 @@ module.exports = {
 						pond.fields = [];
 						pond.addField(`RARE CATCH!`, `Earned **<:coins:861974605203636253> ${coindrop} coins**`);
 
-						interaction.editReply({ embeds: [pond], components: [row] });
+						await interaction.editReply({ embeds: [pond], components: [row] });
 					} else {
 						let fishxp = Math.floor(Math.random() * (200 - 50) + 50);
 						let fishes = ['Raw Fish', 'Raw Salmon', 'Pufferfish', 'Clownfish'];
@@ -254,7 +254,7 @@ module.exports = {
 							{ upsert: true }
 						);
 
-						interaction.editReply({ embeds: [pond], components: [row] });
+						await interaction.editReply({ embeds: [pond], components: [row] });
 					}
 				}
 			} else if (i.customId === 'killsc') {
@@ -279,7 +279,7 @@ module.exports = {
 					pond.fields = [];
 					pond.addField(`Battle`, `Player health: ❤️ ${php} (- ${mdmg})\nMob health: ❤️ ${mhp} (- ${pdmg})`);
 				}
-				interaction.editReply({ embeds: [pond] });
+				await interaction.editReply({ embeds: [pond] });
 
 				if (i.customId === 'killsc' && mhp <= 0) {
 					let amount = Math.floor(Math.random() * (3 - 1) + 1);
@@ -310,12 +310,12 @@ module.exports = {
 						{ $inc: { 'data.skills.fishing': foundmob.xp } }
 					);
 
-					interaction.editReply({ embeds: [pond], components: [row] });
+					await interaction.editReply({ embeds: [pond], components: [row] });
 				} else if (i.customId === 'killsc' && php <= 0) {
 					pond.fields = [];
 					pond.setColor('RED');
 					pond.addField(`Result`, `Died to the enemy, which had **❤️ ${mhp}** left.`);
-					interaction.editReply({ embeds: [pond] });
+					await interaction.editReply({ embeds: [pond] });
 					collector.stop();
 				}
 			} else if (i.customId === 'cancel') {

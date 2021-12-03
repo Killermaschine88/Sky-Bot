@@ -11,6 +11,7 @@ module.exports = {
 	aliases: [],
 	async execute(interaction) {
 		var mcname = interaction.options.getString('ign');
+    return interaction.editReply('Command in Maintanance')
 
 		mcname = mcname.replace(/\W/g, ''); // removes weird characters
 

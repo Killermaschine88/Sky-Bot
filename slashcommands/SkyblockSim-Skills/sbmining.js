@@ -26,7 +26,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No profile found')
 				.setDescription(`Create a profile using \`/sb start\``);
-			interaction.editReply({ embeds: [noprofile] });
+			await interaction.editReply({ embeds: [noprofile] });
 			return;
 		}
 
@@ -35,7 +35,7 @@ module.exports = {
 				.setTitle('You are already mining')
 				.setColor('RED')
 				.setFooter(getFooter(player));
-			interaction.editReply({ embeds: [alreadymining] });
+			await interaction.editReply({ embeds: [alreadymining] });
 			return;
 		}
 
@@ -58,7 +58,7 @@ module.exports = {
 				.setColor('RED')
 				.setFooter(getFooter(player));
 
-			return interaction.editReply({ embeds: [invalidarea] });
+			return await interaction.editReply({ embeds: [invalidarea] });
 		}
 
 		let ps = await playerStats(player);
@@ -172,7 +172,7 @@ module.exports = {
         { upsert: true }
       )
       
-      interaction.editReply({embeds: [embed], components: [row1, row2, row3, row4, row5]})
+      await interaction.editReply({embeds: [embed], components: [row1, row2, row3, row4, row5]})
 
       await sleep(getCooldown(ps))
 
@@ -207,7 +207,7 @@ module.exports = {
         row4 = await addButtons(row4, 4)
       }
 
-      interaction.editReply({embeds: [embed], components: [row1, row2, row3, row4, row5]})
+      await interaction.editReply({embeds: [embed], components: [row1, row2, row3, row4, row5]})
 		});
 
 		//Collector End
@@ -221,7 +221,7 @@ module.exports = {
 				{ upsert: true }
 			);
 			await collection1.updateOne({ _id: interaction.channelId }, { $set: { blocked: false } }, { upsert: true });
-			interaction.editReply({ embeds: [embed], components: [] });
+			await interaction.editReply({ embeds: [embed], components: [] });
 		});
 	},
 };
