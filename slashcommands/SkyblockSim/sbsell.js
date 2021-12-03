@@ -102,9 +102,9 @@ module.exports = {
 
     const sellitem = interaction.options.getString('item')
 
-		const founditem = player.data.inventory.items.find((item) => item.name.toLowerCase() == sellitem.toLowerCase());
+		const founditem = player.data.inventory.items.find((item) => item.name.toLowerCase() == sellitem.toLowerCase() && item.amount > 0);
 
-		if (founditem === undefined) {
+		if (!founditem) {
 			let invaliditemembed = new Discord.MessageEmbed()
 				.setTitle('Invalid Item Name')
 				.setColor('RED')
@@ -114,7 +114,7 @@ module.exports = {
 			return;
 		}
 
-		if (Math.sign(amount) <= 0) {
+		if (amount <= 0) {
 			const embed = new Discord.MessageEmbed()
 				.setTitle('Invalid Amount')
 				.setColor('RED')
@@ -124,7 +124,7 @@ module.exports = {
 		}
 
 		//Check if more than 1 of said item exists
-		if (founditem === undefined) {
+		if (!founditem) {
 			const noitems = new Discord.MessageEmbed()
 				.setFooter(getFooter(player))
 				.setColor('RED')
