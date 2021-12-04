@@ -1,71 +1,76 @@
+'use strict';
 const Discord = require('discord.js');
-const fetch = require('node-fetch');
-const list = require('../../constants/Skyblock/items.json');
 const Fuse = require('fuse.js');
-const fs = require('fs');
+const fetch = require('node-fetch');
+
+const list = require('../../constants/Skyblock/items.json');
 const list2 = require('./list2.json');
+const embedColour = '7CFC00';
 
 module.exports = {
 	name: 'Bazaar',
 	description: 'Get bazaar data for an item',
-	usage: 'bazzar (item)',
+	usage: 'bazaar (item)',
 	perms: 'None',
 	folder: 'Skyblock',
 	aliases: ['bz'],
 	async execute(interaction) {
-		Object.keys(list).forEach((key) => (list[key].bazaar ? (list2[key] = list[key]) : ''));
+		for (const key of Object.keys(list)) {
+			if (list[key].bazaar === true) list2[key] = list[key];
+		}
 
-		var method = 'save';
+		const method = 'save';
 
-		let result = interaction.options.getString('item');
+		const item = interaction.options.getString('item');
+		let result;
 
-		const waiting = new Discord.MessageEmbed()
+		const waitingEmbed = new Discord.MessageEmbed()
 			.setTitle('Checking Bazaar Data')
 			.setFooter("If I don't respond within 10 seconds, the item wasn't found or an error occurred");
 
-		const wait = await interaction.editReply({ embeds: [waiting] });
+		const wait = await interaction.editReply({ embeds: [waitingEmbed] });
 
-		var apiData = await getApiData(result, method);
+		let apiData = await getApiData(item, method);
 
 		if (apiData.error) {
 			const options = {
 				isCaseSensitive: false,
-				treshold: 0.7,
+				threshold: 0.7,
 				keys: ['name'],
 			};
 
 			const fuse = new Fuse(Object.keys(list2), options);
 
-			const pattern = result;
+			const pattern = item;
 
 			const itemlist = await fuse.search(pattern);
 
 			result = itemlist[0].item;
 		}
 
-		var apiData = await getApiData(result, method);
+		apiData = await getApiData(result, method);
 
-		const notfound = new Discord.MessageEmbed().setTitle(`Couldnt find item ${result}`);
+		const notfound = new Discord.MessageEmbed().setTitle(`Couldn't find item \`${result}\``).setDescription('Did you make a typo?');
 
 		if (apiData.error) {
 			wait.edit({ embeds: [notfound] });
 		}
 
-		//Related Items
-		var related = '';
-		if (apiData.related === undefined) {
+		// Related Items
+		let related = '';
+		if (typeof apiData.related === 'undefined') {
 			related = 'None';
 		} else if (apiData.related.length === 0) {
 			related = 'None';
 		} else {
-			related = apiData.related;
+			({ related } = apiData);
 		}
 
 		return wait.edit({
 			embeds: [
 				new Discord.MessageEmbed()
 					.setTitle(`Bazaar data for ${result}`)
-					.setColor('7CFC00')
+					.setColor(embedColour)
 					.setAuthor(
 						result,
 						`https://sky.lea.moe/item/${result}`,
@@ -73,41 +78,42 @@ module.exports = {
 					)
 					.addFields(
 						{
-							name: `Insta Sell Price`,
+							name: 'Insta Sell Price',
 							value: `${toFixed(apiData.quick_status.sellPrice).toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Sell Offers`,
+							name: 'Amount of Sell Offers',
 							value: `${toFixed(apiData.quick_status.sellOrders).toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Items in Sell Offers`,
+							name: 'Amount of Items in Sell Offers',
 							value: `${apiData.quick_status.sellVolume.toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Insta Buy Price`,
+							name: 'Insta Buy Price',
 							value: `${toFixed(apiData.quick_status.buyPrice).toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Buy Offers`,
+							name: 'Amount of Buy Offers',
 							value: `${toFixed(apiData.quick_status.buyOrders).toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Amount of Items in Buy Offers`,
+							name: 'Amount of Items in Buy Offers',
 							value: `${apiData.quick_status.buyVolume.toLocaleString()}`,
 							inline: true,
 						},
 						{
-							name: `Related Items`,
+							name: 'Related Items',
 							value: `${related}`,
 							inline: false,
 						}
-					),
+					)
+					.setFooter(`You searched for ${item}`)
 			],
 		});
 	},
@@ -118,10 +124,11 @@ async function getApiData(result) {
 	const config = require('../../constants/Bot/config.json');
 
 	const response = await fetch(`https://api.slothpixel.me/api/skyblock/bazaar/${result}?key=${config.apikey}`);
+	// eslint-disable-next-line no-return-await
 	return await response.json();
 }
 
 function toFixed(num) {
-	var re = new RegExp('^-?\\d+(?:.\\d{0,' + (2 || -1) + '})?');
+	const re = new RegExp(`^-?\\d+(?:.\\d{0,${2 || -1}})?`);
 	return num.toString().match(re)[0];
 }
