@@ -15,7 +15,6 @@ module.exports = {
 
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
-				.setFooter(getFooter(player))
 				.setColor('RED')
 				.setTitle('No Profile found')
 				.setDescription(`Create a profile using \`/sb start\``);

@@ -227,7 +227,7 @@ module.exports = {
 			commandExecute = interaction.commandName + interaction.options.getSubcommand(false);
 		}
 
-		const collection1 = mclient.db('Sky-Bot').collection('settings');
+		/*const collection1 = mclient.db('Sky-Bot').collection('settings');
 		let settings = await collection1.findOne({
 			_id: "844951901653041203",
 		});
@@ -243,9 +243,10 @@ module.exports = {
 				);
 			return interaction.editReply({ embeds: [maintan] });
     }
-    }
+    }*/
 
 		if (interaction.commandName == 'sb') {
+      console.log('sb cmd error')
 			const collection = mclient.db('SkyblockSim').collection('Players');
 			let player = await collection.findOne({ _id: interaction.user.id });
 
@@ -337,14 +338,35 @@ module.exports = {
 		setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
 
 		try {
+      console.log(commandExecute)
+      
 			const collection = mclient.db('Sky-Bot').collection('commanduses');
-			collection.updateOne({ _id: commandExecute }, { $inc: { uses: 1 } }, { upsert: true });
+			await collection.updateOne({ _id: commandExecute }, { $inc: { uses: 1 } }, { upsert: true });
+      console.log(commandExecute + ' added in db')
+
+      let option_str = []
+
+       for(const option of interaction.options._hoistedOptions) {
+         await option_str.push(`Type: ${option.type}, Name: ${option.name}, Value: ${option.value}`)
+      }
+
+			const myObj = {
+        command: commandExecute,
+        options: option_str,
+        user: {
+          id: interaction.user.id,
+          tag: interaction.user.tag
+        }
+      }
 
       const usedcmd = new Discord.MessageEmbed()
-      .setDescription(`**${commandExecute}** has been used.\n\nGuildID: \`${interaction.guild.id}\`\nGuild Name: \`${interaction.guild.name}\`\nUserID: \`${interaction.user.id}\`\nUser: \`${interaction.user.tag}\``)
-    interaction.client.channels.fetch('855512734514937906').then(channel => channel.send({ embeds: [usedcmd] }))
+      .addField(`**${commandExecute}** has been used.`, `GuildID: \`${interaction.guild.id}\`\nGuild Name: \`${interaction.guild.name}\`\nUserID: \`${interaction.user.id}\`\nUser: \`${interaction.user.tag}\``)
+      .setDescription(`${JSON.stringify(myObj)}`)
+   
+      await interaction.client.channels.cache.get('855512734514937906').send({embeds: [usedcmd]}) 
 
-			//await interaction.deferReply();
+
+      
 			await interaction.client.slashcommands.get(commandExecute).execute(interaction, mclient);
 		} catch (error) {
 			console.error(error);

@@ -1,6 +1,7 @@
 let CronJob = require('cron').CronJob;
 let Discord = require('discord.js');
 const { addItems } = require('../../constants/Functions/simulator.js');
+const { caps } = require('../../constants/Functions/general.js')
 const pms = require('pretty-ms');
 
 async function start(client, mclient) {
@@ -70,6 +71,7 @@ client.user.setActivity(`with ${client.guilds.cache.size} Servers`, { type: 'PLA
 
 	//Handling expire auctions
 	const ahhandler = new CronJob('0 */10 * * * *', async function () {
+    console.log('ah handler error')
 		//handle here
 		const auctions = await collection3.find({}).toArray();
 
@@ -80,7 +82,7 @@ client.user.setActivity(`with ${client.guilds.cache.size} Servers`, { type: 'PLA
 						await collection.updateOne(
 							{
 								_id: ah.owner.id,
-								'data.inventory.items.name': ah.item.name,
+								'data.inventory.items.name': caps(ah.item.name),
 							},
 							{ $inc: { 'data.inventory.items.$.amount': 1, 'data.misc.auctions': -1 } },
 							{ upsert: true }
@@ -108,7 +110,7 @@ client.user.setActivity(`with ${client.guilds.cache.size} Servers`, { type: 'PLA
 
 						const player = await collection.findOne({ _id: ah.item.last_bidid });
 
-						const updatePlayer = addItems(ah.item.name, 1, player);
+						const updatePlayer = addItems(caps(ah.item.name), 1, player);
 
 						await collection.replaceOne({ _id: ah.item.last_bidid }, updatePlayer);
 

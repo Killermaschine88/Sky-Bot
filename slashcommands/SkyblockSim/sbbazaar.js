@@ -133,9 +133,9 @@ module.exports = {
         return await interaction.editReply({embeds: [errEmbed(`No bazaar entry found for ${itemname} if you believe this is wrong contact **Baltraz#4874**`, true)]})
       }
 
-      const founditem = player.data.inventory.items.find(item => item.name.toLowerCase() == itemname.toLowerCase())
+      const founditem = player.data.inventory.items.find(item => item.name.toLowerCase() == itemname.toLowerCase() && item.amount <= amount)
 
-      if(!founditem || founditem.amount <= 0) {
+      if(!founditem) {
         return await interaction.editReply({embeds: [errEmbed(`Couldn't find any ${caps(itemname)} in your inventory.`, true)]})
       }
 
@@ -169,7 +169,7 @@ module.exports = {
         );
 
       await collection.updateOne(
-				{ _id: interaction.user.id, 'data.inventory.items.name': caps(itemname) },
+				{ _id: interaction.user.id, 'data.inventory.items.name': founditem.name },
 				{
 					$inc: {
 						'data.inventory.items.$.amount': -amount
@@ -195,7 +195,7 @@ module.exports = {
         return await interaction.editReply({embeds: [errEmbed("Can't input negative Amount.", true)]})
       }
 
-      const founditem = player.data.inventory.items.find(item => item.name.toLowerCase() == itemname.toLowerCase())
+      const founditem = player.data.inventory.items.find(item => item.name.toLowerCase() == itemname.toLowerCase() && item.amount > 0)
 
       const item = await collection2.findOne({ _id: caps(itemname) })
 
@@ -239,7 +239,7 @@ module.exports = {
 
         if(id == 'yes') {
           if(player.data.profile.coins < costfound) {
-            return await interaction.editReply({embeds: [errEmbed(`Not enough coins to purchased ${caps(itemname)}`)], components: []})
+            return await interaction.editReply({embeds: [errEmbed(`Not enough coins to purchase ${caps(itemname)}`)], components: []})
           }
 
           //handle user buying items

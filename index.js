@@ -174,6 +174,7 @@ client.on('messageCreate', async (message) => {
 
 	if (message.author.id != '570267487393021969') {
 		if (found == null || found.scopeadded == false) {
+      console.log('server coll error')
 			try {
 				await client.guilds.cache.get(message.guild.id)?.commands.fetch([]);
 				await servercoll.updateOne({ _id: message.guild.id }, { $set: { scopeadded: true } }, { upsert: true });

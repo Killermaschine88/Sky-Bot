@@ -54,7 +54,7 @@ module.exports = {
 
 			await collection.updateOne({ _id: interaction.user.id }, { $set: { 'data.misc.is_massselling': true } });
 			for (const item of player.data.inventory.items) {
-				if (item.amount != 0 && item.name != '' && !excluded.includes(item.name.toLowerCase())) {
+				if (item.amount != 0 && !excluded.includes(item.name.toLowerCase())) {
 
 						let price = getPrice(item.name);
 						price = Number(price);
@@ -64,7 +64,7 @@ module.exports = {
 						await collection.updateOne(
 							{
 								_id: interaction.user.id,
-								'data.inventory.items.name': item.name,
+								'data.inventory.items.name': caps(item.name),
 							},
 							{
 								$inc: {
@@ -102,7 +102,7 @@ module.exports = {
 
     const sellitem = interaction.options.getString('item')
 
-		const founditem = player.data.inventory.items.find((item) => item.name.toLowerCase() == sellitem.toLowerCase() && item.amount > 0);
+		const founditem = player.data.inventory.items.find((item) => item.name.toLowerCase() == sellitem.toLowerCase() && item.amount >= amount);
 
 		if (!founditem) {
 			let invaliditemembed = new Discord.MessageEmbed()
@@ -150,7 +150,7 @@ module.exports = {
 			await collection.updateOne(
 				{
 					_id: interaction.user.id,
-					'data.inventory.items.name': caps(sellitem),
+					'data.inventory.items.name': founditem.name,
 				},
 				{ $inc: { 'data.inventory.items.$.amount': -amount } }
 			);
