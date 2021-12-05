@@ -370,8 +370,7 @@ module.exports = {
 			components: [floors],
 		});
 
-		const filter = async (i) => {
-			await i.deferUpdate();
+		const filter = (i) => {
 			return i.user.id === interaction.user.id;
 		};
 
@@ -722,6 +721,7 @@ module.exports = {
 		await interaction.editReply({ embeds: [test], components: [row1, row2] });
 
 		collector.on('collect', async (i) => {
+      await i.deferUpdate()
 			const { customId: id } = i;
 
 			if (inTTT) {

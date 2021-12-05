@@ -7,6 +7,7 @@ const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 const buttonemoji = require('../../constants/Simulator/Json/emojilist.json');
 const { addItems } = require('../../constants/Functions/simulator.js')
 
+
 module.exports = {
 	name: 'sbmining',
 	description: 'Earn fishing XP',
@@ -94,7 +95,6 @@ module.exports = {
 		});
 
 		const filter = (i) => {
-			i.deferUpdate();
 			return i.user.id === interaction.user.id;
 		};
 
@@ -119,6 +119,7 @@ module.exports = {
 		//Collector
     let clickamount = 0;
 		collector.on('collect', async (i) => {
+      await i.deferUpdate()
 			if (!validlocations.includes(player.data.misc.location) || player.data.misc.is_fishing == true) {
 				interaction.followUp({
 					content: 'You seem to be fishing, cheeky you.',

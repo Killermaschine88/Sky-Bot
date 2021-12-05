@@ -5,6 +5,7 @@ const getLevel = require('../../constants/Simulator/Functions/skilllvl.js');
 const playerStats = require('../../constants/Simulator/Functions/playerStats.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 
+
 module.exports = {
 	name: 'sbfishing',
 	description: 'Earn fishing XP',
@@ -143,7 +144,6 @@ module.exports = {
 		);
 
 		const filter = (i) => {
-			i.deferUpdate();
 			return i.user.id === interaction.user.id;
 		};
 
@@ -154,6 +154,7 @@ module.exports = {
 		});
 
 		collector.on('collect', async (i) => {
+      await i.deferUpdate()
 			if (player.data.misc.is_mining == true) {
 				interaction.followUp({
 					content: 'You seem to be mining, cheeky you.',
