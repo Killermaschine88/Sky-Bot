@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const Stats = require('discord-live-stats')
 const client = new Discord.Client({
 	intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'],
 });
@@ -22,8 +23,12 @@ const mclient = new MongoClient(urii, {
 mclient.connect();
 global.mmclient = mclient;
 
-
-
+//Stats https://test.baltrazz.repl.co
+const Poster = new Stats.Client(client, {
+  stats_uri: 'https://test.baltrazz.repl.co/',
+  authorizationkey: process.env['stats_auth'],
+  postinterval: 20000
+})
 
 /*client
     .on("debug", console.log)
