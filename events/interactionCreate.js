@@ -176,7 +176,6 @@ module.exports = {
     try {
     await interaction.deferReply()
     } catch (err) {
-      console.log(err)
       return
     }
 
@@ -246,7 +245,6 @@ module.exports = {
     }*/
 
 		if (interaction.commandName == 'sb') {
-      console.log('sb cmd error')
 			const collection = mclient.db('SkyblockSim').collection('Players');
 			let player = await collection.findOne({ _id: interaction.user.id });
 
@@ -338,11 +336,9 @@ module.exports = {
 		setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
 
 		try {
-      console.log(commandExecute)
       
 			const collection = mclient.db('Sky-Bot').collection('commanduses');
 			await collection.updateOne({ _id: commandExecute }, { $inc: { uses: 1 } }, { upsert: true });
-      console.log(commandExecute + ' added in db')
 
       let option_str = []
 

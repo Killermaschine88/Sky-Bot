@@ -100,7 +100,7 @@ module.exports = {
 			} else if (reforge == 'wither blood') {
 				apply_reforge = 'Withered';
 			} else if (reforge == 'warped stone') {
-				apply_reforge = 'warped';
+				apply_reforge = 'Warped';
 			} else if (reforge == 'recombobulator 3000') {
 				apply_reforge = 'Recombobulator 3000';
 			}

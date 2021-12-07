@@ -20,22 +20,24 @@ module.exports = {
 
 		const waitembed = new Discord.MessageEmbed()
 			.setDescription('Checking for player data . . .')
+      .setFooter(`If an error occures then ${ign} is invalid`)
 			.setColor('ORANGE');
 
 		const waitingembed = await interaction.editReply({
 			embeds: [waitembed],
 		});
 
-		fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then((res) => {
+	  fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then((res) => {
 			if (res.status != 200) {
 				const nomcacc = new Discord.MessageEmbed()
 					.setDescription(`No Minecraft account found for \`${ign}\``)
 					.setColor('DC143C')
+          .setFooter('Ignore the error this is due to mojang being weird.')
 					.setTimestamp();
 				waitingembed.edit({ embeds: [nomcacc] });
 				return;
 			}
-		}); // Test if IGN esists
+		});
 
 		ign = await getTrueIgn(ign);
 

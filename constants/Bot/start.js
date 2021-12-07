@@ -71,7 +71,6 @@ client.user.setActivity(`with ${client.guilds.cache.size} Servers`, { type: 'PLA
 
 	//Handling expire auctions
 	const ahhandler = new CronJob('0 */10 * * * *', async function () {
-    console.log('ah handler error')
 		//handle here
 		const auctions = await collection3.find({}).toArray();
 
