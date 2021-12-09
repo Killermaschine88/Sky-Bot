@@ -173,6 +173,12 @@ module.exports = {
 		}
 
 		if (!interaction.isCommand()) return;
+
+
+   /* interaction.reply({content: "im replied", ephemeral: true})
+    interaction.followUp({content: "im an followup", ephemeral: false})
+    return;*/
+    
     try {
     await interaction.deferReply()
     } catch (err) {
@@ -343,7 +349,7 @@ module.exports = {
       let option_str = []
 
        for(const option of interaction.options._hoistedOptions) {
-         await option_str.push(`Type: ${option.type}, Name: ${option.name}, Value: ${option.value}`)
+         await option_str.push(`type: ${option.type}, name: ${option.name}, value: ${option.value}`)
       }
 
 			const myObj = {
