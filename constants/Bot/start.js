@@ -35,6 +35,7 @@ client.user.setActivity(`with ${client.guilds.cache.size} Servers`, { type: 'PLA
 
         client.user.setActivity(activities_list[index].message, { type: activities_list[index].type });
     }, 300000);
+
   
 
   //Info for Website

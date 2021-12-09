@@ -347,17 +347,12 @@ module.exports = {
       }
 
 			const myObj = {
-        command: commandExecute,
         options: option_str,
-        user: {
-          id: interaction.user.id,
-          tag: interaction.user.tag
-        }
       }
 
       const usedcmd = new Discord.MessageEmbed()
       .addField(`**${commandExecute}** has been used.`, `GuildID: \`${interaction.guild.id}\`\nGuild Name: \`${interaction.guild.name}\`\nUserID: \`${interaction.user.id}\`\nUser: \`${interaction.user.tag}\``)
-      .setDescription(`${JSON.stringify(myObj)}`)
+      .setDescription(`${JSON.stringify(myObj, null, 4)}`)
    
       await interaction.client.channels.cache.get('855512734514937906').send({embeds: [usedcmd]}) 
 

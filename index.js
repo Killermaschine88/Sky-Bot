@@ -1,9 +1,9 @@
 const Discord = require('discord.js');
 const Stats = require('discord-live-stats')
 const client = new Discord.Client({
-	intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'],
+	intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'], shardCount: 2
 });
-//client.options.http.api = 'https://discordapp.com/api'
+client.options.http.api = 'https://discordapp.com/api'
 const config = require('./constants/Bot/config.json');
 const keepAlive = require('./constants/Bot/keepAlive.js');
 const fs = require('fs');
@@ -24,12 +24,16 @@ mclient.connect();
 global.mmclient = mclient;
 
 //Stats https://test.baltrazz.repl.co
+try {
 const Poster = new Stats.Client(client, {
   stats_uri: 'https://test.baltrazz.repl.co/',
   authorizationkey: process.env['stats_auth'],
   postinterval: 20000
 })
+} catch (e) {}
 
+
+//Debugging
 /*client
     .on("debug", console.log)
     .on("warn", console.log)*/
