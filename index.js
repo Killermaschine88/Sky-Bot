@@ -204,7 +204,10 @@ client.on('messageCreate', async (message) => {
 						)
 						.setStyle('LINK')
 				);
-				message.channel.send({ embeds: [noscope], components: [row] });
+        try {
+				await message.channel.send({ embeds: [noscope], components: [row] });
+        } catch (e) {}
+        
 				await servercoll.updateOne(
 					{ _id: message.guild.id },
 					{ $set: { scopeadded: false } },
@@ -227,7 +230,10 @@ client.on('messageCreate', async (message) => {
 					)
 					.setStyle('LINK')
 			);
-			message.channel.send({ embeds: [addedscope], components: [row] });
+
+      try {
+			await message.channel.send({ embeds: [addedscope], components: [row] });
+      } catch (e) {}
 		}
 		return;
 	}
