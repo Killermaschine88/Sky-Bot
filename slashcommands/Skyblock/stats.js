@@ -40,7 +40,7 @@ module.exports = {
 		});
 
 		if (apiData.status != 200) {
-			return waitingembed.edit({
+			return interaction.editReply({
 				embeds: [new Discord.MessageEmbed().setDescription(apiData.reason).setColor('DC143C').setTimestamp()],
 			});
 		}

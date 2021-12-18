@@ -53,7 +53,7 @@ module.exports = {
 		const notfound = new Discord.MessageEmbed().setTitle(`Couldn't find item \`${result}\``).setDescription('Did you make a typo?');
 
 		if (apiData.error) {
-			wait.edit({ embeds: [notfound] });
+			interaction.editReply({ embeds: [notfound] });
 		}
 
 		// Related Items
@@ -66,7 +66,7 @@ module.exports = {
 			({ related } = apiData);
 		}
 
-		return wait.edit({
+		return interaction.editReply({
 			embeds: [
 				new Discord.MessageEmbed()
 					.setTitle(`Bazaar data for ${result}`)

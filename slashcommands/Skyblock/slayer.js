@@ -29,7 +29,7 @@ module.exports = {
 					.setDescription(`No Minecraft account found for \`${ign}\``)
 					.setColor('DC143C')
 					.setTimestamp();
-				waitingembed.edit({ embeds: [nomcacc] });
+				interaction.editReply({ embeds: [nomcacc] });
 				return;
 			}
 		}); // Test if IGN esists
@@ -40,7 +40,7 @@ module.exports = {
 		const apiData = await getApiData(ign, method);
 
 		if (apiData.status != 200) {
-			return waitingembed.edit({
+			return interaction.editReply({
 				embeds: [new Discord.MessageEmbed().setDescription(apiData.reason).setColor('DC143C').setTimestamp()],
 			});
 		}
@@ -138,7 +138,7 @@ module.exports = {
 				)
 				.setColor('DC143C')
 				.setTimestamp();
-			waitingembed.edit({ embeds: [noapion] });
+			interaction.editReply({ embeds: [noapion] });
 			return;
 		}
 
@@ -173,7 +173,7 @@ module.exports = {
 				}
 			);
 
-		waitingembed.edit({ embeds: [slayerembed] });
+		interaction.editReply({ embeds: [slayerembed] });
 		return;
 	},
 };

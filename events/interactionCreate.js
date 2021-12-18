@@ -200,7 +200,14 @@ module.exports = {
 		}
 
 		let validchannels = ['GUILD_TEXT', 'GUILD_PUBLIC_THREAD', 'GUILD_PRIVATE_THREAD'];
-		if (!validchannels.includes(interaction.channel.type)) {
+
+    if(interaction.channel) {
+      chan = interaction.channel.type
+    } else {
+      interaction.editReply('Invalid Channel')
+      return
+    }
+		if (!validchannels.includes(chan)) {
 			const embed = new Discord.MessageEmbed()
 				.setTitle('Unsupported Channel')
 				.setColor('ORANGE')

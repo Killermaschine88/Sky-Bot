@@ -34,7 +34,7 @@ module.exports = {
 					.setColor('DC143C')
           .setFooter('Ignore the error this is due to mojang being weird.')
 					.setTimestamp();
-				waitingembed.edit({ embeds: [nomcacc] });
+				interaction.editReply({ embeds: [nomcacc] });
 				return;
 			}
 		});
@@ -49,7 +49,7 @@ module.exports = {
 				.setDescription(apiData.reason)
 				.setColor('DC143C')
 				.setTimestamp();
-			waitingembed.edit({ embeds: [apierrorembed] });
+			interaction.editReply({ embeds: [apierrorembed] });
 			return;
 		}
 		// IGN is valid and player has skyblock profiles
@@ -62,7 +62,7 @@ module.exports = {
 				)
 				.setColor('DC143C')
 				.setTimestamp();
-			waitingembed.edit({ embeds: [apioff] });
+			interaction.editReply({ embeds: [apioff] });
 			return;
 		}
 
@@ -73,7 +73,7 @@ module.exports = {
 				.setDescription(`${ign} has not entered the Catacombs`)
 				.setColor('DC143C')
 				.setTimestamp();
-			waitingembed.edit({ embeds: [nodungeonsfound] });
+			interaction.editReply({ embeds: [nodungeonsfound] });
 			return;
 		}
 
@@ -288,7 +288,7 @@ module.exports = {
 			)
 			.setTimestamp();
 
-		waitingembed.edit({ embeds: [foundresults] });
+		interaction.editReply({ embeds: [foundresults] });
 	},
 };
 

@@ -22,14 +22,15 @@ module.exports = {
 			embeds: [waitembed],
 		});
 
-		axios.get(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(async (res) => {
+		try {
+      axios.get(`https://api.mojang.com/users/profiles/minecraft/${ign}`).then(async (res) => {
 			const uuid = res.data.id;
 
 			if (uuid === undefined) {
 				const invalidign = new Discord.MessageEmbed()
 					.setDescription(`Cannot find **${ign}** in the Mojang database.`)
 					.setColor('ORANGE');
-				waitingembed.edit({ embeds: [invalidign] });
+				interaction.editReply({ embeds: [invalidign] });
 				return;
 			}
 
@@ -39,7 +40,7 @@ module.exports = {
 						`An error has occured. The API might be overloaded, or something went wrong. Try again later.`
 					)
 					.setColor('ORANGE');
-				waitingembed.edit({ embeds: [apierror] });
+				interaction.editReply({ embeds: [apierror] });
 				return;
 			}
 
@@ -59,7 +60,7 @@ module.exports = {
 					)
 					.setColor('RED')
 					.setFooter('Powered by the Sky Bot scammer database');
-				waitingembed.edit({ embeds: [sbembed] });
+				interaction.editReply({ embeds: [sbembed] });
 				return;
 			} else if (sbz[uuid]) {
 				const sbzembed = new Discord.MessageEmbed()
@@ -74,7 +75,7 @@ module.exports = {
 					)
 					.setColor('RED')
 					.setFooter('Powered by the SkyblockZ Scammer Database');
-				waitingembed.edit({ embeds: [sbzembed] });
+				interaction.editReply({ embeds: [sbzembed] });
 				return;
 			} else {
 				const innocent = new Discord.MessageEmbed()
@@ -86,8 +87,9 @@ module.exports = {
 					.setTitle('<a:yes:847468695772987423> User is innocent')
 					.setDescription('Still be careful when trading with anyone!')
 					.setColor('GREEN');
-				waitingembed.edit({ embeds: [innocent] });
+				interaction.editReply({ embeds: [innocent] });
 			}
 		});
+    } catch (e) {}
 	},
 };

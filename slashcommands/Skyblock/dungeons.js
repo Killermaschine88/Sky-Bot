@@ -45,7 +45,7 @@ module.exports = {
 				.setColor('DC143C')
 				.setTimestamp();
 
-			waitingembed.edit({ embeds: [errorembed] });
+			interaction.editReply({ embeds: [errorembed] });
 			return;
 		}
 
@@ -54,7 +54,7 @@ module.exports = {
 				.setDescription("This player hasn't played Dungeons yet!")
 				.setColor('ORANGE')
 				.setTimestamp();
-			waitingembed.edit({ embeds: [nodungembed] });
+			interaction.editReply({ embeds: [nodungembed] });
 			return;
 		}
 
@@ -355,7 +355,7 @@ module.exports = {
 					inline: true,
 				}
 			);
-		waitingembed.edit({ embeds: [foundresult] });
+		interaction.editReply({ embeds: [foundresult] });
 	},
 };
 
