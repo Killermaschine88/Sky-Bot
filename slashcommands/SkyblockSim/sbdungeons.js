@@ -1081,7 +1081,7 @@ module.exports = {
 						score += 20;
 						test.fields = [];
 						test.setColor('ORANGE');
-						test.addField('\u200B', 'Killed the enemy with **❤️ ${php} HP** left and earned combat XP'); //Add combat xp var
+						test.addField('\u200B', `Killed the enemy with **❤️ ${php} HP** left and earned combat XP`); //Add combat xp var
 						await collection.updateOne(
 							//Add Combat XP from enemy Kill (do once mobs decided)
 							{ _id: interaction.user.id },
