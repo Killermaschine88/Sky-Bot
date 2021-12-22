@@ -265,7 +265,7 @@ module.exports = {
 				.setColor('RED')
 				.setTitle('No Profile found')
 				.setDescription(`Create a profile using \`/sb start\``);
-			return await interaction.editReply({ embeds: [noprofile] });
+			return interaction.editReply({ embeds: [noprofile] });
 		}
 
 		//Checks if the Player already has an open Dungeon Run
@@ -275,7 +275,7 @@ module.exports = {
 				.setDescription('Dungeons automatically close after 1 minute of inactivity')
 				.setColor('RED')
 				.setFooter('Skyblock Simulator');
-			return await interaction.editReply({ embeds: [runopen] });
+			return interaction.editReply({ embeds: [runopen] });
 		}
 
 		//Players Stats
@@ -371,6 +371,7 @@ module.exports = {
 		});
 
 		const filter = (i) => {
+			i.deferUpdate();
 			return i.user.id === interaction.user.id;
 		};
 
@@ -380,7 +381,7 @@ module.exports = {
 				componentType: 'BUTTON',
 				time: 60000,
 			})
-			.then(async (i) => {
+			.then((i) => {
 				const { customId: id } = i;
 
 				if (id == 'f1') floor = 1;
@@ -388,16 +389,16 @@ module.exports = {
 				else if (id === 'f3') floor = 3;
 				else {
 					const cancelled = new MessageEmbed().setTitle('Menu Cancelled').setColor('RED');
-					await interaction.editReply({ embeds: [cancelled], components: [] });
+					menu.edit({ embeds: [cancelled], components: [] });
 					return;
 				}
 			})
-			.catch((err) => interaction.editReply({ components: [] }));
+			.catch((err) => menu.edit({ components: [] }));
 
 		//console.log(floor)
 
 		if (floor == null) {
-			return await interaction.editReply({ components: [] });
+			return menu.edit({ components: [] });
 		}
 
 		const invalidreqs = new MessageEmbed()
@@ -407,14 +408,14 @@ module.exports = {
 			)
 			.setColor('RED');
 
-		if (floor == 1 && combatlvl < 8) {
-			await interaction.editReply({ embeds: [invalidreqs], components: [] });
+		if (floor == 1 && combatlvl <= 7) {
+			menu.edit({ embeds: [invalidreqs], components: [] });
 			return;
-		} else if (floor == 2 && catalevel < 4) {
-			await interaction.editReply({ embeds: [invalidreqs], components: [] });
+		} else if (floor == 2 && catalevel <= 4) {
+			menu.edit({ embeds: [invalidreqs], components: [] });
 			return;
-		} else if (floor == 3 && catalevel < 8) {
-			await interaction.editReply({ embeds: [invalidreqs], components: [] });
+		} else if (floor == 3 && catalevel <= 8) {
+			menu.edit({ embeds: [invalidreqs], components: [] });
 			return;
 		}
 
@@ -495,22 +496,8 @@ module.exports = {
 
 		let critchance = pstats.crit_chance;
 		let php = pstats.health;
-    if(floor == 1) {
-      mhp = 100
-      mdmg = 10
-    } else if(floor == 2) {
-      mhp = 150
-      mdmg = 20
-    } else if(floor == 3) {
-      mhp = 200
-      mdmg = 30
-    } else if(floor == 4) {
-      mhp = 250
-      mdmg = 40
-    } else if(floor == 5) {
-      mhp = 320
-      mdmg = 50
-    }
+		let mhp = Math.random() < 0.5 ? 300 : 200; // Random mob hp at the moment
+		let mdmg = Math.random() < 0.5 ? 50 : 25; // Random mob hp at the moment
 
 		test.setDescription(`🎯 Score: **${score}**\n\n${mapArray(map)}`);
 
@@ -519,6 +506,7 @@ module.exports = {
 		// If enemy is near, fight button activates
 		row1.components[0].disabled = nearEnemy()[0] ? false : true;
 
+		// menu.edit({ embeds: [test], components: [row1, row2] })
 
 		const collector = menu.createMessageComponentCollector({
 			filter,
@@ -718,17 +706,16 @@ module.exports = {
 			}
 		}
 		test.setDescription(`🎯 Score: **${score}**\n\n${mapArray(map)}`);
-		await interaction.editReply({ embeds: [test], components: [row1, row2] });
+		interaction.editReply({ embeds: [test], components: [row1, row2] });
 
 		collector.on('collect', async (i) => {
-      await i.deferUpdate()
 			const { customId: id } = i;
 
 			if (inTTT) {
 				let x, y;
 				if (test.fields.length > 0) {
 					test.fields = []; // remove the addition field like the "killed a mod with x hp left" // no, ur dumb
-					await interaction.editReply({ embeds: [test] });
+					menu.edit({ embeds: [test] });
 				}
 
 				if (id == 1) (x = 0), (y = 0);
@@ -786,6 +773,8 @@ module.exports = {
 					if (E == '🟩' || !E) {
 						inTTT = false;
 						score += 30;
+						//await menu.edit({ embeds: [test], components: [row1, row2] })
+						//await sleep(1000)
 						test.description = `🎯 Score: **${score}** (+30)` + '\n\n' + mapArray();
 
 						table = [
@@ -803,7 +792,7 @@ module.exports = {
 						row5.components[0].disabled = false;
 						row5.components[1].disabled = false;
 						row5.components[2].disabled = false; // reset components for new tictactoe // ew
-						return await interaction.editReply({
+						return await menu.edit({
 							embeds: [test],
 							components: [row1, row2],
 						});
@@ -827,7 +816,7 @@ module.exports = {
 						row5.components[0].disabled = false;
 						row5.components[1].disabled = false;
 						row5.components[2].disabled = false; // reset components for new tictactoe
-						return await interaction.editReply({
+						return await menu.edit({
 							embeds: [test],
 							components: [row1, row2],
 						});
@@ -843,6 +832,8 @@ module.exports = {
 					if (e == '🟩' || !e) {
 						inTTT = false;
 						test.description += `\n${txt}`;
+						//await menu.edit({ embeds: [test], components: [row1, row2] })
+						//await sleep(1000)
 						test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray();
 
 						table = [
@@ -860,7 +851,7 @@ module.exports = {
 						row5.components[0].disabled = false;
 						row5.components[1].disabled = false;
 						row5.components[2].disabled = false; // reset components for new tictactoe
-						return await interaction.editReply({
+						return await menu.edit({
 							embeds: [test],
 							components: [row1, row2],
 						});
@@ -884,17 +875,23 @@ module.exports = {
 						row5.components[0].disabled = false;
 						row5.components[1].disabled = false;
 						row5.components[2].disabled = false; // reset components for new tictactoe
-						return await interaction.editReply({
+						return await menu.edit({
 							embeds: [test],
 							components: [row1, row2],
 						});
 					}
 				}
-				await interaction.editReply({
+				await menu.edit({
 					embeds: [test],
 					components: [row3, row4, row5],
 				});
 			} else if (inQuiz) {
+				/*if (test.fields.length > 0) {
+          test.fields = []  // remove the addition field like the "killed a mod with x hp left"
+      //    if(noButtonedit == false) {
+          menu.edit({ embeds: [test] })
+      //    }
+        }*/
 				test.fields = [];
 
 				let rightChoise = '',
@@ -912,7 +909,7 @@ module.exports = {
 				if (id == rightChoise) {
 					inQuiz = false;
 					// if(noButtonedit == false) {
-					await interaction.editReply({
+					await menu.edit({
 						embeds: [test],
 						components: [row1, row2],
 					});
@@ -921,7 +918,7 @@ module.exports = {
 					score += 30;
 					test.description = `🎯 Score: **${score}** (+30)` + '\n\n' + mapArray();
 
-					return await interaction.editReply({
+					return await menu.edit({
 						embeds: [test],
 						components: [row1, row2],
 					});
@@ -931,7 +928,7 @@ module.exports = {
 					score -= 30;
 					test.description = `🎯 Score: **${score}** (-30)` + '\n\n' + mapArray();
 					//    if(noButtonedit == false) {
-					await interaction.editReply({
+					await menu.edit({
 						embeds: [test],
 						components: [row1, row2],
 					});
@@ -968,47 +965,31 @@ module.exports = {
 
 					//   if(noButtonedit == false) {
 
-					await interaction.editReply({ embeds: [test], components: [bossrow] });
+					menu.edit({ embeds: [test], components: [bossrow] });
 					//    }
 
 					if (mhp <= 0) {
 						fightEnded = true;
 						test.fields = [];
 						test.setColor('ORANGE');
-						test.addField(`\u200B`, `Killed the boss with **❤️ ${php}** left, and you earned combat XP`); //Add combat xp var
-            let xp = 0
-            if(floor == 1) {
-              xp = 150
-            } else if(floor == 2) {
-              xp = 250
-            } else if(floor == 3) {
-              xp = 350
-            } else if(floor == 4) {
-              xp = 500
-            } else if(floor == 5) {
-              xp = 750
-            } else if(floor == 6) {
-              xp = 1000
-            } else if(floor == 7) {
-              xp = 1500
-            }
+						test.addField(`\u200B`, `Killed the boss with **❤️ ${php} HP** left, and you earned combat XP`); //Add combat xp var
 						await collection.updateOne(
 							//Add Combat XP from enemy Kill (do once mobs decided)
 							{ _id: interaction.user.id },
-							{ $inc: { 'data.skills.combat': xp } },
+							{ $inc: { 'data.skills.combat': 500 } },
 							{ upsert: true }
 						);
 
 						//     if(noButtonedit == false) {
 
-						await interaction.editReply({ embeds: [test], components: [bossrow] });
+						menu.edit({ embeds: [test], components: [bossrow] });
 						//    }
 
 						await sleep(1000); // waiting a second so you can actually read the message
 					} else if (php <= 0) {
 						test.fields = [];
 						test.setColor('RED');
-						test.addField(`\u200B`, `Died to the boss, which had **❤️ ${mhp}** left.`);
+						test.addField(`\u200B`, `Died to the boss, which had **❤️ ${mhp} HP** left.`);
 						runFailed = true;
 						return collector.stop();
 					}
@@ -1034,6 +1015,7 @@ module.exports = {
 							test.description += `<:diamond:869126926646788097> Diamond Chest: **${diamond_loot}\n**`;
 							lootrow.addComponents(diamond_button);
 						} else if (floor == 3 && score >= 180) {
+              preclaim = true
 							diamond_loot = lt.diamond.roll(pstats.magic_find);
 							emerald_loot = lt.emerald.roll(pstats.magic_find);
 							if (isNaN(diamond_loot)) {
@@ -1063,7 +1045,7 @@ module.exports = {
 						atLoot = true;
 						//    if(noButtonedit == false) {
 
-						await interaction.editReply({ embeds: [test], components: [lootrow] }); //add row for chests
+						menu.edit({ embeds: [test], components: [lootrow] }); //add row for chests
 						//    }
 					}
 				} else {
@@ -1092,54 +1074,24 @@ module.exports = {
 					row2.components[1].disabled = true; // down arrow
 					row2.components[2].disabled = true; // right arrow
 
-					await interaction.editReply({ embeds: [test], components: [row1, row2] });
+					menu.edit({ embeds: [test], components: [row1, row2] });
 
 					if (mhp <= 0) {
 						fightEnded = true;
 						score += 20;
 						test.fields = [];
 						test.setColor('ORANGE');
-						test.addField('\u200B', `Killed the enemy with **❤️ ${php}** left and earned combat XP`); //Add combat xp var
-            let xp = 0
-            if(floor == 1) {
-              xp = 20
-            } else if(floor == 2) {
-              xp = 40
-            } else if(floor == 3) {
-              xp = 60
-            } else if(floor == 4) {
-              xp = 80
-            } else if(floor == 5) {
-              xp = 100
-            } else if(floor == 6) {
-              xp = 125
-            } else if(floor == 7) {
-              xp = 150
-            }
+						test.addField('\u200B', 'Killed the enemy with **❤️ ${php} HP** left and earned combat XP'); //Add combat xp var
 						await collection.updateOne(
 							//Add Combat XP from enemy Kill (do once mobs decided)
 							{ _id: interaction.user.id },
-							{ $inc: { 'data.skills.combat': xp } },
+							{ $inc: { 'data.skills.combat': 50 } },
 							{ upsert: true }
 						);
 
 						php = pstats.health; //reset player health
-						if(floor == 1) {
-      mhp = 100
-      mdmg = 10
-    } else if(floor == 2) {
-      mhp = 150
-      mdmg = 20
-    } else if(floor == 3) {
-      mhp = 200
-      mdmg = 30
-    } else if(floor == 4) {
-      mhp = 250
-      mdmg = 40
-    } else if(floor == 5) {
-      mhp = 320
-      mdmg = 50
-    }
+						mhp = Math.random() < 0.5 ? 300 : 200; // reset mob hp for new mob
+						mdmg = Math.random() < 0.5 ? 50 : 25; // reset mob dmg for new mob
 
 						// Unlocks arrows after mob is killed
 						row1.components[0].disabled = true;
@@ -1147,17 +1099,17 @@ module.exports = {
 						row2.components[0].disabled = false; // left arrow
 						row2.components[1].disabled = false; // down arrow
 						row2.components[2].disabled = false; // right arrow
-						await interaction.editReply({ embeds: [test], components: [row1, row2] });
+						menu.edit({ embeds: [test], components: [row1, row2] });
 
 						await sleep(1000); // waiting a second so you can actually read the message
 					} else if (php <= 0) {
 						test.fields = [];
 						test.setColor('RED');
-						test.addField('\u200B', `Died to the enemy which had **❤️ ${mhp}** left.`);
+						test.addField('\u200B', 'Died to the enemy which had **❤️ ${mhp} HP** left.');
 						runFailed = true;
 						return collector.stop();
 					}
-					// FINISH FIGHT
+					// FINISH FIGHTa
 
 					if (fightEnded) {
 						if (direction == undefined) {
@@ -1180,7 +1132,7 @@ module.exports = {
 						test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray();
 					}
 					test.description = `🎯 Score: **${score}**` + '\n\n' + mapArray();
-					await interaction.editReply({ embeds: [test], components: [row1, row2] }); // Components need to get adjusted might be wrong
+					menu.edit({ embeds: [test], components: [row1, row2] }); // Components need to get adjusted might be wrong
 				}
 			} else if (id == 'interact') {
 				//console.log('bing')
@@ -1189,9 +1141,8 @@ module.exports = {
 					bossFight = true;
 					bossrow.components[0].disabled = false;
 					if (floor == 1) (mhp = 500), (mdmg = 100);
-					else if (floor == 2) (mhp = 1000), (mdmg = 150);
-					else if (floor == 3) (mhp = 2500), (mdmg = 200);
-          else if (floor == 4) (mhp = 3500), (mdmg = 300);
+					else if (floor == 2) (mhp = 1000), (mdmg = 200);
+					else if (floor == 3) (mhp = 2500), (mdmg = 350);
 					test.fields = [];
 					test.addField(
 						`Battle`,
@@ -1199,7 +1150,7 @@ module.exports = {
                 Mob Health: ❤️ ${mhp} HP`
 					);
 					//  if(noButtonedit == false) {
-					await interaction.editReply({ embeds: [test], components: [bossrow] });
+					await menu.edit({ embeds: [test], components: [bossrow] });
 					//    }
 					const direction = nearDoor()[1];
 				} else {
@@ -1234,7 +1185,7 @@ module.exports = {
 						}
 
 						// if(noButtonedit == false) {
-						await interaction.editReply({
+						await menu.edit({
 							embeds: [test],
 							components: [row3, row4, row5],
 						});
@@ -1260,7 +1211,7 @@ module.exports = {
 
 						test.addField(quiz.question, answers, false);
 						//if(noButtonedit == false) {
-						await interaction.editReply({ embeds: [test], components: [row6] });
+						await menu.edit({ embeds: [test], components: [row6] });
 						//}
 					}
 
@@ -1309,7 +1260,7 @@ module.exports = {
 						.setColor('GREEN')
 						.setFooter('Skyblock Simulator');
 					//if(noButtonedit == false) {
-					await interaction.editReply({ embeds: [lootembed], components: [] });
+					menu.edit({ embeds: [lootembed], components: [] });
 					//  }
 					runFinished = true;
 					collector.stop();
@@ -1330,7 +1281,7 @@ module.exports = {
 						.setColor('GREEN')
 						.setFooter('Skyblock Simulator');
 					// if(noButtonedit == false) {
-					await interaction.editReply({ embeds: [lootembed], components: [] });
+					menu.edit({ embeds: [lootembed], components: [] });
 					//   }
 					runFinished = true;
 					collector.stop();
@@ -1356,7 +1307,7 @@ module.exports = {
 								.setColor('GREEN')
 								.setFooter('Skyblock Simulator');
 							// if(noButtonedit == false) {
-							await interaction.editReply({ embeds: [lootembed], components: [] });
+							menu.edit({ embeds: [lootembed], components: [] });
 							//  }
 							runFinished = true;
 							collector.stop();
@@ -1388,7 +1339,7 @@ module.exports = {
 								.setColor('GREEN')
 								.setFooter('Skyblock Simulator');
 							//   if(noButtonedit == false) {
-							await interaction.editReply({ embeds: [lootembed], components: [] });
+							menu.edit({ embeds: [lootembed], components: [] });
 							//   }
 							runFinished = true;
 							collector.stop();
@@ -1420,7 +1371,7 @@ module.exports = {
 								.setColor('GREEN')
 								.setFooter('Skyblock Simulator');
 							//      if(noButtonedit == false) {
-							await interaction.editReply({ embeds: [lootembed], components: [] });
+							menu.edit({ embeds: [lootembed], components: [] });
 							//  }
 							runFinished = true;
 							collector.stop();
@@ -1449,7 +1400,7 @@ module.exports = {
 								.setColor('GREEN')
 								.setFooter('Skyblock Simulator');
 							//  if(noButtonedit == false) {
-							await interaction.editReply({ embeds: [lootembed], components: [] });
+							menu.edit({ embeds: [lootembed], components: [] });
 							//   }
 							runFinished = true;
 							collector.stop();
@@ -1465,7 +1416,7 @@ module.exports = {
 				test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray();
 			}
 			if (!inTTT && !inQuiz && !bossFight)
-				return test.setColor('GREY'), await interaction.editReply({ embeds: [test], components: [row1, row2] });
+				return test.setColor('GREY'), menu.edit({ embeds: [test], components: [row1, row2] });
 		});
 		collector.on('end', async (collected) => {
 			try {
@@ -1561,9 +1512,15 @@ module.exports = {
 					);
 				}
 				test.setColor('RED');
-				await interaction.editReply({ embeds: [test], components: [] });
+				await menu.edit({ embeds: [test], components: [] });
 			} catch (e) {}
 		});
+
+		/*  } catch (e) {
+      test.setDescription('An error occured!')
+      test.setColor('Red')
+    return interaction.editReply({embeds: [test], components: []})
+  }*/
 	},
 };
 

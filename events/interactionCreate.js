@@ -11,7 +11,11 @@ module.exports = {
 	 * @returns
 	 */
 	async execute(interaction, mclient) {
+
 		if (interaction.isAutocomplete()) {
+      
+      if(config.blacklistedusers.includes(interaction.user.id)) return
+      
 			const focused = interaction.options.getFocused(true).value;
       const focusedcmd = interaction.options.getFocused(true).name
       const cmd = interaction.options.getSubcommand(false)
@@ -173,6 +177,8 @@ module.exports = {
 		}
 
 		if (!interaction.isCommand()) return;
+
+if(config.blacklistedusers.includes(interaction.user.id)) return
 
 
    /* interaction.reply({content: "im replied", ephemeral: true})

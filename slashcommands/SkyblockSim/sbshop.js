@@ -14,6 +14,34 @@ module.exports = {
 		const collection = mclient.db('SkyblockSim').collection('Players');
 		let player = await collection.findOne({ _id: interaction.user.id });
 
+    /*
+      if(interaction.user.id !== "683472792695472166") return
+
+
+
+    let item = dungloot['Skeletor Armor'];
+					await collection.updateOne(
+						{ _id: interaction.user.id },
+						{
+							$push: {
+								'data.inventory.armor': {
+									name: 'Skeletor Armor',
+									health: item.health,
+									defense: item.defense,
+									strength: item.strength,
+									crit_chance: item.crit_chance,
+									crit_damage: item.crit_damage,
+									magic_find: item.magic_find,
+									sea_creature_chance: item.sea_creature_chance,
+									recombobulated: item.recombobulated,
+									reforge: 'None',
+								},
+							},
+						},
+						{ upsert: true }
+					);
+*/
+
 		if (player === null) {
 			const noprofile = new Discord.MessageEmbed()
 				.setColor('RED')

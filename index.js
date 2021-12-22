@@ -3,7 +3,7 @@ const Stats = require('discord-live-stats')
 const client = new Discord.Client({
 	intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'], shardCount: 2
 });
-client.options.http.api = 'https://discordapp.com/api'
+//client.options.http.api = 'https://discordapp.com/api'
 const config = require('./constants/Bot/config.json');
 const keepAlive = require('./constants/Bot/keepAlive.js');
 const fs = require('fs');
@@ -34,9 +34,8 @@ const Poster = new Stats.Client(client, {
 
 
 //Debugging
-/*client
-    .on("debug", console.log)
-    .on("warn", console.log)*/
+//client.on("debug", console.log)
+//client.on("warn", console.log)
     
 
 //Topgg votes detectionsa
