@@ -18,8 +18,8 @@ module.exports = {
     let i = 0
 
     for(const g of guilds) {
-      str += `${g.name} - ${g.count}\n`
-      if(i <= 20) break;
+      str += `${i+1}. ${g.name} - ${g.count}\n`
+      if(i >= 20) break;
       i++
     }
 

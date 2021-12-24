@@ -540,7 +540,7 @@ module.exports = {
     } else if (player.data.equipment.mining.pickaxe.name == 'Iron Pickaxe') {
       shopembed.addField(
         'Mithril Pickaxe',
-        '**Cost:** 90k coins + 30 Mithril\n\n**Stats:** `45 ⸕`, `80 ☘`',
+        '**Cost:** 90k coins + 40 Mithril\n\n**Stats:** `45 ⸕`, `80 ☘`',
         true
       );
     } else if (player.data.equipment.mining.pickaxe.name == 'Mithril Pickaxe') {
