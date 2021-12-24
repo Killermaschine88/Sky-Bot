@@ -455,7 +455,7 @@ const data = [
 			{
 				name: 'auction',
 				type: 'SUB_COMMAND',
-				description: 'Buy and Sell Items',
+				description: 'Auction Items for people to bid on',
 				options: [
 					{
 						name: 'action',
@@ -516,7 +516,7 @@ const data = [
 			},
       {
 				name: 'bazaar',
-				description: 'Lets you grind Mobs for Combat XP and Items',
+				description: 'Lets you sell Item drops to other people easily',
 				type: 'SUB_COMMAND',
         options: [
           {
