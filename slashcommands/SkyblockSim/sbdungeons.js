@@ -1015,7 +1015,6 @@ module.exports = {
 							test.description += `<:diamond:869126926646788097> Diamond Chest: **${diamond_loot}\n**`;
 							lootrow.addComponents(diamond_button);
 						} else if (floor == 3 && score >= 180) {
-              preclaim = true
 							diamond_loot = lt.diamond.roll(pstats.magic_find);
 							emerald_loot = lt.emerald.roll(pstats.magic_find);
 							if (isNaN(diamond_loot)) {
@@ -1031,6 +1030,7 @@ module.exports = {
 							lootrow.addComponents(diamond_button);
 							lootrow.addComponents(emerald_button);
 							preclaim = true;
+             // atLoot = true
 						} else if (floor == 3 && score >= 150 && preclaim == false) {
 							diamond_loot = lt.diamond.roll(pstats.magic_find);
 							if (isNaN(diamond_loot)) {

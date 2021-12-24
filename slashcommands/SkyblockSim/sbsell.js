@@ -102,7 +102,9 @@ module.exports = {
 
     const sellitem = interaction.options.getString('item')
 
-		const founditem = player.data.inventory.items.find((item) => item.name.toLowerCase() == sellitem.toLowerCase() && item.amount >= amount);
+		const founditem = player.data.inventory.items.find((item) => item.name.toLowerCase() == sellitem.toLowerCase() && item.amount >= 1);
+
+   // console.log(founditem)
 
 		if (!founditem) {
 			let invaliditemembed = new Discord.MessageEmbed()

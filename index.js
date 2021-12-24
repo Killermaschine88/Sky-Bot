@@ -24,13 +24,20 @@ mclient.connect();
 global.mmclient = mclient;
 
 //Stats https://test.baltrazz.repl.co
-try {
+/*try {
 const Poster = new Stats.Client(client, {
   stats_uri: 'https://test.baltrazz.repl.co/',
   authorizationkey: process.env['stats_auth'],
   postinterval: 20000
 })
-} catch (e) {}
+} catch (e) {}*/
+
+try {
+process.on('uncaughtException', error => console.log(error))
+process.on('unhandledRejection', error => console.log(error))
+} catch (e) {
+  console.log(e)
+}
 
 
 //Debugging

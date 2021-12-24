@@ -284,8 +284,7 @@ module.exports = {
 		}
 
 		const endembed = new Discord.MessageEmbed()
-			.setFooter('Calcs by Skezza')
-			.setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `http://sky.shiiyu.moe/stats/${ign}`)
+      .setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `http://sky.shiiyu.moe/stats/${ign}`)
 			.setDescription(`${ign}'s Networth is ${total.toLocaleString()} (${num(total)})`)
 			.addField(`<:coins:861974605203636253> Purse`, `${num(nw.purse.total)}`)
 			.addField(`<:gold:869126927011708929> Bank`, `${num(nw.banking.total)}`)
