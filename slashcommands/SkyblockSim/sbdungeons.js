@@ -1463,7 +1463,7 @@ module.exports = {
 							},
 							{ upsert: true }
 						);
-					} else if (player.data.dungeons.class.selected.xp == 'Tank') {
+					} else if (player.data.dungeons.class.selected.name == 'Tank') {
 						await collection.updateOne(
 							{ _id: interaction.user.id },
 							{
@@ -1474,7 +1474,7 @@ module.exports = {
 							},
 							{ upsert: true }
 						);
-					} else if (player.data.dungeons.class.selected.xp == 'Berserker') {
+					} else if (player.data.dungeons.class.selected.name == 'Berserker') {
 						await collection.updateOne(
 							{ _id: interaction.user.id },
 							{
