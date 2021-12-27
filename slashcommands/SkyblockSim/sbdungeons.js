@@ -1417,7 +1417,7 @@ module.exports = {
 				score += 20;
 				test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray();
 			}
-      if(atLoot) {
+      if(atLoot && !runFinished) {
         await interaction.editReply({components: [lootrow], embeds: [test]})
         return
       }
