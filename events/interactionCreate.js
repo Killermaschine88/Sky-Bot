@@ -380,10 +380,11 @@ if(config.blacklistedusers.includes(interaction.user.id)) return
 			await interaction.client.slashcommands.get(commandExecute).execute(interaction, mclient);
 		} catch (error) {
 			console.error(error);
-			interaction.editReply({
-				content: 'There was an error while executing this command and the Bot Dev has been notified.',
+			interaction.followUp({
+				content: `There was an error while executing ${commandExecute} and the Bot Dev has been notified.`,
 				ephemeral: true,
 			});
+      await interaction.deleteReply()
 
 			const errembed = new Discord.MessageEmbed()
 				.setTitle(`Error occured when ${interaction.user.tag} used ${commandExecute}`)

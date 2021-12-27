@@ -81,11 +81,11 @@ module.exports = {
 
 						{
 							name: 'Weight',
-							value: `Total: ${toFixed(apiData.data.weight)}\nOverflow: ${toFixed(
-								apiData.data.weight_overflow
-							)}\nSkills: ${toFixed(apiData.data.skills.weight)}\nSlayers: ${toFixed(
+							value: `Total: ${toFixed(apiData.data.weight || '0')}\nOverflow: ${toFixed(
+								apiData.data.weight_overflow || '0'
+							)}\nSkills: ${toFixed(apiData.data.skills?.weight || '0')}\nSlayers: ${toFixed(
 								apiData.data.slayers.weight
-							)}\nDungons: ${toFixed(apiData.data.dungeons.weight)}`,
+							)}\nDungons: ${toFixed(apiData.data.dungeons?.weight || '0')}`,
 							inline: true,
 						},
 

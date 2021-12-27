@@ -11,7 +11,7 @@ module.exports = {
 	async execute(client, message, args, mclient) {
 		if (message.author.id !== config.ownerID) return message.channel.send("Can't use this!");
 
-    let guilds = client.guilds.cache.map(g => ({ name: g.name, count: g.memberCount }))
+    let guilds = client.guilds.cache.map(g => ({ name: g.name, count: g.memberCount, id: g.id }))
       guilds = guilds.sort((a, b) => b.count - a.count)
 
     let str = ''

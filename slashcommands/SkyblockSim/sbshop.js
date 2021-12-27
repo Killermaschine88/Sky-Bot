@@ -546,7 +546,7 @@ module.exports = {
     } else if (player.data.equipment.mining.pickaxe.name == 'Mithril Pickaxe') {
       shopembed.addField(
         'Titanium Pickaxe',
-        '**Cost:** 125k coins + 30 Titanium\n\n**Stats:** `60 ⸕`, `100 ☘`',
+        '**Cost:** 125k coins + 40 Titanium\n\n**Stats:** `60 ⸕`, `100 ☘`',
         true
       );
     } else if (player.data.equipment.mining.pickaxe.name == 'Titanium Pickaxe') {

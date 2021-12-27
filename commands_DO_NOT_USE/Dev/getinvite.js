@@ -15,10 +15,7 @@ module.exports = {
 		if (!targetguild) {
 			return message.channel.send(`Enter a valid guild ID`);
 		} else {
-			targetguild.channels.cache
-				.random()
-				.createInvite({ maxAge: 0, maxUses: 1 })
-				.then((inv) => message.channel.send(`${targetguild.name}\n${inv.url}`));
+			targetguild.channels.cache.random().createInvite({ maxAge: 0, maxUses: 1 }).then((inv) => message.channel.send(`${targetguild.name}\n${inv.url}`));
 		}
 	},
 };

@@ -996,6 +996,7 @@ module.exports = {
 					if (fightEnded) {
 						let preclaim = false;
 						fightEnded = false;
+            atLoot = true;
 						wood_loot = lt.wood.roll(pstats.magic_find);
 						gold_loot = lt.gold.roll(pstats.magic_find);
 						test.fields = [];
@@ -1031,7 +1032,7 @@ module.exports = {
 							lootrow.addComponents(emerald_button);
 							preclaim = true;
              // atLoot = true
-						} else if (floor == 3 && score >= 150 && preclaim == false) {
+						} else if (floor == 3 && score <= 150) {
 							diamond_loot = lt.diamond.roll(pstats.magic_find);
 							if (isNaN(diamond_loot)) {
 								test.description += `<:diamond:869126926646788097> Diamond Chest: **${diamond_loot}\n**`;
@@ -1042,6 +1043,7 @@ module.exports = {
 							lootrow.addComponents(diamond_button);
 						}
 						test.setColor('FFD700');
+            test.setTitle(`Floor: ${floor}, Score: ${score}`)
 						atLoot = true;
 						//    if(noButtonedit == false) {
 
@@ -1335,7 +1337,7 @@ module.exports = {
 
 							const lootembed = new MessageEmbed()
 								.setTitle(`Floor ${floor} Finished`)
-								.setDescription(`<:tank:852079613051666472> **${loot}** added to your orofile.`)
+								.setDescription(`<:tank:852079613051666472> **${loot}** added to your profile.`)
 								.setColor('GREEN')
 								.setFooter('Skyblock Simulator');
 							//   if(noButtonedit == false) {
@@ -1415,6 +1417,10 @@ module.exports = {
 				score += 20;
 				test.description = `🎯 Score: **${score}** (+20)` + '\n\n' + mapArray();
 			}
+      if(atLoot) {
+        await interaction.editReply({components: [lootrow], embeds: [test]})
+        return
+      }
 			if (!inTTT && !inQuiz && !bossFight)
 				return test.setColor('GREY'), menu.edit({ embeds: [test], components: [row1, row2] });
 		});
