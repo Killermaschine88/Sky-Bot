@@ -408,13 +408,13 @@ module.exports = {
 			)
 			.setColor('RED');
 
-		if (floor == 1 && combatlvl <= 7) {
+		if (floor == 1 && combatlvl < 8) {
 			menu.edit({ embeds: [invalidreqs], components: [] });
 			return;
-		} else if (floor == 2 && catalevel <= 4) {
+		} else if (floor == 2 && catalevel < 4) {
 			menu.edit({ embeds: [invalidreqs], components: [] });
 			return;
-		} else if (floor == 3 && catalevel <= 8) {
+		} else if (floor == 3 && catalevel < 8) {
 			menu.edit({ embeds: [invalidreqs], components: [] });
 			return;
 		}
