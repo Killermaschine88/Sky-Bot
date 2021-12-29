@@ -114,6 +114,8 @@ module.exports = {
 		const row2 = new Discord.MessageActionRow().addComponents(bcatchoff, bkillsc, bcancel);
 		const row3 = new Discord.MessageActionRow().addComponents(blureoff, bkillscoff, bcancel);
 
+    //console.log(row.components)
+
 		//Pond Embed
 		let pond = new Discord.MessageEmbed()
 			.setTitle('Fishing Pond')
