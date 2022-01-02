@@ -75,7 +75,7 @@ async function sucEmbed(output, message, input) {
     } else {
       embed.setDescription(`\`\`\`js\n${JSON.stringify(output, null, 2)}\`\`\``)
     }
-  } else if(type === 'string' || type === 'number') {
+  } else if(type === 'string' || type === 'number' || type === 'boolean') {
     embed.setDescription(`${output}`)
   } else if(type === 'null' || type === 'undefined') {
     embed.setColor('RED')
