@@ -62,7 +62,7 @@ async function sucEmbed(output, message, input) {
       const bin = await sourcebin.create(
 				[
 					{
-						content: evaled,
+						content: `${JSON.stringify(output, null, 4)}`,
 						language: 'Javascript',
 					},
 				],
@@ -83,24 +83,25 @@ async function sucEmbed(output, message, input) {
   }
 
   embed.setFooter(`Took: ${Date.now() - message.createdTimestamp}ms`)
+  console.log(embed)
   return embed
 }
 
 function getLength(obj) {
   let length = 0
-  const first = Object.values(obj)
-  const second = Object.keys(obj)
+  const first = Object.values(obj) || 'e'
+  const second = Object.keys(obj) || 'e'
 
   for(const str of first) {
     if(typeof str !== 'string') {
-      length += 50
+      length += JSON.stringify(str).length
       continue;
     }
     length += str.length
   }
   for(const str of second) {
     if(typeof str !== 'string') {
-      length += 50
+      length += JSON.stringify(str).length
       continue;
     }
     length += str.length
