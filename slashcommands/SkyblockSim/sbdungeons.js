@@ -709,6 +709,7 @@ module.exports = {
 		interaction.editReply({ embeds: [test], components: [row1, row2] });
 
 		collector.on('collect', async (i) => {
+      bossrow.components[0].disabled = false
 			const { customId: id } = i;
 
 			if (inTTT) {
