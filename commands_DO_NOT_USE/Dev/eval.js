@@ -83,7 +83,6 @@ async function sucEmbed(output, message, input) {
   }
 
   embed.setFooter(`Took: ${Date.now() - message.createdTimestamp}ms`)
-  console.log(embed)
   return embed
 }
 
