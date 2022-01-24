@@ -310,22 +310,22 @@ module.exports = {
 						.setDescription(`**Slayer info for <@${id}>**\n\n**NOT ADDED YET!!!**`)
 						.addField(
 							'<:rev:852892164559732806> Revenant Horror',
-							`XP: **${player.data.slayer.zombiexp}**\nBoss kills: **${player.data.slayer.zombiekills}**`,
+							`XP: **${player.data.slayer.zombie.xp}**\nBoss kills: **${player.data.slayer.zombie.kills}**`,
 							true
 						)
 						.addField(
 							'<:tara:852892164392222740> Tarantula Broodfather',
-							`XP: **${player.data.slayer.spiderxp}**\nBoss kills: **${player.data.slayer.spiderkills}**`,
+							`XP: **${player.data.slayer.spider.xp}**\nBoss kills: **${player.data.slayer.spider.kills}**`,
 							true
 						)
 						.addField(
 							'<:sven:852892164299423754> Sven Packmaster',
-							`XP: **${player.data.slayer.wolfxp}**\nBoss kills: **${player.data.slayer.wolfkills}**`,
+							`XP: **${player.data.slayer.wolf.xp}**\nBoss kills: **${player.data.slayer.wolf.kills}**`,
 							true
 						)
 						.addField(
 							'<:eman:854253314747924511> Voidgloom Seraph',
-							`XP: **${player.data.slayer.endermanxp}**\nBoss kills: **${player.data.slayer.endermankills}**`,
+							`XP: **${player.data.slayer.enderman.xp}**\nBoss kills: **${player.data.slayer.enderman.kills}**`,
 							true
 						);
 					await interaction.editReply({ embeds: [slayer] });

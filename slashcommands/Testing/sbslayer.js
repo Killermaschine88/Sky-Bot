@@ -115,18 +115,19 @@ module.exports = {
 		];
 
     //randomly replace an 0 in the array with 1 based on the slayer level
-    let mobamount = 0;
+    let mobamount = 1;
     if(type === 'zombie') {
-      mobamount = slayerLevel(zombie.xp).level;
+      const level = slayerLevel(zombie.xp).level;
+      mobamount = level < 4 ? 6 : 10
     } else if(type === 'spider') {
-      mobamount = slayerLevel(spider.xp).level;
+      const level = slayerLevel(spider.xp).level;
+      mobamount = level < 4 ? 6 : 10
     } else if(type === 'wolf') {
-      mobamount = slayerLevel(wolf.xp).level;
+      const level = slayerLevel(wolf.xp).level;
+      mobamount = level < 4 ? 6 : 10
     } else if(type === 'enderman') {
-      mobamount = slayerLevel(enderman.xp).level;
-    }
-    if(mobamount == 0) {
-      mobamount = 1;
+      const level = slayerLevel(wolf.xp).level;
+      mobamount = level < 4 ? 6 : 10
     }
 
     for(let i = 0; i < mobamount * 2; i++){
@@ -193,7 +194,7 @@ module.exports = {
         } else if(id === 'attack2') {
 
         } else if(id === 'cancel') {
-          return interaction.editReply({ embeds: [errEmbed('You cancelled the slayer')] });
+          return interaction.editReply({ embeds: [errEmbed('You cancelled the slayer boss')] });
         }
         });
 
@@ -201,14 +202,6 @@ module.exports = {
         slayerembed.setColor('RED');
         slayerembed.setDescription('Cancelled');
       })
-
-
-
-
-
-
-
-
   }
 };
 

@@ -16,6 +16,10 @@ module.exports = {
 	async execute(client, message, args) {
 		if (message.author.id !== config.ownerID) return;
 
+    if(message.guild.id === '753255055024586934') {
+      return message.channel.send('Not here')
+    }
+
     if(!args) {
       return message.channel.send({emebds: [errEmbed('No args provided!')]})
     }

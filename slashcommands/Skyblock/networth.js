@@ -295,6 +295,7 @@ module.exports = {
 			.addField(`<:backpack:881176409983303740> Storage (${num(storage.total)})`, `${storagetext}`)
 			.addField(`<:taming:852069714493833227> Pets (${num(pets.total)})`, `${petstext}`)
 			.addField(`<:talisbag:881176392178499634> Accessories (${num(talis.total)})`, `${talistext}`)
+      .setFooter("Calcs by Skeza")
 			.setColor('90EE90');
 
 		interaction.editReply({ embeds: [endembed] });

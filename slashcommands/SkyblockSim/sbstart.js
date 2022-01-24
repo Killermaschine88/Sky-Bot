@@ -106,7 +106,6 @@ module.exports = {
 								],
 							},
 							slayer: {
-
                 zombie: {
                     xp: 0,
                     kills: 0
