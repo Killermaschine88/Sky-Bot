@@ -1,8 +1,6 @@
 const Discord = require('discord.js');
 const config = require('../../constants/Bot/config.json');
 const pms = require('pretty-ms');
-const prefix = require('@replit/database');
-const prefixx = new prefix();
 const emojis = require('../../constants/Skyblock/allemojis.json');
 const sourcebin = require('sourcebin');
 

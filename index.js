@@ -41,7 +41,7 @@ process.on('unhandledRejection', error => console.log(error))
 
 
 //Debugging
-//client.on("debug", console.log)
+client.on("debug", console.log)
 //client.on("warn", console.log)
     
 
