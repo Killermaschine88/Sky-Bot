@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const { getFooter, getColor } = require('../../constants/Bot/embeds.js');
 const { errEmbed } = require('../../constants/Functions/general.js');
 const slayerLevel = require('../../constants/Simulator/Functions/slayerLevel.js');
-
+dawdawdawdawda
 module.exports = {
 	name: 'sbslayer',
 	description: 'starts slayer',
@@ -12,7 +12,7 @@ module.exports = {
 	aliases: [],
 	cooldown: 5,
 	async execute(interaction, mclient) {
-
+awdawdawdawdaw
     if(interaction.user.id != '570267487393021969') return interaction.editReply('WIP')
 
 		const collection = mclient.db('SkyblockSim').collection('Players');
@@ -254,3 +254,102 @@ function checkArray(array){
   }
   return false;
 }
+adawdawdaw
+awdawdawdawd
+wadawdawdawd
+awdawdawdawda
+wdawdawdawda
+dawdawdawdawda
+wdawdawdawdaw
+dawdawdawdawd
+awdawdawdawdaw
+dawdawdawdawdawd
+awdawdawdawdaw
+dawd
+ad
+awda
+wd
+awdwdwd
+d
+
+
+dd
+dd
+
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+dwdwd
+wdw
+dw
+d
+wd
+wd
+d
+w
+dw
+dw
+dw
+dw
+d
+wd
+w
+dw
+dw
+d
+wd
+wd
+
+
+wd
+w
+dwd
+wd
+wd
+d
+wd
+wd
+wd
+w
+dwd
+wd
+wd
+wd
+wd
+wd
+w
+dw
+dw
+dw
